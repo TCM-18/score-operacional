@@ -1,40 +1,69 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:#f0f0f0;color:#1a1a1a}
-#app{max-width:480px;margin:0 auto;min-height:100vh;background:#f0f0f0}
+#wrap{max-width:480px;margin:0 auto;min-height:100vh}
 .scr{display:none}.scr.on{display:block}
+
+/* Lock */
+#lock{max-width:480px;margin:0 auto;min-height:100vh;background:#1a1a1a;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px}
+
+/* App */
+#appRoot{display:none;max-width:480px;margin:0 auto;min-height:100vh;background:#f0f0f0}
+
+/* Header */
 .hdr{background:#1a1a1a;padding:16px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:10}
 .hdr-title{font-size:16px;font-weight:600;color:#fff;flex:1}
 .hdr-sub{font-size:12px;color:#aaa;margin-top:1px}
 .btn-back{background:none;border:none;color:#fff;padding:4px;display:flex;align-items:center;justify-content:center;min-width:36px;min-height:36px;border-radius:8px}
-.btn-back:active{background:rgba(255,255,255,.1)}
+
+/* Body */
 .body{padding:16px;padding-bottom:100px}
+
+/* Directory */
+.dir-hdr{background:#1a1a1a;padding:24px 16px 28px}
+.dir-brand{font-size:11px;font-weight:600;color:#888;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px}
+.dir-title{font-size:24px;font-weight:700;color:#fff}
+.dir-sub{font-size:13px;color:#888;margin-top:6px}
+.dir-card{background:#fff;border-radius:16px;padding:16px;margin-bottom:10px;display:flex;align-items:center;gap:14px;cursor:pointer;border:1.5px solid transparent}
+.dir-card:active{background:#f5f5f5}
+.dir-card.active{border-color:#1a1a1a}
+.dir-card.wip{opacity:.6;cursor:default}
+.dir-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.dir-icon.dark{background:#1a1a1a}
+.dir-icon.gray{background:#e5e5e5}
+.dir-info{flex:1}
+.dir-name{font-size:15px;font-weight:600;margin-bottom:3px}
+.dir-desc{font-size:12px;color:#888;line-height:1.4}
+.dir-badge{font-size:10px;font-weight:600;padding:3px 8px;border-radius:999px;white-space:nowrap;flex-shrink:0}
+.badge-ok{background:#EAF3DE;color:#27500A}
+.badge-wip{background:#f0f0f0;color:#aaa}
+.sec-lbl{font-size:11px;font-weight:600;color:#aaa;letter-spacing:.6px;text-transform:uppercase;padding:0 4px;margin:16px 0 8px}
+
+/* Checklist */
 .card{background:#fff;border-radius:16px;padding:16px;margin-bottom:12px}
 .card-sm{background:#fff;border-radius:12px;padding:14px;margin-bottom:8px}
-.sec-lbl{font-size:11px;font-weight:600;color:#aaa;letter-spacing:.6px;text-transform:uppercase;padding:0 4px;margin:16px 0 8px}
 .fg{margin-bottom:14px}
 .fl{font-size:12px;color:#888;margin-bottom:6px;display:block;font-weight:500;text-transform:uppercase;letter-spacing:.4px}
 input[type=text],input[type=date],textarea{width:100%;padding:13px 14px;border:1.5px solid #e5e5e5;border-radius:12px;font-size:16px;font-family:inherit;color:#1a1a1a;background:#fafafa;-webkit-appearance:none}
 textarea{resize:none;font-size:15px}
 input:focus,textarea:focus{outline:none;border-color:#1a1a1a;background:#fff}
 .ag{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0 8px}
-.ab{padding:11px 8px;border-radius:12px;font-size:13px;font-weight:600;cursor:pointer;border:2px solid;text-align:center;min-height:46px;display:flex;align-items:center;justify-content:center;gap:5px;transition:all .12s;background:transparent}
+.ab{padding:11px 8px;border-radius:12px;font-size:13px;font-weight:600;cursor:pointer;border:2px solid;text-align:center;min-height:46px;display:flex;align-items:center;justify-content:center;transition:all .12s;background:transparent}
 .ab.sel{border-width:2px}
 .ac{border-color:#c8e6a0;color:#27500A;background:rgba(234,243,222,.4)}.ac.sel{background:#EAF3DE;border-color:#639922}
 .an{border-color:#f5c0c0;color:#791F1F;background:rgba(252,235,235,.4)}.an.sel{background:#FCEBEB;border-color:#E24B4A}
 .ap{border-color:#f5d9aa;color:#633806;background:rgba(250,238,218,.4)}.ap.sel{background:#FAEEDA;border-color:#BA7517}
 .aa{border-color:#d5d3cc;color:#555;background:rgba(241,239,232,.4)}.aa.sel{background:#F1EFE8;border-color:#888780}
 .ph{background:#fff;border-radius:14px;padding:14px 16px;margin-bottom:8px;cursor:pointer;display:flex;align-items:center;gap:10px;min-height:54px}
-.ph:active{background:#f5f5f5}
 .ph-icon{width:36px;height:36px;border-radius:10px;background:#1a1a1a;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.ph-n{font-size:14px;font-weight:600;flex:1}.ph-t{font-size:12px;color:#888}.ph-arr{font-size:12px;color:#bbb;margin-left:4px}
+.ph-n{font-size:14px;font-weight:600;flex:1}.ph-t{font-size:12px;color:#888}.ph-arr{font-size:12px;color:#bbb}
 .prog-wrap{background:#fff;border-radius:14px;padding:14px 16px;margin-bottom:12px}
 .prog-info{display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px}
 .prog-pct{font-weight:700;font-size:15px}
 .ptr{height:6px;background:#f0f0f0;border-radius:999px;overflow:hidden}
 .pfl{height:100%;background:#1a1a1a;border-radius:999px;transition:width .3s}
 .bottom-action{position:sticky;bottom:0;left:0;right:0;background:linear-gradient(transparent,#f0f0f0 30%);padding:16px;max-width:480px;margin:0 auto}
-.btn-main{width:100%;padding:16px;background:#1a1a1a;color:#fff;border:none;border-radius:16px;font-size:16px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px;min-height:54px;font-family:inherit;margin-bottom:8px}
+.btn-main{width:100%;padding:16px;background:#1a1a1a;color:#fff;border:none;border-radius:16px;font-size:16px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px;min-height:54px;font-family:inherit;margin-bottom:8px;cursor:pointer}
 .btn-main:active{opacity:.85}
 .btn-main.green{background:#27500A}
 .btn-main.outline{background:#fff;color:#1a1a1a;border:1.5px solid #e5e5e5}
@@ -55,9 +84,6 @@ input:focus,textarea:focus{outline:none;border-color:#1a1a1a;background:#fff}
 .ar-name{font-size:15px;font-weight:600;margin-bottom:3px}
 .ar-sub{font-size:12px;color:#888}
 .ar-pct{font-size:24px;font-weight:700}
-.home-hdr{background:#1a1a1a;padding:20px 16px 24px}
-.home-brand{font-size:11px;font-weight:600;color:#aaa;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
-.home-title{font-size:22px;font-weight:700;color:#fff}
 .ch{display:inline-block;font-size:11px;font-weight:600;padding:4px 10px;border-radius:999px;white-space:nowrap}
 .cc{background:#EAF3DE;color:#27500A}.cn{background:#FCEBEB;color:#791F1F}
 .cp{background:#FAEEDA;color:#633806}.ca{background:#F1EFE8;color:#444441}.cs{background:#f0f0f0;color:#666}
@@ -65,22 +91,21 @@ input:focus,textarea:focus{outline:none;border-color:#1a1a1a;background:#fff}
 .dc{display:none;font-size:13px;color:#666;background:#f5f5f3;padding:12px;border-radius:10px;white-space:pre-line;margin-bottom:8px;line-height:1.6}
 .ta-lbl{font-size:11px;font-weight:600;color:#aaa;letter-spacing:.4px;text-transform:uppercase;margin:8px 0 4px;display:block}
 .foto-btn{background:#f5f5f5;border:1.5px dashed #ccc;border-radius:12px;padding:10px 14px;font-size:13px;color:#666;display:inline-flex;align-items:center;gap:6px;margin-top:8px;font-family:inherit;cursor:pointer;min-height:42px}
-.foto-btn:active{background:#ebebeb}
 .foto-area{margin-top:4px}
 .foto-thumb-wrap{position:relative;display:inline-block;margin:6px 6px 0 0}
 .foto-thumb-wrap img{width:80px;height:80px;object-fit:cover;border-radius:10px;display:block}
 .foto-del{position:absolute;top:-6px;right:-6px;background:#E24B4A;color:#fff;border:none;border-radius:50%;width:22px;height:22px;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700}
-.emp{text-align:center;padding:48px 16px;color:#aaa;font-size:14px}
-.fab{position:sticky;bottom:20px;display:flex;justify-content:flex-end;padding:0 4px;pointer-events:none}
-.fab button{pointer-events:all;width:56px;height:56px;border-radius:999px;background:#1a1a1a;color:#fff;border:none;font-size:28px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,.25)}
 .plan-box{background:#FFF8E8;border:1.5px solid #BA7517;border-radius:10px;padding:2px 0 0}
 .plan-box textarea{background:transparent;border:none;border-radius:10px;font-size:14px;padding:10px 12px;color:#633806}
 .plan-box textarea:focus{border:none;outline:none}
 .plan-lbl{font-size:10px;font-weight:700;color:#BA7517;letter-spacing:.5px;text-transform:uppercase;padding:8px 12px 0;display:block}
+.emp{text-align:center;padding:48px 16px;color:#aaa;font-size:14px}
+.fab{position:sticky;bottom:20px;display:flex;justify-content:flex-end;padding:0 4px;pointer-events:none}
+.fab button{pointer-events:all;width:56px;height:56px;border-radius:999px;background:#1a1a1a;color:#fff;border:none;font-size:28px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,.25);cursor:pointer}
 
 @media print{
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  #app{display:none !important}#pr{display:block !important}
+  #appRoot{display:none !important}#lock{display:none !important}#pr{display:block !important}
   #pr{font-family:Arial,sans-serif;color:#111;font-size:11px}
   .pr-header{padding:12px 16px 10px;border-bottom:2px solid #333}
   .pr-metrics{display:flex;gap:6px;padding:10px 16px;background:#f8f8f8;border-bottom:1px solid #ddd;flex-wrap:wrap}
@@ -104,12 +129,11 @@ input:focus,textarea:focus{outline:none;border-color:#1a1a1a;background:#fff}
 #pr{display:none}
 </style>
 
-<h2 class="sr-only">Score Operacional PG MED</h2>
-
-<div id="lock" style="max-width:480px;margin:0 auto;min-height:100vh;background:#1a1a1a;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px">
+<!-- LOCK -->
+<div id="lock">
   <div style="margin-bottom:32px;text-align:center">
     <div style="font-size:11px;font-weight:600;color:#888;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px">PG MED</div>
-    <div style="font-size:26px;font-weight:700;color:#fff">Score Operacional</div>
+    <div style="font-size:26px;font-weight:700;color:#fff">Central de Checklists</div>
     <div style="font-size:13px;color:#666;margin-top:6px">Acesso restrito</div>
   </div>
   <div style="width:100%;background:#2a2a2a;border-radius:20px;padding:24px">
@@ -122,25 +146,93 @@ input:focus,textarea:focus{outline:none;border-color:#1a1a1a;background:#fff}
   </div>
 </div>
 
-<div id="app" style="display:none">
-  <div id="sh" class="scr on"></div>
-  <div id="ss" class="scr"></div>
-  <div id="sa" class="scr"></div>
-  <div id="sm" class="scr"></div>
+<!-- APP -->
+<div id="appRoot">
+  <!-- DIRETÓRIO -->
+  <div id="sDir" class="scr on">
+    <div class="dir-hdr">
+      <div class="dir-brand">PG MED</div>
+      <div class="dir-title">Central de Checklists</div>
+      <div class="dir-sub">Selecione o checklist para iniciar</div>
+    </div>
+    <div class="body">
+      <div class="sec-lbl">Disponível</div>
+      <div class="dir-card active" onclick="openChecklist('score')">
+        <div class="dir-icon dark">📋</div>
+        <div class="dir-info">
+          <div class="dir-name">Score Operacional</div>
+          <div class="dir-desc">44 itens · 9 pilares · Auditoria completa da unidade</div>
+        </div>
+        <span class="dir-badge badge-ok">Ativo</span>
+      </div>
+
+      <div class="sec-lbl" style="margin-top:20px">Em desenvolvimento</div>
+      <div class="dir-card wip">
+        <div class="dir-icon gray">🛡️</div>
+        <div class="dir-info">
+          <div class="dir-name">Regulatórios e Biossegurança</div>
+          <div class="dir-desc">Documentações legais, EPIs, biossegurança e conformidade</div>
+        </div>
+        <span class="dir-badge badge-wip">Em breve</span>
+      </div>
+      <div class="dir-card wip">
+        <div class="dir-icon gray">🔧</div>
+        <div class="dir-info">
+          <div class="dir-name">Manutenção e Conservação</div>
+          <div class="dir-desc">Equipamentos, infraestrutura e conservação da unidade</div>
+        </div>
+        <span class="dir-badge badge-wip">Em breve</span>
+      </div>
+      <div class="dir-card wip">
+        <div class="dir-icon gray">🎓</div>
+        <div class="dir-info">
+          <div class="dir-name">Educacional</div>
+          <div class="dir-desc">Cursos, ensalamentos, notas, gravações e gestão acadêmica</div>
+        </div>
+        <span class="dir-badge badge-wip">Em breve</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCORE OPERACIONAL -->
+  <div id="sScore">
+    <div id="sh" class="scr on"></div>
+    <div id="ss" class="scr"></div>
+    <div id="sa" class="scr"></div>
+    <div id="sm" class="scr"></div>
+  </div>
 </div>
 <div id="pr"></div>
 
 <script>
 var SENHA='pgmed2025';
-var EMAIL_GESTOR='tainan.moura@slmandic.edu.br';
+var EMAIL_GESTOR='gestor@pgmed.com.br';
 
 function checkPw(){
   var v=document.getElementById('pwInput').value;
-  if(v===SENHA){document.getElementById('lock').style.display='none';document.getElementById('app').style.display='block';loadData();}
-  else{var e=document.getElementById('pwErr');e.style.display='block';document.getElementById('pwInput').value='';document.getElementById('pwInput').focus();}
+  if(v===SENHA){
+    document.getElementById('lock').style.display='none';
+    document.getElementById('appRoot').style.display='block';
+  } else {
+    var e=document.getElementById('pwErr');e.style.display='block';
+    document.getElementById('pwInput').value='';document.getElementById('pwInput').focus();
+  }
 }
 document.getElementById('pwInput').focus();
 
+function openChecklist(id){
+  if(id==='score'){
+    document.getElementById('sDir').classList.remove('on');
+    document.getElementById('sScore').style.display='block';
+    loadData();
+  }
+}
+function backToDir(){
+  document.getElementById('sScore').style.display='none';
+  document.getElementById('sDir').classList.add('on');
+}
+
+// ===================== SCORE OPERACIONAL =====================
 const IT=[
 {id:'1',p:'Atendimento',q:'O operador realiza a conferência do documento e atualiza os dados cadastrais?'},
 {id:'2',p:'Atendimento',q:'O operador realiza a admissão do paciente seguindo o script de atendimento?'},
@@ -187,24 +279,15 @@ const IT=[
 {id:'43',p:'Exp. do Aluno',q:'A tratativa dos casos do Zendesk está dentro do SLA de resposta?'},
 {id:'44',p:'Exp. do Aluno',q:'O NPS está acima de 70%?'},
 ];
+const DK={'1':'*Confere documento original (nome completo, CPF e data de nascimento)\n*Valida dados obrigatórios no sistema antes de finalizar\n*Atualiza telefone, e-mail e endereço com confirmação do paciente\n*Amostra de 3 pacientes — se possível, mais de um colaborador','2':'*Colaborador está atendendo de forma humanizada\n*Esclarece todas as dúvidas do paciente\n*Explica o próximo passo dentro da clínica\n*Amostra de 3 pacientes','3':'*Mantém a tela do pós-consulta aberta durante todo o atendimento\n*Confere e apresenta o plano de tratamento\n*Imprime o orçamento e entrega ao paciente\n*Agenda próximo passo antes do paciente sair\n*Amostra de 3 pacientes','4':'*Explica o plano de tratamento de forma clara e objetiva\n*Destaca benefícios e importância da continuidade\n*Estimula fechamento no momento, sem pressão excessiva\n*Amostra de 3 pacientes','5':'*Utiliza uniforme completo conforme padrão da empresa\n*Uniforme limpo, sem desgaste excessivo\n*Uso correto de crachá','6':'*Identificar pacientes atendidos na semana anterior no Consulta Já\n*Selecionar 1 para revisar os movimentos no TOTVS','7':'*Exemplo de 1 NF de procedimento lançada dentro do prazo (até 5 dias do recebimento)','8':'*Triagem aberta por Enfermeiro e turno conforme escala padrão\n*Verificar no Consulta Já se os horários da semana estão disponíveis\n*Perguntar à liderança se houve fechamento e o motivo','9':'*Verificar se há registro do último controle de qualidade ou manutenção preventiva\n*Verificar se os equipamentos estão funcionando','10':'*Entrar em 3 consultórios para verificar: colírios, álcool, entre outros','11':'*Controle de temperatura: diário\n*Limpeza da geladeira: semanal','12':'*Verificar se o local tem controle de temperatura\n*As amostras estavam em um ambiente seguro e lacrado?','13':'*Verificar se o termo está com todos os campos preenchidos\n*Fazer amostragem de 3 pacientes','14':'*Questionar quando acontecerá o próximo Módulo Mandic\n*Solicitar evidência ao coordenador','15':'*Questionar se no dia da visita há algum módulo finalizando\n*Perguntar se o coordenador irá projetar o QR Code na sala','16':'*Abrir o BI e verificar se há algum curso com início em menos de 30 dias','17':'*Abrir o BI e verificar se há cursos com 18 alunos inscritos\n*Coordenador deve apresentar o calendário','18':'*Acessar o TOTVS e ver as turmas dos dias anteriores\n*Fazer por amostragem (mínimo 3 turmas)','19':'*Acessar o Blackboard e ver as turmas dos dias anteriores\n*Fazer por amostragem (mínimo 3 turmas)','20':'*Verificar 3x na semana se os controles de limpeza nos banheiros estão preenchidos\n*Unidade não tem caixas em locais indevidos','21':'*Possui alguma lâmpada ou iluminação queimada?\n*Todas torneiras e banheiros estão funcionando?\n*Filtros funcionando?','22':'*Verificar se o ambiente está confortável','23':'*Verificar pasta física e drive','24':'*Verificar se todos os computadores ligam e acessam o sistema sem erros\n*Checar impressoras, leitores e maquininhas\n*Testar ao menos 2 estações de atendimento','25':'*Confirmar que todos os usuários conseguem logar normalmente\n*Checar relatos de lentidão nos últimos 7 dias','26':'*Verificar sinal de internet nas áreas de atendimento e salas clínicas\n*Testar conectividade em ao menos 3 pontos','27':'*Entrevistar colaboradores com menos de 3 meses de casa\n*Solicitar ao coordenador que mostre o feedback na ferramenta','28':'','29':'*Verificar no book de gente\n*Se possuir horas, precisa apresentar o plano de ação','30':'*Verificar na plataforma "meu RH" > "Gestor" > "gestão de férias"','31':'*Perguntar sobre o ciclo e valores\n*Entrevistar ao menos 2 colaboradores','32':'*Verificar onde as receitas estão sendo armazenadas','33':'*As filipetas estão sendo controladas','34':'*EPIs disponíveis para todas as funções, sem sinais de dano\n*Solicitar ficha de EPI assinada do mês anterior','35':'*Verificar dentro de uma ou mais clínicas e da clínica de apoio','36':'*Realizar a auditoria dentro da expedição e clínica de apoio\n*Fazer ao menos 5 amostras','37':'*AVCB · Vigilância sanitária · Alvará de funcionamento\n*Certificado caixa d\'água · PMOC · Dedetização\n*Cartão CNPJ · Contrato de coleta de resíduos','38':'*RS · Daily · RMR\n*Solicitar ao coordenador a RS da última semana','39':'*Perguntar quais indicadores são acompanhados (receita educacional, receita clínica, NPS, cancelamento, CSAT, ocupação)\n*Solicitar os planos de ação para indicadores com desvios','40':'*Verificar PDI formalizado para colaboradores em cargo de referência\n*Solicitar PDI de ao menos 1 colaborador-chave\n*Perguntar quais capacitações estão previstas para os próximos 90 dias','41':'*Verificar no BI o resultado\n*Caso esteja < 8, liderança precisa apresentar plano de ação','42':'*Questionar a concierge se há pendências\n*Planos de ação para garantir a entrega','43':'*Solicitar abertura do Zendesk e mostrar pendências\n*Verificar quais manifestações precisam ser tratadas','44':'*Considerar o NPS vigente\n*Resultado de Maio ou Outubro'};
 
-const DK={'1':'*Confere documento original (nome completo, CPF e data de nascimento)\n*Valida dados obrigatórios no sistema antes de finalizar\n*Atualiza telefone, e-mail e endereço com confirmação do paciente\n*Amostra de 3 pacientes — se possível, mais de um colaborador','2':'*Colaborador está atendendo de forma humanizada\n*Esclarece todas as dúvidas do paciente\n*Explica o próximo passo dentro da clínica\n*Amostra de 3 pacientes — se possível, mais de um colaborador','3':'*Mantém a tela do pós-consulta aberta durante todo o atendimento\n*Confere e apresenta o plano de tratamento\n*Imprime o orçamento e entrega ao paciente\n*Informa formas de pagamento disponíveis\n*Agenda próximo passo antes do paciente sair\n*Amostra de 3 pacientes','4':'*Explica o plano de tratamento de forma clara e objetiva\n*Destaca benefícios e importância da continuidade\n*Estimula fechamento no momento, sem pressão excessiva\n*Amostra de 3 pacientes','5':'*Utiliza uniforme completo conforme padrão da empresa\n*Uniforme limpo, sem desgaste excessivo\n*Uso correto de crachá','6':'*Identificar pacientes atendidos na semana anterior no Consulta Já\n*Selecionar 1 para revisar os movimentos no TOTVS','7':'*Exemplo de 1 NF de procedimento lançada dentro do prazo (até 5 dias do recebimento)','8':'*Triagem aberta por Enfermeiro e turno conforme escala padrão\n*Verificar no Consulta Já se os horários da semana estão disponíveis\n*Nenhum dia deve estar com agenda fechada sem justificativa\n*Perguntar à liderança se houve fechamento e o motivo','9':'*Verificar se há registro do último controle de qualidade ou manutenção preventiva\n*Verificar se os equipamentos estão funcionando','10':'*Entrar em 3 consultórios para verificar: colírios, álcool, entre outros','11':'*Controle de temperatura: diário\n*Limpeza da geladeira: semanal','12':'*Verificar se o local tem controle de temperatura\n*As amostras estavam em um ambiente seguro e lacrado?','13':'*Verificar se o termo está com todos os campos preenchidos\n*Fazer amostragem de 3 pacientes','14':'*Questionar quando acontecerá o próximo Módulo Mandic\n*Solicitar evidência ao coordenador','15':'*Questionar se no dia da visita há algum módulo finalizando\n*Perguntar se o coordenador irá projetar o QR Code na sala','16':'*Abrir o BI e verificar se há algum curso com início em menos de 30 dias','17':'*Abrir o BI e verificar se há cursos com 18 alunos inscritos\n*Coordenador deve apresentar o calendário','18':'*Acessar o TOTVS e ver as turmas dos dias anteriores\n*Fazer por amostragem (mínimo 3 turmas)','19':'*Acessar o Blackboard e ver as turmas dos dias anteriores\n*Fazer por amostragem (mínimo 3 turmas)','20':'*Verificar 3x na semana se os controles de limpeza nos banheiros estão preenchidos\n*Unidade não tem caixas em locais indevidos','21':'*Possui alguma lâmpada ou iluminação queimada?\n*Todas torneiras e banheiros estão funcionando?\n*Filtros funcionando?','22':'*Verificar se o ambiente está confortável','23':'*Verificar pasta física e drive','24':'*Verificar se todos os computadores ligam e acessam o sistema sem erros\n*Checar impressoras, leitores e maquininhas\n*Testar ao menos 2 estações de atendimento','25':'*Confirmar que todos os usuários conseguem logar normalmente\n*Checar relatos de lentidão nos últimos 7 dias','26':'*Verificar sinal de internet nas áreas de atendimento e salas clínicas\n*Testar conectividade em ao menos 3 pontos','27':'*Entrevistar colaboradores com menos de 3 meses de casa\n*Solicitar ao coordenador que mostre o feedback na ferramenta','28':'','29':'*Verificar no book de gente\n*Se possuir horas, precisa apresentar o plano de ação','30':'*Verificar na plataforma "meu RH" > "Gestor" > "gestão de férias"','31':'*Perguntar sobre o ciclo e valores\n*Entrevistar ao menos 2 colaboradores','32':'*Verificar onde as receitas estão sendo armazenadas','33':'*As filipetas estão sendo controladas','34':'*EPIs disponíveis para todas as funções, sem sinais de dano\n*Solicitar ficha de EPI assinada do mês anterior','35':'*Verificar dentro de uma ou mais clínicas e da clínica de apoio','36':'*Realizar a auditoria dentro da expedição e clínica de apoio\n*Fazer ao menos 5 amostras','37':'*AVCB · Vigilância sanitária · Alvará de funcionamento\n*Certificado caixa d\'água · PMOC · Dedetização\n*Cartão CNPJ · Contrato de coleta de resíduos','38':'*RS · Daily · RMR\n*Solicitar ao coordenador a RS da última semana','39':'*Perguntar quais indicadores são acompanhados (receita educacional, receita clínica, NPS, cancelamento, CSAT, ocupação)\n*Solicitar os planos de ação para indicadores com desvios','40':'*Verificar PDI formalizado para colaboradores em cargo de referência\n*Solicitar PDI de ao menos 1 colaborador-chave\n*Perguntar quais capacitações estão previstas para os próximos 90 dias','41':'*Verificar no BI o resultado\n*Caso esteja < 8, liderança precisa apresentar plano de ação','42':'*Questionar a concierge se há pendências\n*Planos de ação para garantir a entrega','43':'*Solicitar abertura do Zendesk e mostrar pendências\n*Verificar quais manifestações precisam ser tratadas','44':'*Considerar o NPS vigente\n*Resultado de Maio ou Outubro'};
-
-var store={
-  get:function(k){
-    if(typeof window.storage!=='undefined')return window.storage.get(k).catch(function(){return null;});
-    try{var v=localStorage.getItem(k);return Promise.resolve(v?{value:v}:null);}catch(e){return Promise.resolve(null);}
-  },
-  set:function(k,v){
-    if(typeof window.storage!=='undefined')return window.storage.set(k,v).catch(function(){});
-    try{localStorage.setItem(k,v);}catch(e){}
-    return Promise.resolve();
-  }
-};
-// Fallback em memória para quando localStorage não está disponível (arquivo local no celular)
 var _mem={};
 function svMem(k,v){_mem[k]=v;}
 function gtMem(k){return _mem[k]||null;}
+var store={
+  get:function(k){if(typeof window.storage!=='undefined')return window.storage.get(k).catch(function(){return null;});try{var v=localStorage.getItem(k);return Promise.resolve(v?{value:v}:null);}catch(e){return Promise.resolve(null);}},
+  set:function(k,v){if(typeof window.storage!=='undefined')return window.storage.set(k,v).catch(function(){});try{localStorage.setItem(k,v);}catch(e){}return Promise.resolve();}
+};
 
 var audits=[],curId=null,scr='home';
 function gA(){return audits.find(function(a){return a.id===curId})||null;}
@@ -231,29 +314,13 @@ function calcPS(a,pilar){
 }
 
 function loadData(){
-  var loaded=false;
-  // Tenta window.storage (Claude.ai)
   if(typeof window.storage!=='undefined'){
-    window.storage.get('pgmed-v3').then(function(r){
-      if(r)try{audits=JSON.parse(r.value);}catch(e){}
-      render();
-    }).catch(function(){render();});
+    window.storage.get('pgmed-v3').then(function(r){if(r)try{audits=JSON.parse(r.value);}catch(e){}render();}).catch(function(){render();});
     return;
   }
-  // Tenta localStorage
-  try{
-    var v=localStorage.getItem('pgmed-v3');
-    if(v)audits=JSON.parse(v);
-    loaded=true;
-  }catch(e){}
-  // Fallback memória
-  if(!loaded){
-    var v2=gtMem('pgmed-v3');
-    if(v2)try{audits=JSON.parse(v2);}catch(e){}
-  }
+  try{var v=localStorage.getItem('pgmed-v3');if(v)audits=JSON.parse(v);}catch(e){var v2=gtMem('pgmed-v3');if(v2)try{audits=JSON.parse(v2);}catch(e2){}}
   render();
 }
-
 function sv(){
   var data=JSON.stringify(audits);
   svMem('pgmed-v3',data);
@@ -277,7 +344,7 @@ function updProg(){
 }
 
 function render(){
-  document.querySelectorAll('.scr').forEach(function(s){s.classList.remove('on');s.innerHTML='';});
+  document.querySelectorAll('#sScore .scr').forEach(function(s){s.classList.remove('on');s.innerHTML='';});
   var mp={home:'sh',setup:'ss',audit:'sa',summary:'sm'};
   var el=document.getElementById(mp[scr]);if(!el)return;
   el.classList.add('on');
@@ -290,7 +357,7 @@ function render(){
 function rHome(){
   var sorted=audits.slice().sort(function(a,b){return b.dat.localeCompare(a.dat)});
   var list='';
-  if(!sorted.length){list='<div class="emp" style="padding:60px 16px"><div style="font-size:40px;margin-bottom:12px">📋</div><div>Nenhuma auditoria ainda.<br>Toque em + para começar.</div></div>';}
+  if(!sorted.length){list='<div class="emp"><div style="font-size:40px;margin-bottom:12px">📋</div><div>Nenhuma auditoria ainda.<br>Toque em + para começar.</div></div>';}
   else{
     list='<div class="sec-lbl">Auditorias</div>';
     sorted.forEach(function(a){
@@ -299,7 +366,7 @@ function rHome(){
       list+='<div class="ar" onclick="openA(\''+a.id+'\')"><div><div class="ar-name">'+a.uni+'</div><div class="ar-sub">'+a.aud+(a.cargo?' · '+a.cargo:'')+' · '+fD(a.dat)+'</div></div>'+right+'</div>';
     });
   }
-  return '<div class="home-hdr"><div class="home-brand">PG MED</div><div class="home-title">Score Operacional</div></div>'
+  return '<div class="hdr"><button class="btn-back" onclick="backToDir()">&#8592;</button><div><div class="hdr-title">Score Operacional</div><div class="hdr-sub">PG MED · 44 itens</div></div></div>'
     +'<div class="body">'+list+'</div>'
     +'<div class="fab"><button onclick="scr=\'setup\';render()" aria-label="Nova auditoria">+</button></div>';
 }
@@ -326,9 +393,7 @@ function rAudit(){
   var rCnt=IT.filter(function(i){return a.respostas[i.id]&&a.respostas[i.id].ad}).length;
   var pct=Math.round(rCnt/IT.length*100);
   var h='<div class="hdr"><button class="btn-back" onclick="if(confirm(\'Sair? O progresso foi salvo.\'))goHome()">&#8592;</button><div><div class="hdr-title">'+a.uni+'</div><div class="hdr-sub">'+a.aud+(a.cargo?' · '+a.cargo:'')+'</div></div></div>'
-    +'<div class="body">'
-    +'<div class="prog-wrap"><div class="prog-info"><span id="pinf" style="font-size:13px;color:#888">'+rCnt+' de '+IT.length+' respondidos</span><span class="prog-pct" id="ppct">'+pct+'%</span></div><div class="ptr"><div class="pfl" id="pfl" style="width:'+pct+'%"></div></div></div>';
-
+    +'<div class="body"><div class="prog-wrap"><div class="prog-info"><span id="pinf" style="font-size:13px;color:#888">'+rCnt+' de '+IT.length+' respondidos</span><span class="prog-pct" id="ppct">'+pct+'%</span></div><div class="ptr"><div class="pfl" id="pfl" style="width:'+pct+'%"></div></div></div>';
   getPil().forEach(function(pl,idx){
     var pits=IT.filter(function(i){return i.p===pl});
     var prsp=pits.filter(function(i){return a.respostas[i.id]&&a.respostas[i.id].ad}).length;
@@ -344,7 +409,7 @@ function rAudit(){
       var hd=DK[it.id]&&DK[it.id].length>0;
       var fotos=r.fotos||[];
       var showPlan=r.ad==='NAO'||r.ad==='PARCIAL';
-      h+='<div class="card-sm" id="ic'+it.id+'">'
+      h+='<div class="card-sm">'
         +'<div style="font-size:15px;font-weight:600;line-height:1.45;margin-bottom:8px">'+it.q+'</div>'
         +(hd?'<button class="db" onclick="tgDk(\''+it.id+'\')">💡 Ver dica do auditor</button><div class="dc" id="dk'+it.id+'"></div>':'')
         +'<div class="ag" id="ag'+it.id+'">'
@@ -356,11 +421,10 @@ function rAudit(){
         +'<span class="ta-lbl">Observações</span>'
         +'<textarea placeholder="Descreva o que foi observado..." style="height:60px" onblur="setField(\''+it.id+'\',\'obs\',this.value)">'+(r.obs||'')+'</textarea>'
         +'<div id="plan'+it.id+'" style="margin-top:8px;'+(showPlan?'':'display:none')+'">'
-        +'<div class="plan-box"><span class="plan-lbl">📋 Plano de ação</span><textarea placeholder="Descreva o plano de ação para este item..." style="height:60px;color:#633806" onblur="setField(\''+it.id+'\',\'plan\',this.value)">'+(r.plan||'')+'</textarea></div>'
+        +'<div class="plan-box"><span class="plan-lbl">📋 Plano de ação</span><textarea placeholder="Descreva o plano de ação..." style="height:60px;color:#633806" onblur="setField(\''+it.id+'\',\'plan\',this.value)">'+(r.plan||'')+'</textarea></div>'
         +'</div>'
-        +'<div class="foto-area">'
-        +'<div id="ft'+it.id+'">'+fotosHtml(it.id,fotos)+'</div>'
-        +(fotos.length<3?'<input type="file" accept="image/*" id="fi'+it.id+'" style="display:none" onchange="addFoto(\''+it.id+'\',this)"><button class="foto-btn" onclick="document.getElementById(\'fi'+it.id+'\').click()">📷 Adicionar foto</button>':'<span style="font-size:12px;color:#aaa">Máx. 3 fotos</span>')
+        +'<div class="foto-area"><div id="ft'+it.id+'">'+fotosHtml(it.id,fotos)+'</div>'
+        +(fotos.length<3?'<input type="file" accept="image/*" id="fi'+it.id+'" style="display:none" onchange="addFoto(\''+it.id+'\',this)"><button class="foto-btn" onclick="document.getElementById(\'fi'+it.id+'\').click()">📷 Foto</button>':'<span style="font-size:12px;color:#aaa">Máx. 3 fotos</span>')
         +'</div></div>';
     });
     h+='</div>';
@@ -370,26 +434,21 @@ function rAudit(){
 }
 
 function rSum(){
-  var a=gA();if(!a)return'';
-  var s=calcS(a);
+  var a=gA();if(!a)return'';var s=calcS(a);
   var h='<div class="hdr"><button class="btn-back" onclick="goHome()">&#8592;</button><div><div class="hdr-title">Resultado</div><div class="hdr-sub">'+a.uni+' · '+fD(a.dat)+'</div></div><button onclick="printS()" style="background:none;border:none;color:#fff;font-size:22px;cursor:pointer;padding:4px;min-width:36px">📄</button></div>'
-    +'<div class="body">'
-    +'<div class="metrics-grid">'
+    +'<div class="body"><div class="metrics-grid">'
     +'<div class="metric-big"><div class="mv">'+s.pct+'%</div><div class="ml">Conformidade geral</div></div>'
     +'<div class="mc"><div class="mv" style="color:#27500A">'+s.c+'</div><div class="ml">Conformes</div></div>'
     +'<div class="mc"><div class="mv" style="color:#791F1F">'+s.n+'</div><div class="ml">Não conformes</div></div>'
     +'<div class="mc"><div class="mv" style="color:#633806">'+s.p+'</div><div class="ml">Parciais</div></div>'
     +'<div class="mc"><div class="mv">'+s.na+'</div><div class="ml">N/A</div></div>'
-    +'</div>'
-    +'<div class="sec-lbl">Por pilar</div>';
-
+    +'</div><div class="sec-lbl">Por pilar</div>';
   getPil().forEach(function(pl){
     var ps=calcPS(a,pl);
     h+='<div class="psrow"><div class="pstop"><span class="psn">'+pilIcon(pl)+' '+pl+'</span><span style="color:'+pC(ps.pct)+';font-weight:700">'+(ps.av>0?ps.pct+'%':'—')+'</span></div>'
       +'<div class="btr"><div class="bfl" style="width:'+ps.pct+'%;background:'+pB(ps.pct)+'"></div></div>'
       +'<div style="font-size:11px;color:#aaa;margin-top:5px">'+ps.c+' conf · '+ps.n+' nc · '+ps.p+' parc · '+ps.na+' N/A</div></div>';
   });
-
   h+='<div class="sec-lbl">Detalhamento</div>';
   getPil().forEach(function(pl){
     var pits=IT.filter(function(i){return i.p===pl});
@@ -406,7 +465,6 @@ function rSum(){
         +'</div>';
     });
   });
-
   if(!a.done){h+='<button class="btn-main outline" onclick="scr=\'audit\';render()" style="margin-bottom:8px">✏️ Continuar preenchendo</button>';}
   h+='<button class="btn-main" onclick="sendEmail()" style="margin-bottom:8px">📧 Enviar por e-mail</button>'
     +'<button class="btn-main" onclick="printS()" style="margin-bottom:8px">📄 Exportar PDF</button>'
@@ -429,23 +487,17 @@ function startA(){
 }
 function tgDk(id){var el=document.getElementById('dk'+id);if(!el)return;if(!el.textContent)el.textContent=DK[id]||'';el.style.display=el.style.display==='block'?'none':'block';}
 function tgPil(pid,idx){var body=document.getElementById(pid);var icon=document.getElementById('ici'+idx);if(!body)return;var open=body.style.display!=='none';body.style.display=open?'none':'block';if(icon)icon.textContent=open?'▶':'▼';}
-
 function setAd(itemId,value,btn){
   var a=gA();if(!a)return;
   if(!a.respostas[itemId])a.respostas[itemId]={};
   a.respostas[itemId].ad=value;
   var grp=document.getElementById('ag'+itemId);
   if(grp)grp.querySelectorAll('.ab').forEach(function(b){b.classList.toggle('sel',b===btn);});
-  // Mostrar/ocultar plano de ação
   var planDiv=document.getElementById('plan'+itemId);
   if(planDiv)planDiv.style.display=(value==='NAO'||value==='PARCIAL')?'block':'none';
   updProg();sv();
 }
-function setField(itemId,field,value){
-  var a=gA();if(!a)return;
-  if(!a.respostas[itemId])a.respostas[itemId]={};
-  a.respostas[itemId][field]=value;sv();
-}
+function setField(itemId,field,value){var a=gA();if(!a)return;if(!a.respostas[itemId])a.respostas[itemId]={};a.respostas[itemId][field]=value;sv();}
 function addFoto(itemId,input){
   var file=input.files[0];if(!file)return;
   var a=gA();if(!a)return;
@@ -480,38 +532,21 @@ function finA(){
   setTimeout(function(){sendEmail();},400);
 }
 function delA(){audits=audits.filter(function(a){return a.id!==curId;});sv();goHome();}
-
 function sendEmail(){
-  var a=gA();if(!a)return;
-  var s=calcS(a);var pils=getPil();
-  var lines=[];
-  lines.push('SCORE OPERACIONAL — PG MED');
-  lines.push('━━━━━━━━━━━━━━━━━━━━━━━━');
-  lines.push('Unidade: '+a.uni);
-  lines.push('Auditor: '+a.aud+(a.cargo?' | '+a.cargo:''));
-  lines.push('Data: '+fD(a.dat));
-  lines.push('Score geral: '+s.pct+'%');
-  lines.push('');lines.push('RESULTADO POR PILAR');lines.push('────────────────────');
-  pils.forEach(function(pl){var ps=calcPS(a,pl);lines.push((ps.pct>=80?'✓':ps.pct>=50?'~':'✗')+' '+pl+': '+(ps.av>0?ps.pct+'%':'—'));});
+  var a=gA();if(!a)return;var s=calcS(a);
+  var lines=['SCORE OPERACIONAL — PG MED','━━━━━━━━━━━━━━━━━━━━━━━━','Unidade: '+a.uni,'Auditor: '+a.aud+(a.cargo?' | '+a.cargo:''),'Data: '+fD(a.dat),'Score geral: '+s.pct+'%','','RESULTADO POR PILAR','────────────────────'];
+  getPil().forEach(function(pl){var ps=calcPS(a,pl);lines.push((ps.pct>=80?'✓':ps.pct>=50?'~':'✗')+' '+pl+': '+(ps.av>0?ps.pct+'%':'—'));});
   var ncs=[];
-  IT.forEach(function(it){
-    var r=a.respostas[it.id];if(!r||!r.ad)return;
-    if(r.ad==='NAO'||r.ad==='PARCIAL'){
-      ncs.push((r.ad==='NAO'?'✗ ':'~ ')+it.q+(r.obs?' → Obs: '+r.obs:'')+(r.plan?' → Plano: '+r.plan:''));
-    }
-  });
-  if(ncs.length){lines.push('');lines.push('NÃO CONFORMES / ATENÇÃO ('+ncs.length+')');lines.push('────────────────────');ncs.forEach(function(n){lines.push(n);});}
-  var sr=s.tot-s.resp;if(sr>0){lines.push('');lines.push('⚠ '+sr+' item(ns) sem resposta');}
-  lines.push('');lines.push('━━━━━━━━━━━━━━━━━━━━━━━━');
-  lines.push('Enviado via Score Operacional PG MED');
+  IT.forEach(function(it){var r=a.respostas[it.id];if(!r||!r.ad)return;if(r.ad==='NAO'||r.ad==='PARCIAL'){ncs.push((r.ad==='NAO'?'✗ ':'~ ')+it.q+(r.obs?' → Obs: '+r.obs:'')+(r.plan?' → Plano: '+r.plan:''));}});
+  if(ncs.length){lines.push('','NÃO CONFORMES / ATENÇÃO ('+ncs.length+')','────────────────────');ncs.forEach(function(n){lines.push(n);});}
+  var sr=s.tot-s.resp;if(sr>0){lines.push('','⚠ '+sr+' item(ns) sem resposta');}
+  lines.push('','━━━━━━━━━━━━━━━━━━━━━━━━','Enviado via Central de Checklists PG MED');
   var subj=encodeURIComponent('[Score Operacional] '+a.uni+' — '+fD(a.dat)+' ('+s.pct+'%)');
   var body=encodeURIComponent(lines.join('\n'));
   window.location.href='mailto:'+EMAIL_GESTOR+'?subject='+subj+'&body='+body;
 }
-
 function printS(){
-  var a=gA();if(!a)return;
-  var s=calcS(a);var now=new Date().toLocaleDateString('pt-BR');
+  var a=gA();if(!a)return;var s=calcS(a);var now=new Date().toLocaleDateString('pt-BR');
   var pilTbls='';
   getPil().forEach(function(pl){
     var ps=calcPS(a,pl);var rows='';var num=0;
@@ -520,30 +555,14 @@ function printS(){
       var bg=r.ad==='CONFORME'?'#f0fbe8':r.ad==='NAO'?'#fff0f0':r.ad==='PARCIAL'?'#fffbf0':'';
       var fc=(r.fotos&&r.fotos.length)?'<div class="pr-fotos">'+r.fotos.map(function(f){return'<img src="'+f+'">';}).join('')+'</div>':'';
       var planCell=r.plan?'<div class="pr-plan"><b>Plano de ação:</b> '+r.plan+'</div>':'';
-      rows+='<tr style="background:'+bg+'"><td style="color:#888;width:22px;text-align:center">'+num+'</td><td>'+it.q+'</td><td style="text-align:center;font-weight:600">'+adLbl(r.ad||'')+'</td><td>'+(r.obs||'')+planCell+fc+'</td></tr>';
+      rows+='<tr style="background:'+bg+'"><td>'+num+'</td><td>'+it.q+'</td><td style="text-align:center;font-weight:600">'+adLbl(r.ad||'')+'</td><td>'+(r.obs||'')+planCell+fc+'</td></tr>';
     });
-    pilTbls+='<div class="pr-pilar"><div class="pr-pt">'+pl+'</div><div class="pr-stats">'+ps.tot+' itens · <b>'+(ps.av>0?ps.pct+'%':'—')+'</b> conformidade · '+ps.c+' conf · '+ps.n+' nc · '+ps.p+' parc · '+ps.na+' N/A</div><table class="pr-table"><thead><tr><th>#</th><th>Prática auditada</th><th>Aderência</th><th>Obs / Plano de Ação / Fotos</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+    pilTbls+='<div class="pr-pilar"><div class="pr-pt">'+pl+'</div><div class="pr-stats">'+ps.tot+' itens · <b>'+(ps.av>0?ps.pct+'%':'—')+'</b> · '+ps.c+' conf · '+ps.n+' nc · '+ps.p+' parc</div><table class="pr-table"><thead><tr><th>#</th><th>Prática auditada</th><th>Aderência</th><th>Obs / Plano / Fotos</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
   });
   document.getElementById('pr').innerHTML=
-    '<div class="pr-header">'
-    +'<div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px">'
-    +'<div><p style="font-size:13px;font-weight:700;margin-bottom:2px">'+a.uni+'</p>'
-    +'<p style="font-size:11px;color:#555;margin:1px 0">'+a.aud+(a.cargo?' · '+a.cargo:'')+'</p>'
-    +'<p style="font-size:11px;color:#555;margin:1px 0">Visita: '+fD(a.dat)+' &nbsp;·&nbsp; Gerado: '+now+'</p></div>'
-    +'<div style="background:'+pC(s.pct)+';color:#fff;border-radius:8px;padding:8px 14px;text-align:center;min-width:70px">'
-    +'<div style="font-size:22px;font-weight:700">'+s.pct+'%</div>'
-    +'<div style="font-size:9px;opacity:.85">conformidade</div></div>'
-    +'</div></div>'
-    +'<div class="pr-metrics">'
-    +'<div class="pr-mc"><div class="pr-mv" style="color:green">'+s.c+'</div><div class="pr-ml">Conformes</div></div>'
-    +'<div class="pr-mc"><div class="pr-mv" style="color:red">'+s.n+'</div><div class="pr-ml">Não conformes</div></div>'
-    +'<div class="pr-mc"><div class="pr-mv" style="color:orange">'+s.p+'</div><div class="pr-ml">Parciais</div></div>'
-    +'<div class="pr-mc"><div class="pr-mv">'+s.na+'</div><div class="pr-ml">N/A</div></div>'
-    +'<div class="pr-mc"><div class="pr-mv" style="color:#aaa">'+(s.tot-s.resp)+'</div><div class="pr-ml">Sem resposta</div></div>'
-    +'</div>'
-    +'<div class="pr-pilars">'+pilTbls+'</div>'
-    +'<div class="pr-foot">Score Operacional PG MED · '+IT.length+' práticas · '+getPil().length+' pilares · '+fD(a.dat)+'</div>';
+    '<div class="pr-header"><div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px"><div><p style="font-size:13px;font-weight:700;margin-bottom:2px">'+a.uni+'</p><p style="font-size:11px;color:#555;margin:1px 0">'+a.aud+(a.cargo?' · '+a.cargo:'')+'</p><p style="font-size:11px;color:#555;margin:1px 0">Visita: '+fD(a.dat)+' · Gerado: '+now+'</p></div><div style="background:'+pC(s.pct)+';color:#fff;border-radius:8px;padding:8px 14px;text-align:center"><div style="font-size:22px;font-weight:700">'+s.pct+'%</div><div style="font-size:9px;opacity:.85">conformidade</div></div></div></div>'
+    +'<div class="pr-metrics"><div class="pr-mc"><div class="pr-mv" style="color:green">'+s.c+'</div><div class="pr-ml">Conformes</div></div><div class="pr-mc"><div class="pr-mv" style="color:red">'+s.n+'</div><div class="pr-ml">Não conformes</div></div><div class="pr-mc"><div class="pr-mv" style="color:orange">'+s.p+'</div><div class="pr-ml">Parciais</div></div><div class="pr-mc"><div class="pr-mv">'+s.na+'</div><div class="pr-ml">N/A</div></div><div class="pr-mc"><div class="pr-mv" style="color:#aaa">'+(s.tot-s.resp)+'</div><div class="pr-ml">Sem resposta</div></div></div>'
+    +'<div class="pr-pilars">'+pilTbls+'</div><div class="pr-foot">Score Operacional PG MED · '+IT.length+' práticas · '+getPil().length+' pilares</div>';
   window.print();
 }
-loadData();
 </script>
