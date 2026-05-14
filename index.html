@@ -492,7 +492,7 @@ function rSum(){
     });
   });
   if(!a.done){h+='<button class="btn-main outline" onclick="scr=\'audit\';render()" style="margin-bottom:8px">✏️ Continuar preenchendo</button>';}
-  h+='<button class="btn-main gold" onclick="sendEmail()" style="margin-bottom:8px">📧 Enviar por e-mail</button>'
+  h+='<button class="btn-main gold" onclick="sendEmail()" style="margin-bottom:8px">📧 Enviar e-mail + anexar PDF</button>'
     +'<button class="btn-main" onclick="printS()" style="margin-bottom:8px">📄 Exportar PDF</button>'
     +'<button class="btn-main outline" style="color:#791F1F;border-color:#f5c0c0" onclick="if(confirm(\'Excluir?\'))delA()">🗑 Excluir</button>'
     +'</div>';
@@ -555,7 +555,10 @@ function finA(){
   var s=calcS(a);var missing=IT.length-s.resp;
   if(missing>0&&!confirm('Há '+missing+' item(ns) sem resposta. Finalizar mesmo assim?'))return;
   a.done=true;sv();scr='summary';render();
-  setTimeout(function(){sendEmail();},400);
+  setTimeout(function(){
+    alert('✅ Auditoria concluída!\n\nPASSO 1 de 2 — Salvar PDF\nA tela de impressão vai abrir. Salve como PDF.\n\nPASSO 2 de 2 — Enviar e-mail\nDepois de salvar, volte ao app e toque em "Enviar por e-mail" para anexar o PDF e enviar.');
+    printS();
+  },400);
 }
 function delA(){audits=audits.filter(function(a){return a.id!==curId;});sv();goHome();}
 function sendEmail(){
