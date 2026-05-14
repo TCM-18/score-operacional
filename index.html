@@ -82,24 +82,24 @@ input:focus,textarea:focus{outline:none;border-color:#1a1a1a;background:#fff}
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   #app{display:none !important}#pr{display:block !important}
   #pr{font-family:Arial,sans-serif;color:#111;font-size:11px}
-  .pr-header{padding:16px 20px 12px;border-bottom:2px solid #333}
-  .pr-header h1{font-size:17px;font-weight:700;margin-bottom:6px}
-  .pr-header p{font-size:11px;color:#555;margin:2px 0}
-  .pr-metrics{display:flex;gap:8px;padding:12px 20px;background:#f8f8f8;border-bottom:1px solid #ddd;flex-wrap:wrap}
-  .pr-mc{min-width:75px;text-align:center;padding:6px 10px;background:#fff;border:1px solid #ddd;border-radius:4px}
-  .pr-mv{font-size:17px;font-weight:700}.pr-ml{font-size:9px;color:#666;margin-top:1px}
-  .pr-pilars{padding:12px 20px}
-  .pr-pilar{margin-bottom:16px;page-break-inside:avoid}
-  .pr-pt{font-size:12px;font-weight:700;text-transform:uppercase;padding:5px 8px;background:#f0f0f0;border-left:3px solid #333;margin-bottom:6px}
+  .pr-header{padding:12px 16px 10px;border-bottom:2px solid #333}
+  .pr-metrics{display:flex;gap:6px;padding:10px 16px;background:#f8f8f8;border-bottom:1px solid #ddd;flex-wrap:wrap}
+  .pr-mc{flex:1;min-width:55px;text-align:center;padding:6px 8px;background:#fff;border:1px solid #ddd;border-radius:4px}
+  .pr-mv{font-size:15px;font-weight:700}.pr-ml{font-size:9px;color:#666;margin-top:1px}
+  .pr-pilars{padding:10px 16px}
+  .pr-pilar{margin-bottom:14px;page-break-inside:avoid}
+  .pr-pt{font-size:11px;font-weight:700;text-transform:uppercase;padding:4px 8px;background:#f0f0f0;border-left:3px solid #333;margin-bottom:5px}
   .pr-table{width:100%;border-collapse:collapse}
-  .pr-table th{background:#f5f5f5;padding:5px 7px;text-align:left;font-size:9px;border:1px solid #ccc;font-weight:600}
-  .pr-table td{padding:5px 7px;border:1px solid #ddd;font-size:10px;vertical-align:top}
+  .pr-table th{background:#f5f5f5;padding:4px 6px;text-align:left;font-size:9px;border:1px solid #ccc;font-weight:600}
+  .pr-table td{padding:4px 6px;border:1px solid #ddd;font-size:10px;vertical-align:top;word-break:break-word}
+  .pr-table td:first-child{width:20px;text-align:center;color:#888}
+  .pr-table td:nth-child(3){width:80px;text-align:center;font-weight:600}
   .pr-table tr:nth-child(even) td{background:#fafafa}
-  .pr-fotos{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
-  .pr-fotos img{width:55px;height:55px;object-fit:cover;border-radius:3px;border:1px solid #ddd}
-  .pr-plan{background:#FFF8E8;border-left:3px solid #BA7517;padding:3px 6px;margin-top:3px;font-size:9px;color:#633806}
-  .pr-foot{padding:10px 20px;border-top:1px solid #ddd;font-size:9px;color:#999;text-align:center}
-  .pr-stats{font-size:10px;color:#555;margin-bottom:6px}
+  .pr-fotos{display:flex;flex-wrap:wrap;gap:3px;margin-top:3px}
+  .pr-fotos img{width:50px;height:50px;object-fit:cover;border-radius:3px;border:1px solid #ddd}
+  .pr-plan{background:#FFF8E8;border-left:2px solid #BA7517;padding:2px 5px;margin-top:2px;font-size:9px;color:#633806}
+  .pr-foot{padding:8px 16px;border-top:1px solid #ddd;font-size:9px;color:#999;text-align:center}
+  .pr-stats{font-size:9px;color:#555;margin-bottom:4px}
 }
 #pr{display:none}
 </style>
@@ -146,51 +146,49 @@ const IT=[
 {id:'2',p:'Atendimento',q:'O operador realiza a admissão do paciente seguindo o script de atendimento?'},
 {id:'3',p:'Atendimento',q:'O colaborador realiza o atendimento seguindo todos os passos do pós consulta?'},
 {id:'4',p:'Atendimento',q:'O operador pós consulta soube ofertar o plano de tratamento e incentivou o pagamento?'},
-{id:'5',p:'Atendimento',q:'O time de atendimento entende a importância do NPS e do pós consulta?'},
-{id:'6',p:'Atendimento',q:'Os colaboradores estão usando uniforme completo e em bom estado de uso?'},
-{id:'7',p:'Clínica',q:'Os movimentos de finalização de orçamento foram realizados no TOTVS?'},
-{id:'8',p:'Clínica',q:'As notas fiscais de pagamento de fornecedor estão lançadas dentro da competência/mês?'},
-{id:'9',p:'Clínica',q:'As agendas de triagem estão abertas todos os dias conforme padronizados?'},
-{id:'10',p:'Clínica',q:'Os equipamentos da unidade estão funcionando, calibrados e com registros de uso atualizados?'},
-{id:'11',p:'Clínica',q:'Os medicamentos/reagentes abertos estão com identificação (data de abertura, nome e validade)?'},
-{id:'12',p:'Clínica',q:'O controle de temperatura e limpeza da geladeira estão acontecendo dentro do prazo?'},
-{id:'13',p:'Clínica',q:'As biópsias estão armazenadas em ambiente com temperatura controlada e trancado?'},
-{id:'14',p:'Clínica',q:'Os termos de consentimento dos pacientes estão preenchidos de forma correta?'},
-{id:'15',p:'Educacional',q:'Os professores e alunos dos módulos Mandic estão contratados e o espaço físico reservado?'},
-{id:'16',p:'Educacional',q:'As lideranças estão acompanhando a divulgação do CQ Code do CSAT?'},
-{id:'17',p:'Educacional',q:'Os cursos com baixa captação estão sendo remanejados/cancelados com antecedência mínima de 30 dias?'},
-{id:'18',p:'Educacional',q:'Os ensalamentos/calendários dos cursos próximos da capacidade máxima já estão prontos?'},
-{id:'19',p:'Educacional',q:'Os ensalamentos dos cursos estão na pasta da Gestão Educacional com antecedência mínima de 10 dias?'},
-{id:'20',p:'Educacional',q:'As notas e frequência estão sendo lançadas dentro de 24h?'},
-{id:'21',p:'Educacional',q:'As gravações das aulas estão sendo disponibilizadas no prazo de 48h?'},
-{id:'22',p:'Estrutura',q:'A unidade está organizada e limpa?'},
-{id:'23',p:'Estrutura',q:'A infraestrutura elétrica e hidráulica está completamente funcional?'},
-{id:'24',p:'Estrutura',q:'O sistema de refrigeração e exaustão está completamente funcional?'},
-{id:'25',p:'Estrutura',q:'A unidade possui todos os Certificados e Calibrações válidos?'},
-{id:'26',p:'Infra (Tech)',q:'Os computadores e periféricos das estações de trabalho estão funcionando corretamente?'},
-{id:'27',p:'Infra (Tech)',q:'Os sistemas utilizados na unidade estão com acesso estável e atualizados?'},
-{id:'28',p:'Infra (Tech)',q:'A rede Wi-Fi e cabeada está estável e com cobertura adequada em todos os ambientes?'},
-{id:'29',p:'G&G',q:'Colaboradores no período de experiência receberam feedback?'},
-{id:'30',p:'G&G',q:'O onboarding dos novos colaboradores foi realizado?'},
-{id:'31',p:'G&G',q:'Os colaboradores com banco de horas têm plano de ação para compensação?'},
-{id:'32',p:'G&G',q:'Todos os colaboradores com mais de 12 meses possuem férias programadas?'},
-{id:'33',p:'G&G',q:'Os colaboradores conhecem o ciclo de gente e a sua importância?'},
-{id:'34',p:'Reg. / Biossegurança',q:'Os receituários controlados estão guardados em local seguro e trancado?'},
-{id:'35',p:'Reg. / Biossegurança',q:'Os canhotos dos receituários controlados estão sendo guardados para envio à VISA?'},
-{id:'36',p:'Reg. / Biossegurança',q:'Os EPIs estão sendo fornecidos conforme as atividades e em boas condições de uso?'},
-{id:'37',p:'Reg. / Biossegurança',q:'As caixas coletoras de perfurocortantes estão montadas, instaladas e dentro do limite de capacidade?'},
-{id:'38',p:'Reg. / Biossegurança',q:'A unidade está gerenciando os dosímetros corretamente?'},
-{id:'39',p:'Reg. / Biossegurança',q:'Todos os insumos, medicamentos, componentes e implantes estão dentro do prazo de validade?'},
-{id:'40',p:'Reg. / Biossegurança',q:'A unidade está com todas as documentações legais aplicáveis dentro da validade?'},
-{id:'41',p:'Liderança',q:'A unidade está seguindo os rituais de gestão estabelecidos?'},
-{id:'42',p:'Liderança',q:'O coordenador conhece os principais indicadores e analisa os resultados com a equipe?'},
-{id:'43',p:'Liderança',q:'O coordenador tem PDI formalizado para os colaboradores-chave da unidade?'},
-{id:'44',p:'Exp. do Aluno',q:'O CSAT da unidade está acima de 8?'},
-{id:'45',p:'Exp. do Aluno',q:'Os alunos receberam o kit completo de boas-vindas até o 2º módulo?'},
-{id:'46',p:'Exp. do Aluno',q:'A tratativa dos casos do Zendesk está dentro do SLA de resposta?'},
+{id:'5',p:'Atendimento',q:'Os colaboradores estão usando uniforme completo e em bom estado de uso?'},
+{id:'6',p:'Clínica',q:'Os movimentos de finalização de orçamento foram realizados no TOTVS?'},
+{id:'7',p:'Clínica',q:'As notas fiscais de pagamento de fornecedor estão lançadas dentro da competência/mês?'},
+{id:'8',p:'Clínica',q:'As agendas de triagem estão abertas todos os dias conforme padronizados?'},
+{id:'9',p:'Clínica',q:'Os equipamentos da unidade estão funcionando, calibrados e com registros de uso atualizados?'},
+{id:'10',p:'Clínica',q:'Os medicamentos/reagentes abertos estão com identificação (data de abertura, nome e validade)?'},
+{id:'11',p:'Clínica',q:'O controle de temperatura e limpeza da geladeira estão acontecendo dentro do prazo?'},
+{id:'12',p:'Clínica',q:'As biópsias estão armazenadas em ambiente com temperatura controlada e trancado?'},
+{id:'13',p:'Clínica',q:'Os termos de consentimento dos pacientes estão preenchidos de forma correta?'},
+{id:'14',p:'Educacional',q:'Os professores e alunos dos módulos Mandic estão contratados e o espaço físico reservado?'},
+{id:'15',p:'Educacional',q:'As lideranças estão acompanhando a divulgação do CQ Code do CSAT?'},
+{id:'16',p:'Educacional',q:'Os cursos com baixa captação estão sendo remanejados/cancelados com antecedência mínima de 30 dias?'},
+{id:'17',p:'Educacional',q:'Os ensalamentos/calendários dos cursos próximos da capacidade máxima já estão prontos?'},
+{id:'18',p:'Educacional',q:'As notas e frequência estão sendo lançadas dentro de 24h?'},
+{id:'19',p:'Educacional',q:'As gravações das aulas estão sendo disponibilizadas no prazo de 48h?'},
+{id:'20',p:'Estrutura',q:'A unidade está organizada e limpa?'},
+{id:'21',p:'Estrutura',q:'A infraestrutura elétrica e hidráulica está completamente funcional?'},
+{id:'22',p:'Estrutura',q:'O sistema de refrigeração e exaustão está completamente funcional?'},
+{id:'23',p:'Estrutura',q:'A unidade possui todos os Certificados e Calibrações válidos?'},
+{id:'24',p:'Infra (Tech)',q:'Os computadores e periféricos das estações de trabalho estão funcionando corretamente?'},
+{id:'25',p:'Infra (Tech)',q:'Os sistemas utilizados na unidade estão com acesso estável e atualizados?'},
+{id:'26',p:'Infra (Tech)',q:'A rede Wi-Fi e cabeada está estável e com cobertura adequada em todos os ambientes?'},
+{id:'27',p:'G&G',q:'Colaboradores no período de experiência receberam feedback?'},
+{id:'28',p:'G&G',q:'O onboarding dos novos colaboradores foi realizado?'},
+{id:'29',p:'G&G',q:'Os colaboradores com banco de horas têm plano de ação para compensação?'},
+{id:'30',p:'G&G',q:'Todos os colaboradores com mais de 12 meses possuem férias programadas?'},
+{id:'31',p:'G&G',q:'Os colaboradores conhecem o ciclo de gente e a sua importância?'},
+{id:'32',p:'Reg. / Biossegurança',q:'Os receituários controlados estão guardados em local seguro e trancado?'},
+{id:'33',p:'Reg. / Biossegurança',q:'Os canhotos dos receituários controlados estão sendo guardados para envio à VISA?'},
+{id:'34',p:'Reg. / Biossegurança',q:'Os EPIs estão sendo fornecidos conforme as atividades e em boas condições de uso?'},
+{id:'35',p:'Reg. / Biossegurança',q:'As caixas coletoras de perfurocortantes estão montadas, instaladas e dentro do limite de capacidade?'},
+{id:'36',p:'Reg. / Biossegurança',q:'Todos os insumos, medicamentos, componentes e implantes estão dentro do prazo de validade?'},
+{id:'37',p:'Reg. / Biossegurança',q:'A unidade está com todas as documentações legais aplicáveis dentro da validade?'},
+{id:'38',p:'Liderança',q:'A unidade está seguindo os rituais de gestão estabelecidos?'},
+{id:'39',p:'Liderança',q:'O coordenador conhece os principais indicadores e analisa os resultados com a equipe?'},
+{id:'40',p:'Liderança',q:'O coordenador tem PDI formalizado para os colaboradores-chave da unidade?'},
+{id:'41',p:'Exp. do Aluno',q:'O CSAT da unidade está acima de 8?'},
+{id:'42',p:'Exp. do Aluno',q:'Os alunos receberam o kit completo de boas-vindas até o 2º módulo?'},
+{id:'43',p:'Exp. do Aluno',q:'A tratativa dos casos do Zendesk está dentro do SLA de resposta?'},
+{id:'44',p:'Exp. do Aluno',q:'O NPS está acima de 70%?'},
 ];
 
-const DK={'1':'*Confere documento original (nome completo, CPF e data de nascimento)\n*Valida dados obrigatórios no sistema antes de finalizar\n*Atualiza telefone, e-mail e endereço com confirmação do paciente\n*Amostra de 3 pacientes — se possível, mais de um colaborador','2':'*Colaborador está atendendo de forma humanizada\n*Esclarece todas as dúvidas do paciente\n*Informa o envio da pesquisa do NPS\n*Explica o próximo passo dentro da clínica\n*Amostra de 3 pacientes — se possível, mais de um colaborador','3':'*Mantém a tela do pós-consulta aberta durante todo o atendimento\n*Confere e apresenta o plano de tratamento\n*Imprime o orçamento e entrega ao paciente\n*Agenda próximo passo antes do paciente sair\n*Amostra de 3 pacientes','4':'*Explica o plano de tratamento de forma clara e objetiva\n*Destaca benefícios e importância da continuidade\n*Estimula fechamento no momento, sem pressão excessiva\n*Amostra de 3 pacientes','5':'*Demonstra conhecimento sobre o que é NPS\n*Incentiva o paciente a responder a pesquisa\n*Atua com foco em excelência no atendimento','6':'*Utiliza uniforme completo conforme padrão da empresa\n*Uniforme limpo, sem desgaste excessivo\n*Uso correto de crachá','7':'*Identificar pacientes atendidos na semana anterior no Consulta Já\n*Selecionar 1 para revisar os movimentos no TOTVS','8':'*Exemplo de 1 NF de procedimento lançada dentro do prazo (até 5 dias do recebimento)','9':'*Triagem aberta por Enfermeiro e turno conforme escala padrão\n*Verificar no Consulta Já se os horários da semana estão disponíveis\n*Perguntar à liderança se houve fechamento e o motivo','10':'*Verificar se há registro do último controle de qualidade ou manutenção preventiva\n*Verificar se os equipamentos estão funcionando','11':'*Entrar em 3 consultórios para verificar: colírios, álcool, entre outros','12':'*Controle de temperatura: diário\n*Limpeza da geladeira: semanal','13':'*Verificar se o local tem controle de temperatura\n*As amostras estavam em um ambiente seguro e lacrado?','14':'*Verificar se o termo está com todos os campos preenchidos\n*Fazer amostragem de 3 pacientes','15':'*Questionar quando acontecerá o próximo Módulo Mandic\n*Solicitar evidência ao coordenador','16':'*Questionar se no dia da visita há algum módulo finalizando\n*Perguntar se o coordenador irá projetar o QR Code na sala','17':'*Abrir o BI e verificar se há algum curso com início em menos de 30 dias','18':'*Abrir o BI e verificar se há cursos com 18 alunos inscritos\n*Coordenador deve apresentar o calendário','19':'*Abrir o BI e verificar se há curso com início em 10 dias\n*Ver o ensalamento na pasta da Gestão Educacional','20':'*Acessar o TOTVS e ver as turmas dos dias anteriores\n*Fazer por amostragem (mínimo 3 turmas)','21':'*Acessar o Blackboard e ver as turmas dos dias anteriores\n*Fazer por amostragem (mínimo 3 turmas)','22':'*Verificar 3x na semana se os controles de limpeza nos banheiros estão preenchidos\n*Unidade não tem caixas em locais indevidos','23':'*Possui alguma lâmpada ou iluminação queimada?\n*Todas torneiras e banheiros estão funcionando?\n*Filtros funcionando?','24':'*Verificar se o ambiente está confortável','25':'*Verificar pasta física e drive','26':'*Verificar se todos os computadores ligam e acessam o sistema sem erros\n*Checar impressoras, leitores e maquininhas\n*Testar ao menos 2 estações de atendimento','27':'*Confirmar que todos os usuários conseguem logar normalmente\n*Checar relatos de lentidão nos últimos 7 dias','28':'*Verificar sinal de internet nas áreas de atendimento e salas clínicas\n*Testar conectividade em ao menos 3 pontos','29':'*Entrevistar colaboradores com menos de 3 meses de casa\n*Solicitar ao coordenador que mostre o feedback na ferramenta','30':'','31':'*Verificar no book de gente\n*Se possuir horas, precisa apresentar o plano de ação','32':'*Verificar na plataforma "meu RH" > "Gestor" > "gestão de férias"','33':'*Perguntar sobre o ciclo e valores\n*Entrevistar ao menos 2 colaboradores','34':'*Verificar onde as receitas estão sendo armazenadas','35':'*As filipetas estão sendo controladas','36':'*EPIs disponíveis para todas as funções, sem sinais de dano\n*Solicitar ficha de EPI assinada do mês anterior','37':'*Verificar dentro de uma ou mais clínicas e da clínica de apoio','38':'','39':'*Realizar a auditoria dentro da expedição e clínica de apoio\n*Fazer ao menos 5 amostras','40':'*AVCB · Vigilância sanitária · Alvará de funcionamento\n*Certificado caixa d\'água · PMOC · Dedetização\n*Cartão CNPJ · Contrato de coleta de resíduos','41':'*RS · Daily · RMR\n*Solicitar ao coordenador a RS da última semana','42':'*Perguntar quais indicadores são acompanhados (receita educacional, receita clínica, NPS, cancelamento, CSAT, ocupação)\n*Solicitar os planos de ação para indicadores com desvios','43':'*Verificar PDI formalizado para colaboradores em cargo de referência\n*Solicitar PDI de ao menos 1 colaborador-chave\n*Perguntar quais capacitações estão previstas para os próximos 90 dias','44':'*Verificar no BI o resultado\n*Caso esteja < 8, liderança precisa apresentar plano de ação','45':'*Questionar a concierge se há pendências\n*Planos de ação para garantir a entrega','46':'*Solicitar abertura do Zendesk e mostrar pendências\n*Verificar quais manifestações precisam ser tratadas'};
+const DK={'1':'*Confere documento original (nome completo, CPF e data de nascimento)\n*Valida dados obrigatórios no sistema antes de finalizar\n*Atualiza telefone, e-mail e endereço com confirmação do paciente\n*Amostra de 3 pacientes — se possível, mais de um colaborador','2':'*Colaborador está atendendo de forma humanizada\n*Esclarece todas as dúvidas do paciente\n*Explica o próximo passo dentro da clínica\n*Amostra de 3 pacientes — se possível, mais de um colaborador','3':'*Mantém a tela do pós-consulta aberta durante todo o atendimento\n*Confere e apresenta o plano de tratamento\n*Imprime o orçamento e entrega ao paciente\n*Informa formas de pagamento disponíveis\n*Agenda próximo passo antes do paciente sair\n*Amostra de 3 pacientes','4':'*Explica o plano de tratamento de forma clara e objetiva\n*Destaca benefícios e importância da continuidade\n*Estimula fechamento no momento, sem pressão excessiva\n*Amostra de 3 pacientes','5':'*Utiliza uniforme completo conforme padrão da empresa\n*Uniforme limpo, sem desgaste excessivo\n*Uso correto de crachá','6':'*Identificar pacientes atendidos na semana anterior no Consulta Já\n*Selecionar 1 para revisar os movimentos no TOTVS','7':'*Exemplo de 1 NF de procedimento lançada dentro do prazo (até 5 dias do recebimento)','8':'*Triagem aberta por Enfermeiro e turno conforme escala padrão\n*Verificar no Consulta Já se os horários da semana estão disponíveis\n*Nenhum dia deve estar com agenda fechada sem justificativa\n*Perguntar à liderança se houve fechamento e o motivo','9':'*Verificar se há registro do último controle de qualidade ou manutenção preventiva\n*Verificar se os equipamentos estão funcionando','10':'*Entrar em 3 consultórios para verificar: colírios, álcool, entre outros','11':'*Controle de temperatura: diário\n*Limpeza da geladeira: semanal','12':'*Verificar se o local tem controle de temperatura\n*As amostras estavam em um ambiente seguro e lacrado?','13':'*Verificar se o termo está com todos os campos preenchidos\n*Fazer amostragem de 3 pacientes','14':'*Questionar quando acontecerá o próximo Módulo Mandic\n*Solicitar evidência ao coordenador','15':'*Questionar se no dia da visita há algum módulo finalizando\n*Perguntar se o coordenador irá projetar o QR Code na sala','16':'*Abrir o BI e verificar se há algum curso com início em menos de 30 dias','17':'*Abrir o BI e verificar se há cursos com 18 alunos inscritos\n*Coordenador deve apresentar o calendário','18':'*Acessar o TOTVS e ver as turmas dos dias anteriores\n*Fazer por amostragem (mínimo 3 turmas)','19':'*Acessar o Blackboard e ver as turmas dos dias anteriores\n*Fazer por amostragem (mínimo 3 turmas)','20':'*Verificar 3x na semana se os controles de limpeza nos banheiros estão preenchidos\n*Unidade não tem caixas em locais indevidos','21':'*Possui alguma lâmpada ou iluminação queimada?\n*Todas torneiras e banheiros estão funcionando?\n*Filtros funcionando?','22':'*Verificar se o ambiente está confortável','23':'*Verificar pasta física e drive','24':'*Verificar se todos os computadores ligam e acessam o sistema sem erros\n*Checar impressoras, leitores e maquininhas\n*Testar ao menos 2 estações de atendimento','25':'*Confirmar que todos os usuários conseguem logar normalmente\n*Checar relatos de lentidão nos últimos 7 dias','26':'*Verificar sinal de internet nas áreas de atendimento e salas clínicas\n*Testar conectividade em ao menos 3 pontos','27':'*Entrevistar colaboradores com menos de 3 meses de casa\n*Solicitar ao coordenador que mostre o feedback na ferramenta','28':'','29':'*Verificar no book de gente\n*Se possuir horas, precisa apresentar o plano de ação','30':'*Verificar na plataforma "meu RH" > "Gestor" > "gestão de férias"','31':'*Perguntar sobre o ciclo e valores\n*Entrevistar ao menos 2 colaboradores','32':'*Verificar onde as receitas estão sendo armazenadas','33':'*As filipetas estão sendo controladas','34':'*EPIs disponíveis para todas as funções, sem sinais de dano\n*Solicitar ficha de EPI assinada do mês anterior','35':'*Verificar dentro de uma ou mais clínicas e da clínica de apoio','36':'*Realizar a auditoria dentro da expedição e clínica de apoio\n*Fazer ao menos 5 amostras','37':'*AVCB · Vigilância sanitária · Alvará de funcionamento\n*Certificado caixa d\'água · PMOC · Dedetização\n*Cartão CNPJ · Contrato de coleta de resíduos','38':'*RS · Daily · RMR\n*Solicitar ao coordenador a RS da última semana','39':'*Perguntar quais indicadores são acompanhados (receita educacional, receita clínica, NPS, cancelamento, CSAT, ocupação)\n*Solicitar os planos de ação para indicadores com desvios','40':'*Verificar PDI formalizado para colaboradores em cargo de referência\n*Solicitar PDI de ao menos 1 colaborador-chave\n*Perguntar quais capacitações estão previstas para os próximos 90 dias','41':'*Verificar no BI o resultado\n*Caso esteja < 8, liderança precisa apresentar plano de ação','42':'*Questionar a concierge se há pendências\n*Planos de ação para garantir a entrega','43':'*Solicitar abertura do Zendesk e mostrar pendências\n*Verificar quais manifestações precisam ser tratadas','44':'*Considerar o NPS vigente\n*Resultado de Maio ou Outubro'};
 
 var store={
   get:function(k){
@@ -527,9 +525,24 @@ function printS(){
     pilTbls+='<div class="pr-pilar"><div class="pr-pt">'+pl+'</div><div class="pr-stats">'+ps.tot+' itens · <b>'+(ps.av>0?ps.pct+'%':'—')+'</b> conformidade · '+ps.c+' conf · '+ps.n+' nc · '+ps.p+' parc · '+ps.na+' N/A</div><table class="pr-table"><thead><tr><th>#</th><th>Prática auditada</th><th>Aderência</th><th>Obs / Plano de Ação / Fotos</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
   });
   document.getElementById('pr').innerHTML=
-    '<div class="pr-header"><h1>Score Operacional — PG MED</h1><p><b>Unidade:</b> '+a.uni+'</p><p><b>Auditor:</b> '+a.aud+(a.cargo?' · '+a.cargo:'')+'</p><p><b>Data da visita:</b> '+fD(a.dat)+'&emsp;<b>Gerado em:</b> '+now+'</p></div>'
-    +'<div class="pr-metrics"><div class="pr-mc"><div class="pr-mv" style="color:'+pC(s.pct)+'">'+s.pct+'%</div><div class="pr-ml">Conformidade geral</div></div><div class="pr-mc"><div class="pr-mv" style="color:green">'+s.c+'</div><div class="pr-ml">Conformes</div></div><div class="pr-mc"><div class="pr-mv" style="color:red">'+s.n+'</div><div class="pr-ml">Não conformes</div></div><div class="pr-mc"><div class="pr-mv" style="color:orange">'+s.p+'</div><div class="pr-ml">Parciais</div></div><div class="pr-mc"><div class="pr-mv">'+s.na+'</div><div class="pr-ml">N/A</div></div><div class="pr-mc"><div class="pr-mv" style="color:#aaa">'+(s.tot-s.resp)+'</div><div class="pr-ml">Sem resposta</div></div></div>'
-    +'<div class="pr-pilars">'+pilTbls+'</div><div class="pr-foot">Score Operacional PG MED · '+IT.length+' práticas · '+getPil().length+' pilares</div>';
+    '<div class="pr-header">'
+    +'<div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px">'
+    +'<div><p style="font-size:13px;font-weight:700;margin-bottom:2px">'+a.uni+'</p>'
+    +'<p style="font-size:11px;color:#555;margin:1px 0">'+a.aud+(a.cargo?' · '+a.cargo:'')+'</p>'
+    +'<p style="font-size:11px;color:#555;margin:1px 0">Visita: '+fD(a.dat)+' &nbsp;·&nbsp; Gerado: '+now+'</p></div>'
+    +'<div style="background:'+pC(s.pct)+';color:#fff;border-radius:8px;padding:8px 14px;text-align:center;min-width:70px">'
+    +'<div style="font-size:22px;font-weight:700">'+s.pct+'%</div>'
+    +'<div style="font-size:9px;opacity:.85">conformidade</div></div>'
+    +'</div></div>'
+    +'<div class="pr-metrics">'
+    +'<div class="pr-mc"><div class="pr-mv" style="color:green">'+s.c+'</div><div class="pr-ml">Conformes</div></div>'
+    +'<div class="pr-mc"><div class="pr-mv" style="color:red">'+s.n+'</div><div class="pr-ml">Não conformes</div></div>'
+    +'<div class="pr-mc"><div class="pr-mv" style="color:orange">'+s.p+'</div><div class="pr-ml">Parciais</div></div>'
+    +'<div class="pr-mc"><div class="pr-mv">'+s.na+'</div><div class="pr-ml">N/A</div></div>'
+    +'<div class="pr-mc"><div class="pr-mv" style="color:#aaa">'+(s.tot-s.resp)+'</div><div class="pr-ml">Sem resposta</div></div>'
+    +'</div>'
+    +'<div class="pr-pilars">'+pilTbls+'</div>'
+    +'<div class="pr-foot">Score Operacional PG MED · '+IT.length+' práticas · '+getPil().length+' pilares · '+fD(a.dat)+'</div>';
   window.print();
 }
 loadData();
