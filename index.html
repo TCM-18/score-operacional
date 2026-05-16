@@ -106,22 +106,22 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:#1A3272;backgr
 @media print{
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   #appRoot{display:none !important}#lock{display:none !important}#pr{display:block !important}
-  #pr{font-family:Arial,sans-serif;color:#111;font-size:10px}
+  #pr{font-family:Arial,sans-serif;color:#1A3272;font-size:10px}
 
-  /* RESUMO EXECUTIVO — meia página compacta */
+  /* ── CABEÇALHO GLOBAL ── */
+  .pr-page-header{background:#1A3272;padding:8px 16px;display:flex;align-items:center;justify-content:space-between}
+  .pr-page-header .brand{font-size:11px;font-weight:700;color:#E8A800;letter-spacing:1px}
+  .pr-page-header .info{font-size:8px;color:rgba(255,255,255,.5);text-align:right}
+
+  /* ── CAPA / RESUMO EXECUTIVO ── */
   .pr-cover{background:#1A3272;color:#fff;padding:18px 20px;page-break-after:always;page-break-inside:avoid}
   .pr-cover h1{font-size:16px;font-weight:700;color:#E8A800;margin-bottom:2px}
   .pr-cover .sub{font-size:10px;color:rgba(255,255,255,.6);margin-bottom:10px}
-  .pr-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px}
+  .pr-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px}
   .pr-info-box{background:rgba(255,255,255,.08);border-radius:6px;padding:7px 10px}
   .pr-info-lbl{font-size:8px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px}
   .pr-info-val{font-size:12px;font-weight:700;color:#fff}
-  .pr-score-row{display:flex;align-items:center;gap:12px;background:#E8A800;border-radius:8px;padding:10px 14px;margin-bottom:10px}
-  .pr-score-num{font-size:36px;font-weight:700;color:#1A3272;line-height:1}
-  .pr-score-lbl{font-size:10px;color:#1A3272;opacity:.8}
-  .pr-counts{display:flex;gap:8px;margin-top:4px}
-  .pr-count-item{font-size:11px;color:#1A3272;font-weight:600}
-  .pr-time-row{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px}
+  .pr-time-row{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:8px}
   .pr-exec h2{font-size:11px;font-weight:700;color:#E8A800;margin-bottom:6px;border-bottom:1px solid rgba(255,255,255,.2);padding-bottom:4px}
   .pr-exec table{width:100%;border-collapse:collapse}
   .pr-exec th{font-size:8px;color:rgba(255,255,255,.5);text-align:left;padding:3px 6px;border-bottom:1px solid rgba(255,255,255,.15)}
@@ -129,26 +129,35 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:#1A3272;backgr
   .pr-bar-wrap{background:rgba(255,255,255,.15);border-radius:3px;height:7px;overflow:hidden;min-width:50px}
   .pr-bar-fill{height:100%;border-radius:3px}
 
-  /* PÁGINAS DE PILAR */
-  .pr-page{page-break-before:always;padding:16px;page-break-inside:auto}
-  .pr-page-hdr{display:flex;align-items:center;justify-content:space-between;padding-bottom:6px;border-bottom:2px solid #1A3272;margin-bottom:10px}
-  .pr-page-title{font-size:14px;font-weight:700;color:#1A3272}
-  .pr-page-stats{font-size:9px;color:#888;margin-top:1px}
+  /* ── PÁGINAS DE PILAR ── */
+  .pr-page{page-break-before:always;page-break-inside:auto}
+  .pr-page-band{background:#1A3272;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;margin-bottom:0}
+  .pr-page-band .pl-title{font-size:14px;font-weight:700;color:#E8A800}
+  .pr-page-band .pl-sub{font-size:9px;color:rgba(255,255,255,.6);margin-top:2px}
+  .pr-page-band .pl-emojis{font-size:13px;color:#fff}
+  .pr-gold-line{background:#E8A800;height:3px;margin-bottom:10px}
+  .pr-page-body{padding:0 16px 16px}
   .pr-table{width:100%;border-collapse:collapse;table-layout:fixed}
   .pr-table col.c1{width:22px}
   .pr-table col.c2{width:auto}
-  .pr-table col.c3{width:34px}
+  .pr-table col.c3{width:32px}
   .pr-table col.c4{width:28%}
-  .pr-table th{background:#E8F0FE;padding:4px 6px;text-align:left;font-size:8px;border:1px solid #c5d0e8;font-weight:700;color:#1A3272}
-  .pr-table td{padding:5px 6px;border:1px solid #e0e0e0;font-size:9px;vertical-align:top;word-break:break-word}
-  .pr-table td:first-child{text-align:center;color:#aaa}
-  .pr-table td:nth-child(3){font-size:16px;text-align:center}
+  .pr-table thead tr{background:#1A3272}
+  .pr-table th{padding:5px 7px;text-align:left;font-size:8px;font-weight:700;color:#E8A800;border:1px solid #1A3272}
+  .pr-table td{padding:5px 7px;border:1px solid #d0d8ec;font-size:9px;vertical-align:top;word-break:break-word;color:#1A3272}
+  .pr-table td:first-child{text-align:center;color:#aaa;font-size:9px}
+  .pr-table td:nth-child(3){font-size:18px;text-align:center}
   .pr-table tr{page-break-inside:avoid}
-  .pr-table tr:nth-child(even) td{background:#fafafa}
+  .pr-table tr:nth-child(even) td{background:#EEF2FA}
+  .pr-table tr.row-ok td{background:#f0fbe8}
+  .pr-table tr.row-no td{background:#fff0f0}
   .pr-fotos{display:flex;flex-wrap:wrap;gap:3px;margin-top:3px}
-  .pr-fotos img{width:44px;height:44px;object-fit:cover;border-radius:3px;border:1px solid #ddd}
-  .pr-plan{background:#FFF8E8;border-left:2px solid #BA7517;padding:2px 5px;margin-top:3px;font-size:8px;color:#633806}
-  .pr-foot{padding:5px 16px;border-top:1px solid #1A3272;font-size:8px;color:#1A3272;text-align:center;margin-top:8px}
+  .pr-fotos img{width:44px;height:44px;object-fit:cover;border-radius:3px;border:1px solid #c5d0e8}
+  .pr-plan{background:#FFF8E8;border-left:2px solid #E8A800;padding:2px 5px;margin-top:3px;font-size:8px;color:#633806}
+  .pr-obs{font-size:9px;color:#444;margin-bottom:2px}
+
+  /* ── RODAPÉ ── */
+  .pr-foot{background:#1A3272;padding:5px 16px;font-size:8px;color:#E8A800;text-align:center;margin-top:10px}
 }
 #pr{display:none}
 </style>
@@ -703,19 +712,28 @@ function printS(){
     activeCL.items.filter(function(i){return i.p===pl}).forEach(function(it){
       num++;var r=a.respostas[it.id]||{};
       var bg=r.ad==='CONFORME'?'rgba(39,80,10,.05)':r.ad==='NAO'?'rgba(226,75,74,.05)':'';
+    var rowClass=r.ad==='CONFORME'?'row-ok':r.ad==='NAO'?'row-no':'';
       var fc=(r.fotos&&r.fotos.length)?'<div class="pr-fotos">'+r.fotos.map(function(f){return'<img src="'+f+'">';}).join('')+'</div>':'';
       var planCell=r.plan?'<div class="pr-plan"><b>Plano:</b> '+r.plan+'</div>':'';
-      rows+='<tr style="background:'+bg+'"><td>'+num+'</td><td>'+it.q+'</td><td style="font-size:20px;text-align:center">'+adEmoji(r.ad||'')+'</td><td>'+(r.obs||'')+planCell+fc+'</td></tr>';
+      var obsCell=r.obs?'<div class="pr-obs">'+r.obs+'</div>':'';
+      rows+='<tr class="'+rowClass+'"><td>'+num+'</td><td style="color:#1A3272;font-weight:500">'+it.q+'</td>'
+        +'<td style="font-size:18px;text-align:center">'+adEmoji(r.ad||'')+'</td>'
+        +'<td>'+obsCell+planCell+fc+'</td></tr>';
     });
     pilPages+='<div class="pr-page">'
-      +'<div class="pr-page-hdr"><div><div class="pr-page-title">'+pilIcon(pl)+' '+pl+'</div><div class="pr-page-stats">'+ps.tot+' itens · '+(ps.av>0?ps.pct+'% conformidade':'sem avaliação')+'</div></div>'
-      +'<div style="font-size:14px">😊'+ps.c+' &nbsp;😟'+ps.n+' &nbsp;😶'+ps.na+'</div></div>'
+      +'<div class="pr-page-band">'
+      +'<div><div class="pl-title">'+pilIcon(pl)+' '+pl+'</div><div class="pl-sub">'+ps.tot+' itens · '+(ps.av>0?ps.pct+'% conformidade':'sem avaliação')+'</div></div>'
+      +'<div class="pl-emojis">😊 '+ps.c+' &nbsp; 😟 '+ps.n+' &nbsp; 😶 '+ps.na+'</div>'
+      +'</div>'
+      +'<div class="pr-gold-line"></div>'
+      +'<div class="pr-page-body">'
       +'<table class="pr-table"><colgroup><col class="c1"><col class="c2"><col class="c3"><col class="c4"></colgroup>'
       +'<thead><tr><th>#</th><th>Prática auditada</th><th>Status</th><th>Observações / Plano / Fotos</th></tr></thead>'
-      +'<tbody>'+rows+'</tbody></table></div>';
+      +'<tbody>'+rows+'</tbody></table>'
+      +'</div></div>';
   });
   document.getElementById('pr').innerHTML=cover+pilPages
-    +'<div class="pr-foot">⚜ São Leopoldo Mandic · '+activeCL.title+' · Gerado em '+now+' · '+fTime(a.endTime)+'</div>';
+    +'<div class="pr-foot">⚜ São Leopoldo Mandic &nbsp;·&nbsp; '+activeCL.title+' &nbsp;·&nbsp; '+fD(a.dat)+' &nbsp;·&nbsp; '+fTime(a.startTime)+' → '+fTime(a.endTime)+'</div>';
   window.print();
 }
 </script>
