@@ -33,31 +33,23 @@ input[type=text],input[type=date],input[type=email],textarea,select{width:100%;p
 select{background-image:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="%23888" d="M7 10l5 5 5-5z"/></svg>');background-repeat:no-repeat;background-position:right 14px center}
 textarea{resize:none;font-size:15px}
 input:focus,textarea:focus,select:focus{outline:none;border-color:#1A3272;background:#fff}
-
-/* Botões aderência — 3 colunas */
-.ag{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0 8px}
-.ab{padding:10px 4px;border-radius:12px;font-size:22px;cursor:pointer;border:2px solid;text-align:center;min-height:62px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;transition:all .12s;background:transparent}
+.ag{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:10px 0 8px}
+.ab{padding:10px 4px;border-radius:12px;font-size:22px;cursor:pointer;border:2px solid;text-align:center;min-height:68px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;transition:all .12s;background:transparent}
 .ab span.lbl{font-size:10px;font-weight:600}
+.as{border-color:#1A3272;color:#1A3272;background:rgba(26,50,114,.1)}.as.sel{background:#dce3f5;border-color:#1A3272}
 .ac{border-color:#c8e6a0;color:#27500A;background:rgba(234,243,222,.3)}.ac.sel{background:#EAF3DE;border-color:#639922}
 .an{border-color:#f5c0c0;color:#791F1F;background:rgba(252,235,235,.3)}.an.sel{background:#FCEBEB;border-color:#E24B4A}
 .aa{border-color:#d5d3cc;color:#555;background:rgba(241,239,232,.3)}.aa.sel{background:#F1EFE8;border-color:#888780}
-
-/* Indicador de pendência no item */
 .ic-pending{border-color:#E24B4A !important;background:#fff8f8}
 .ic-pending-badge{display:inline-block;font-size:10px;font-weight:700;color:#E24B4A;background:#FCEBEB;padding:2px 8px;border-radius:999px;margin-bottom:6px}
-
-/* Toast de alerta */
 #toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#1A3272;color:#fff;padding:12px 20px;border-radius:12px;font-size:13px;font-weight:600;z-index:999;display:none;max-width:320px;text-align:center;box-shadow:0 4px 16px rgba(0,0,0,.25)}
 .pil-nav{background:#fff;border-radius:14px;padding:12px 14px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
 .pil-nav-info{flex:1;text-align:center}
 .pil-nav-title{font-size:15px;font-weight:700;color:#1A3272}
 .pil-nav-count{font-size:11px;color:#aaa;margin-top:2px}
 .pil-dots{display:flex;justify-content:center;gap:5px;margin-bottom:10px}
-.pil-dot{width:8px;height:8px;border-radius:50%;background:#e0e0e0;transition:all .2s}
-.pil-dot.on{background:#1A3272;width:20px;border-radius:4px}
 .btn-nav{background:#1A3272;color:#fff;border:none;width:36px;height:36px;border-radius:10px;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .btn-nav:disabled{background:#e0e0e0;color:#aaa;cursor:default}
-
 .prog-wrap{background:#fff;border-radius:14px;padding:14px 16px;margin-bottom:12px}
 .prog-info{display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px}
 .prog-pct{font-weight:700;font-size:15px;color:#1A3272}
@@ -102,62 +94,12 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:#1A3272;backgr
 .fab{position:sticky;bottom:20px;display:flex;justify-content:flex-end;padding:0 20px;pointer-events:none}
 .fab button{pointer-events:all;width:56px;height:56px;border-radius:999px;background:#E8A800;color:#1A3272;border:none;font-size:28px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(232,168,0,.4);cursor:pointer;font-weight:700}
 .gold-strip{background:#E8A800;height:3px;width:100%}
-
 @media print{
-  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  #appRoot{display:none !important}#lock{display:none !important}#pr{display:block !important}
-  #pr{font-family:Arial,sans-serif;color:#1A3272;font-size:10px}
-
-  /* ── CABEÇALHO GLOBAL ── */
-  .pr-page-header{background:#1A3272;padding:8px 16px;display:flex;align-items:center;justify-content:space-between}
-  .pr-page-header .brand{font-size:11px;font-weight:700;color:#E8A800;letter-spacing:1px}
-  .pr-page-header .info{font-size:8px;color:rgba(255,255,255,.5);text-align:right}
-
-  /* ── CAPA / RESUMO EXECUTIVO ── */
-  .pr-cover{background:#1A3272;color:#fff;padding:18px 20px;page-break-after:always;page-break-inside:avoid}
-  .pr-cover h1{font-size:16px;font-weight:700;color:#E8A800;margin-bottom:2px}
-  .pr-cover .sub{font-size:10px;color:rgba(255,255,255,.6);margin-bottom:10px}
-  .pr-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px}
-  .pr-info-box{background:rgba(255,255,255,.08);border-radius:6px;padding:7px 10px}
-  .pr-info-lbl{font-size:8px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px}
-  .pr-info-val{font-size:12px;font-weight:700;color:#fff}
-  .pr-time-row{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:8px}
-  .pr-exec h2{font-size:11px;font-weight:700;color:#E8A800;margin-bottom:6px;border-bottom:1px solid rgba(255,255,255,.2);padding-bottom:4px}
-  .pr-exec table{width:100%;border-collapse:collapse}
-  .pr-exec th{font-size:8px;color:rgba(255,255,255,.5);text-align:left;padding:3px 6px;border-bottom:1px solid rgba(255,255,255,.15)}
-  .pr-exec td{font-size:10px;padding:4px 6px;border-bottom:1px solid rgba(255,255,255,.07);color:#fff}
-  .pr-bar-wrap{background:rgba(255,255,255,.15);border-radius:3px;height:7px;overflow:hidden;min-width:50px}
-  .pr-bar-fill{height:100%;border-radius:3px}
-
-  /* ── PÁGINAS DE PILAR ── */
-  .pr-page{page-break-before:always;page-break-inside:auto}
-  .pr-page-band{background:#1A3272;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;margin-bottom:0}
-  .pr-page-band .pl-title{font-size:14px;font-weight:700;color:#E8A800}
-  .pr-page-band .pl-sub{font-size:9px;color:rgba(255,255,255,.6);margin-top:2px}
-  .pr-page-band .pl-emojis{font-size:13px;color:#fff}
-  .pr-gold-line{background:#E8A800;height:3px;margin-bottom:10px}
-  .pr-page-body{padding:0 16px 16px}
-  .pr-table{width:100%;border-collapse:collapse;table-layout:fixed}
-  .pr-table col.c1{width:22px}
-  .pr-table col.c2{width:auto}
-  .pr-table col.c3{width:32px}
-  .pr-table col.c4{width:28%}
-  .pr-table thead tr{background:#1A3272}
-  .pr-table th{padding:5px 7px;text-align:left;font-size:8px;font-weight:700;color:#E8A800;border:1px solid #1A3272}
-  .pr-table td{padding:5px 7px;border:1px solid #d0d8ec;font-size:9px;vertical-align:top;word-break:break-word;color:#1A3272}
-  .pr-table td:first-child{text-align:center;color:#aaa;font-size:9px}
-  .pr-table td:nth-child(3){font-size:18px;text-align:center}
-  .pr-table tr{page-break-inside:avoid}
-  .pr-table tr:nth-child(even) td{background:#EEF2FA}
-  .pr-table tr.row-ok td{background:#f0fbe8}
-  .pr-table tr.row-no td{background:#fff0f0}
-  .pr-fotos{display:flex;flex-wrap:wrap;gap:3px;margin-top:3px}
-  .pr-fotos img{width:44px;height:44px;object-fit:cover;border-radius:3px;border:1px solid #c5d0e8}
-  .pr-plan{background:#FFF8E8;border-left:2px solid #E8A800;padding:2px 5px;margin-top:3px;font-size:8px;color:#633806}
-  .pr-obs{font-size:9px;color:#444;margin-bottom:2px}
-
-  /* ── RODAPÉ ── */
-  .pr-foot{background:#1A3272;padding:5px 16px;font-size:8px;color:#E8A800;text-align:center;margin-top:10px}
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  #appRoot,#lock{display:none!important}
+  #pr{display:block!important}
+  body,html{margin:0;padding:0}
+  @page{margin:6mm}
 }
 #pr{display:none}
 </style>
@@ -165,8 +107,8 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:#1A3272;backgr
 <svg style="display:none">
   <symbol id="mandic-logo" viewBox="0 0 220 60">
     <path d="M10,4 L44,4 L44,38 Q44,54 27,60 Q10,54 10,38 Z" fill="none" stroke="#E8A800" stroke-width="2.5"/>
-    <text x="27" y="42" text-anchor="middle" font-size="28" fill="#E8A800" font-family="serif">⚜</text>
-    <text x="130" y="22" text-anchor="middle" font-family="Arial,sans-serif" font-size="11" fill="#E8A800" font-weight="600" letter-spacing="2">SÃO LEOPOLDO</text>
+    <text x="27" y="42" text-anchor="middle" font-size="28" fill="#E8A800" font-family="serif">&#9956;</text>
+    <text x="130" y="22" text-anchor="middle" font-family="Arial,sans-serif" font-size="11" fill="#E8A800" font-weight="600" letter-spacing="2">SAO LEOPOLDO</text>
     <text x="130" y="48" text-anchor="middle" font-family="Arial,sans-serif" font-size="26" fill="#E8A800" font-weight="700" letter-spacing="3">MANDIC</text>
   </symbol>
 </svg>
@@ -201,18 +143,18 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:#1A3272;backgr
     <div class="body">
       <div class="sec-lbl">Disponível</div>
       <div class="dir-card active" onclick="openChecklist('score')">
-        <div class="dir-icon dark">📋</div>
+        <div class="dir-icon dark">&#128203;</div>
         <div class="dir-info"><div class="dir-name">Score Operacional</div><div class="dir-desc">44 itens · 9 pilares · Auditoria completa da unidade</div></div>
         <span class="dir-badge badge-ok">Ativo</span>
       </div>
       <div class="dir-card active" onclick="openChecklist('reg')">
-        <div class="dir-icon dark">🛡️</div>
-        <div class="dir-info"><div class="dir-name">Regulatórios e Biossegurança</div><div class="dir-desc">44 itens · 9 pilares · Conformidade e biossegurança</div></div>
+        <div class="dir-icon dark">&#128737;</div>
+        <div class="dir-info"><div class="dir-name">Regulatórios e Biossegurança</div><div class="dir-desc">13 itens · 1 pilar · EPIs, documentações e biossegurança</div></div>
         <span class="dir-badge badge-ok">Ativo</span>
       </div>
       <div class="sec-lbl" style="margin-top:20px">Em desenvolvimento</div>
-      <div class="dir-card wip"><div class="dir-icon gray">🔧</div><div class="dir-info"><div class="dir-name">Manutenção e Conservação</div><div class="dir-desc">Equipamentos, infraestrutura e conservação da unidade</div></div><span class="dir-badge badge-wip">Em breve</span></div>
-      <div class="dir-card wip"><div class="dir-icon gray">🎓</div><div class="dir-info"><div class="dir-name">Educacional</div><div class="dir-desc">Cursos, ensalamentos, notas, gravações e gestão acadêmica</div></div><span class="dir-badge badge-wip">Em breve</span></div>
+      <div class="dir-card wip"><div class="dir-icon gray">&#128295;</div><div class="dir-info"><div class="dir-name">Manutenção e Conservação</div><div class="dir-desc">Equipamentos, infraestrutura e conservação da unidade</div></div><span class="dir-badge badge-wip">Em breve</span></div>
+      <div class="dir-card wip"><div class="dir-icon gray">&#127891;</div><div class="dir-info"><div class="dir-name">Educacional</div><div class="dir-desc">Cursos, ensalamentos, notas, gravações e gestão acadêmica</div></div><span class="dir-badge badge-wip">Em breve</span></div>
     </div>
   </div>
   <div id="sCL" style="display:none">
@@ -226,13 +168,13 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:#1A3272;backgr
 
 <script>
 var SENHA='pgmed2025';
-var EMAIL_GESTOR='tainan.moura@slmandic.edu.br';
+var EMAIL_GESTOR='gestor@pgmed.com.br';
 
-function adEmoji(v){return v==='CONFORME'?'😊':v==='NAO'?'😟':v==='NA'?'😶':'❓';}
-function adLbl(v){return v==='CONFORME'?'Conforme':v==='NAO'?'Não conforme':v==='NA'?'N/A':'—';}
+function adEmoji(v){return v==='SUPEROU'?'&#127941;':v==='CONFORME'?'&#128522;':v==='NAO'?'&#128543;':v==='NA'?'&#128566;':'?';}
+function adLbl(v){return v==='SUPEROU'?'Superou':v==='CONFORME'?'Conforme':v==='NAO'?'Nao conforme':v==='NA'?'N/A':'—';}
 function pC(v){return v>=80?'#27500A':v>=50?'#633806':'#791F1F'}
 function pB(v){return v>=80?'#27A800':v>=50?'#BA7517':'#E24B4A'}
-function pilIcon(pl){var m={'Atendimento':'👥','Clínica':'🏥','Educacional':'🎓','Estrutura':'🏢','Infra (Tech)':'💻','G&G':'🤝','Reg. / Biossegurança':'🛡️','Liderança':'📊','Exp. do Aluno':'⭐'};return m[pl]||'📋';}
+function pilIcon(pl){var m={'Atendimento':'&#128101;','Clinica':'&#127973;','Clínica':'&#127973;','Educacional':'&#127891;','Estrutura':'&#127970;','Infra (Tech)':'&#128187;','G&G':'&#129309;','Reg. / Biossegurança':'&#128737;','Liderança':'&#128202;','Exp. do Aluno':'&#11088;'};return m[pl]||'&#128203;';}
 
 var CHECKLISTS={
   score:{title:'Score Operacional',sub:'44 itens · 9 pilares',key:'pgmed-score',emailTag:'Score Operacional',
@@ -280,58 +222,41 @@ var CHECKLISTS={
       {id:'s41',p:'Exp. do Aluno',q:'O CSAT da unidade está acima de 8?'},
       {id:'s42',p:'Exp. do Aluno',q:'Os alunos receberam o kit completo de boas-vindas até o 2º módulo?'},
       {id:'s43',p:'Exp. do Aluno',q:'A tratativa dos casos do Zendesk está dentro do SLA de resposta?'},
-      {id:'s44',p:'Exp. do Aluno',q:'O NPS está acima de 70%?'},
+      {id:'s44',p:'Exp. do Aluno',q:'O NPS está acima de 70%?'}
     ],
-    dicas:{'s1':'*Confere documento original (nome, CPF, data de nascimento)\n*Valida dados obrigatórios\n*Atualiza contatos\n*Amostra 3 pacientes','s2':'*Atendimento humanizado\n*Esclarece dúvidas\n*Explica próximo passo\n*Amostra 3 pacientes','s3':'*Tela pós-consulta aberta\n*Apresenta plano de tratamento\n*Imprime orçamento\n*Agenda próximo passo','s4':'*Explica plano de forma clara\n*Destaca benefícios\n*Estimula fechamento','s5':'*Uniforme completo e limpo\n*Uso correto de crachá','s6':'*1 paciente da semana anterior\n*Revisar movimentos no TOTVS','s7':'*NF lançada em até 5 dias','s8':'*Triagem aberta conforme escala\n*Verificar horários no Consulta Já','s9':'*Registro de manutenção\n*Equipamentos funcionando?','s10':'*Entrar em 3 consultórios','s11':'*Temperatura: diário\n*Limpeza: semanal','s12':'*Controle de temperatura\n*Ambiente seguro e lacrado?','s13':'*Todos os campos preenchidos?\n*Amostragem 3 pacientes','s14':'*Quando será o próximo Módulo Mandic?\n*Evidência ao coordenador','s15':'*Há módulo finalizando hoje?','s16':'*BI: cursos com início em < 30 dias','s17':'*BI: cursos com 18 alunos\n*Calendário do coordenador','s18':'*TOTVS — turmas anteriores\n*Mínimo 3 turmas','s19':'*Blackboard — turmas anteriores\n*Mínimo 3 turmas','s20':'*Controles de limpeza 3x/semana\n*Sem caixas em locais indevidos','s21':'*Lâmpadas? Torneiras? Filtros?','s22':'*Ambiente confortável?','s23':'*Pasta física e drive','s24':'*Computadores e maquininhas ok\n*Testar 2 estações','s25':'*Logins ok\n*Lentidão nos últimos 7 dias?','s26':'*Sinal em 3 pontos','s27':'*Colaboradores < 3 meses receberam feedback?','s28':'','s29':'*Book de gente\n*Plano de ação para horas?','s30':'*"meu RH" > "Gestor" > férias','s31':'*Ciclo e valores\n*Entrevistar 2 colaboradores','s32':'*Onde as receitas estão armazenadas?','s33':'*Filipetas controladas?','s34':'*EPIs sem sinais de dano\n*Ficha de EPI do mês anterior','s35':'*Verificar clínicas e clínica de apoio','s36':'*Expedição e clínica de apoio\n*5 amostras','s37':'*AVCB · Vigilância · Alvará\n*Cert. caixa d\'água · PMOC · Dedetização\n*CNPJ · Contrato de resíduos','s38':'*RS · Daily · RMR\n*RS da última semana','s39':'*Indicadores acompanhados?\n*Planos de ação para desvios','s40':'*PDI formalizado\n*Capacitações 90 dias?','s41':'*BI\n*Se < 8, plano de ação','s42':'*Concierge: pendências?','s43':'*Zendesk: pendências?','s44':'*NPS vigente\n*Maio ou Outubro'}
+    dicas:{'s1':'*Confere documento original\n*Valida dados obrigatórios\n*Atualiza contatos\n*Amostra 3 pacientes','s2':'*Atendimento humanizado\n*Esclarece dúvidas\n*Explica próximo passo\n*Amostra 3 pacientes','s3':'*Tela pós-consulta aberta\n*Apresenta plano de tratamento\n*Imprime orçamento\n*Agenda próximo passo','s4':'*Explica plano de forma clara\n*Destaca benefícios\n*Estimula fechamento','s5':'*Uniforme completo e limpo\n*Uso correto de crachá','s6':'*1 paciente da semana anterior\n*Revisar movimentos no TOTVS','s7':'*NF lançada em até 5 dias','s8':'*Triagem aberta conforme escala\n*Verificar horários no Consulta Já','s9':'*Registro de manutenção\n*Equipamentos funcionando?','s10':'*Entrar em 3 consultórios','s11':'*Temperatura: diário\n*Limpeza: semanal','s12':'*Controle de temperatura\n*Ambiente seguro e lacrado?','s13':'*Todos os campos preenchidos?\n*Amostragem 3 pacientes','s14':'*Quando será o próximo Módulo Mandic?\n*Evidência ao coordenador','s15':'*Há módulo finalizando hoje?','s16':'*BI: cursos com início em < 30 dias','s17':'*BI: cursos com 18 alunos\n*Calendário do coordenador','s18':'*TOTVS — turmas anteriores\n*Mínimo 3 turmas','s19':'*Blackboard — turmas anteriores\n*Mínimo 3 turmas','s20':'*Controles de limpeza 3x/semana\n*Sem caixas em locais indevidos','s21':'*Lâmpadas? Torneiras? Filtros?','s22':'*Ambiente confortável?','s23':'*Pasta física e drive','s24':'*Computadores e maquininhas ok\n*Testar 2 estações','s25':'*Logins ok\n*Lentidão nos últimos 7 dias?','s26':'*Sinal em 3 pontos','s27':'*Colaboradores < 3 meses receberam feedback?','s28':'','s29':'*Book de gente\n*Plano de ação para horas?','s30':'*"meu RH" > "Gestor" > férias','s31':'*Ciclo e valores\n*Entrevistar 2 colaboradores','s32':'*Onde as receitas estão armazenadas?','s33':'*Filipetas controladas?','s34':'*EPIs sem sinais de dano\n*Ficha de EPI do mês anterior','s35':'*Verificar clínicas e clínica de apoio','s36':'*Expedição e clínica de apoio\n*5 amostras','s37':'*AVCB, Vigilância, Alvará\n*Cert. caixa d agua, PMOC, Dedetização\n*CNPJ, Contrato de resíduos','s38':'*RS, Daily, RMR\n*RS da última semana','s39':'*Indicadores acompanhados?\n*Planos de ação para desvios','s40':'*PDI formalizado\n*Capacitações 90 dias?','s41':'*BI\n*Se < 8, plano de ação','s42':'*Concierge: pendências?','s43':'*Zendesk: pendências?','s44':'*NPS vigente\n*Maio ou Outubro'}
   },
-  reg:{title:'Regulatórios e Biossegurança',sub:'44 itens · 9 pilares',key:'pgmed-reg',emailTag:'Regulatórios e Biossegurança',
+  reg:{title:'Regulatórios e Biossegurança',sub:'13 itens · 1 pilar',key:'pgmed-reg',emailTag:'Regulatórios e Biossegurança',
     items:[
-      {id:'r1',p:'Atendimento',q:'O operador realiza a conferência do documento e atualiza os dados cadastrais?'},
-      {id:'r2',p:'Atendimento',q:'O operador realiza a admissão do paciente seguindo o script de atendimento?'},
-      {id:'r3',p:'Atendimento',q:'O colaborador realiza o atendimento seguindo todos os passos do pós consulta?'},
-      {id:'r4',p:'Atendimento',q:'O operador pós consulta soube ofertar o plano de tratamento e incentivou o pagamento?'},
-      {id:'r5',p:'Atendimento',q:'Os colaboradores estão usando uniforme completo e em bom estado de uso?'},
-      {id:'r6',p:'Clínica',q:'Os movimentos de finalização de orçamento foram realizados no TOTVS?'},
-      {id:'r7',p:'Clínica',q:'As notas fiscais de pagamento de fornecedor estão lançadas dentro da competência/mês?'},
-      {id:'r8',p:'Clínica',q:'As agendas de triagem estão abertas todos os dias conforme padronizados?'},
-      {id:'r9',p:'Clínica',q:'Os equipamentos da unidade estão funcionando, calibrados e com registros de uso atualizados?'},
-      {id:'r10',p:'Clínica',q:'Os medicamentos/reagentes abertos estão com identificação (data de abertura, nome e validade)?'},
-      {id:'r11',p:'Clínica',q:'O controle de temperatura e limpeza da geladeira estão acontecendo dentro do prazo?'},
-      {id:'r12',p:'Clínica',q:'As biópsias estão armazenadas em ambiente com temperatura controlada e trancado?'},
-      {id:'r13',p:'Clínica',q:'Os termos de consentimento dos pacientes estão preenchidos de forma correta?'},
-      {id:'r14',p:'Educacional',q:'Os professores e alunos dos módulos Mandic estão contratados e o espaço físico reservado?'},
-      {id:'r15',p:'Educacional',q:'As lideranças estão acompanhando a divulgação do CQ Code do CSAT?'},
-      {id:'r16',p:'Educacional',q:'Os cursos com baixa captação estão sendo remanejados/cancelados com antecedência mínima de 30 dias?'},
-      {id:'r17',p:'Educacional',q:'Os ensalamentos/calendários dos cursos próximos da capacidade máxima já estão prontos?'},
-      {id:'r18',p:'Educacional',q:'As notas e frequência estão sendo lançadas dentro de 24h?'},
-      {id:'r19',p:'Educacional',q:'As gravações das aulas estão sendo disponibilizadas no prazo de 48h?'},
-      {id:'r20',p:'Estrutura',q:'A unidade está organizada e limpa?'},
-      {id:'r21',p:'Estrutura',q:'A infraestrutura elétrica e hidráulica está completamente funcional?'},
-      {id:'r22',p:'Estrutura',q:'O sistema de refrigeração e exaustão está completamente funcional?'},
-      {id:'r23',p:'Estrutura',q:'A unidade possui todos os Certificados e Calibrações válidos?'},
-      {id:'r24',p:'Infra (Tech)',q:'Os computadores e periféricos das estações de trabalho estão funcionando corretamente?'},
-      {id:'r25',p:'Infra (Tech)',q:'Os sistemas utilizados na unidade estão com acesso estável e atualizados?'},
-      {id:'r26',p:'Infra (Tech)',q:'A rede Wi-Fi e cabeada está estável e com cobertura adequada em todos os ambientes?'},
-      {id:'r27',p:'G&G',q:'Colaboradores no período de experiência receberam feedback?'},
-      {id:'r28',p:'G&G',q:'O onboarding dos novos colaboradores foi realizado?'},
-      {id:'r29',p:'G&G',q:'Os colaboradores com banco de horas têm plano de ação para compensação?'},
-      {id:'r30',p:'G&G',q:'Todos os colaboradores com mais de 12 meses possuem férias programadas?'},
-      {id:'r31',p:'G&G',q:'Os colaboradores conhecem o ciclo de gente e a sua importância?'},
-      {id:'r32',p:'Reg. / Biossegurança',q:'Os receituários controlados estão guardados em local seguro e trancado?'},
-      {id:'r33',p:'Reg. / Biossegurança',q:'Os canhotos dos receituários controlados estão sendo guardados para envio à VISA?'},
-      {id:'r34',p:'Reg. / Biossegurança',q:'Os EPIs estão sendo fornecidos conforme as atividades e em boas condições de uso?'},
-      {id:'r35',p:'Reg. / Biossegurança',q:'As caixas coletoras de perfurocortantes estão montadas, instaladas e dentro do limite de capacidade?'},
-      {id:'r36',p:'Reg. / Biossegurança',q:'Todos os insumos, medicamentos, componentes e implantes estão dentro do prazo de validade?'},
-      {id:'r37',p:'Reg. / Biossegurança',q:'A unidade está com todas as documentações legais aplicáveis dentro da validade?'},
-      {id:'r38',p:'Liderança',q:'A unidade está seguindo os rituais de gestão estabelecidos?'},
-      {id:'r39',p:'Liderança',q:'O coordenador conhece os principais indicadores e analisa os resultados com a equipe?'},
-      {id:'r40',p:'Liderança',q:'O coordenador tem PDI formalizado para os colaboradores-chave da unidade?'},
-      {id:'r41',p:'Exp. do Aluno',q:'O CSAT da unidade está acima de 8?'},
-      {id:'r42',p:'Exp. do Aluno',q:'Os alunos receberam o kit completo de boas-vindas até o 2º módulo?'},
-      {id:'r43',p:'Exp. do Aluno',q:'A tratativa dos casos do Zendesk está dentro do SLA de resposta?'},
-      {id:'r44',p:'Exp. do Aluno',q:'O NPS está acima de 70%?'},
+      {id:'r1',p:'Reg. / Biossegurança',q:'Os receituários controlados estão guardados em local seguro e trancado?'},
+      {id:'r2',p:'Reg. / Biossegurança',q:'Os canhotos dos receituários controlados estão sendo guardados para posterior envio à VISA?'},
+      {id:'r3',p:'Reg. / Biossegurança',q:'Os EPIs estão sendo fornecidos de acordo com as atividades da unidade e em boas condições de uso?'},
+      {id:'r4',p:'Reg. / Biossegurança',q:'As caixas coletoras de materiais perfurocortantes estão montadas, instaladas e dentro do limite da capacidade?'},
+      {id:'r5',p:'Reg. / Biossegurança',q:'Todos os insumos, medicamentos, componentes e implantes estão dentro do prazo de validade?'},
+      {id:'r6',p:'Reg. / Biossegurança',q:'A unidade está com todas as documentações legais aplicáveis dentro da validade?'},
+      {id:'r7',p:'Reg. / Biossegurança',q:'Todos os colaboradores com função assistencial utilizam calçados fechados?'},
+      {id:'r8',p:'Reg. / Biossegurança',q:'Todos os colaboradores com função assistencial estão SEM nenhum tipo de adornos?'},
+      {id:'r9',p:'Reg. / Biossegurança',q:'Os resíduos infectantes/perfurocortantes estão sendo descartados na caixa coletora e/ou no coletor de lixo infectante adequadamente?'},
+      {id:'r10',p:'Reg. / Biossegurança',q:'Todos os extintores estão dentro da validade, sinalizados, desobstruídos e prontos para uso em emergência?'},
+      {id:'r11',p:'Reg. / Biossegurança',q:'As FISPQs estão atualizadas e disponíveis no CM?'},
+      {id:'r12',p:'Reg. / Biossegurança',q:'Todos os colaboradores conhecem o procedimento e como atuar caso ocorra algum acidente de trabalho?'},
+      {id:'r13',p:'Reg. / Biossegurança',q:'Há ausência de acidentes nos últimos 6 meses no Centro Médico?'}
     ],
-    dicas:{'r1':'*Confere documento original\n*Valida dados obrigatórios\n*Atualiza contatos\n*Amostra 3 pacientes','r2':'*Atendimento humanizado\n*Esclarece dúvidas\n*Explica próximo passo','r3':'*Tela pós-consulta aberta\n*Apresenta plano\n*Imprime orçamento','r4':'*Explica plano\n*Estimula fechamento','r5':'*Uniforme completo e limpo','r6':'*Revisar TOTVS','r7':'*NF em até 5 dias','r8':'*Triagem aberta conforme escala','r9':'*Registro de manutenção','r10':'*Entrar em 3 consultórios','r11':'*Temperatura: diário\n*Limpeza: semanal','r12':'*Temperatura controlada\n*Ambiente lacrado?','r13':'*Todos os campos preenchidos?\n*Amostragem 3 pacientes','r14':'*Próximo Módulo Mandic?','r15':'*Módulo finalizando hoje?','r16':'*BI: < 30 dias','r17':'*BI: 18 alunos\n*Calendário','r18':'*TOTVS 3 turmas','r19':'*Blackboard 3 turmas','r20':'*Controles 3x/semana','r21':'*Lâmpadas? Torneiras? Filtros?','r22':'*Ambiente confortável?','r23':'*Pasta física e drive','r24':'*Computadores e maquininhas\n*2 estações','r25':'*Logins ok','r26':'*Sinal em 3 pontos','r27':'*< 3 meses receberam feedback?','r28':'','r29':'*Book de gente','r30':'*"meu RH" férias','r31':'*Ciclo e valores','r32':'*Onde as receitas estão?','r33':'*Filipetas controladas?','r34':'*EPIs sem dano\n*Ficha do mês anterior','r35':'*Clínicas e clínica de apoio','r36':'*5 amostras','r37':'*AVCB · Vigilância · Alvará\n*PMOC · Dedetização · CNPJ','r38':'*RS · Daily · RMR','r39':'*Indicadores\n*Planos de ação','r40':'*PDI formalizado','r41':'*BI\n*Plano de ação se < 8','r42':'*Concierge: pendências?','r43':'*Zendesk: pendências?','r44':'*NPS vigente\n*Maio ou Outubro'}
+    dicas:{
+      'r1':'*Verificar onde as receitas estão sendo armazenadas',
+      'r2':'*As filipetas estão sendo controladas',
+      'r3':'*EPIs disponíveis para todas as funções\n*Quantidade suficiente para a operação\n*Itens adequados ao tipo de procedimento\n*Sem sinais de dano ou desgaste\n*Abordar um ou mais colaboradores e perguntar se possui os EPIs da função\n*Solicitar a ficha de EPI assinada do mês anterior',
+      'r4':'*Verificar dentro de uma ou mais clínicas\n*Verificar dentro da clínica de apoio',
+      'r5':'*Realizar a auditoria dentro da expedição e clínica de apoio\n*Fazer ao menos 5 amostras',
+      'r6':'*AVCB\n*Vigilância sanitária\n*Alvará de funcionamento\n*Certificado de limpeza da caixa d\'água\n*PMOC\n*Certificado de dedetização\n*Cartão CNPJ\n*Contrato de coleta de resíduos\n*Solicitar documentos impressos ou no drive\n*Sem documento: apresentar protocolo\n*Sem protocolo: apresentar plano de ação',
+      'r7':'*Verificar se os profissionais da saúde estão usando sapato fechado',
+      'r8':'*O time assistencial deve estar sem adornos\n*Ex: brinco, anéis ou qualquer coisa que se caracterize como adorno',
+      'r9':'*Verificar se os descarpacks estão fechados corretamente\n*Verificar se o lixo infectante está num abrigo separado\n*Verificar se está dentro da caixa coletora branca',
+      'r10':'*Verificar validade\n*Verificar se o local está sinalizado\n*Verificar se não tem nada obstruindo o uso',
+      'r11':'*Verificar se no Arsenal e DML tem ficha dos produtos químicos utilizados no local',
+      'r12':'*Solicitar que expliquem o processo caso ocorra algum acidente\n*Abrir o POP na Intranet',
+      'r13':'*Verificar se houve algum acidente nos últimos 6 meses'
+    }
   }
 };
 
@@ -343,20 +268,20 @@ function gA(){return audits.find(function(a){return a.id===curId})||null;}
 function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,5)}
 function getPil(){return activeCL.items.reduce(function(acc,i){if(acc.indexOf(i.p)<0)acc.push(i.p);return acc;},[])}
 function fD(d){if(!d)return'';var p=d.split('-');return p[2]+'/'+p[1]+'/'+p[0]}
-function fTime(ts){if(!ts)return'—';var d=new Date(ts);return d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});}
+function fTime(ts){if(!ts)return'--';var d=new Date(ts);return d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});}
 
 function calcS(a){
-  var c=0,n=0,na=0;
-  activeCL.items.forEach(function(it){var r=a.respostas[it.id];if(!r||!r.ad)return;if(r.ad==='CONFORME')c++;else if(r.ad==='NAO')n++;else if(r.ad==='NA')na++;});
-  var av=c+n,pts=c;
-  return{c:c,n:n,na:na,tot:activeCL.items.length,resp:c+n+na,av:av,pct:av>0?Math.round(pts/av*100):0};
+  var sup=0,c=0,n=0,na=0;
+  activeCL.items.forEach(function(it){var r=a.respostas[it.id];if(!r||!r.ad)return;if(r.ad==='SUPEROU')sup++;else if(r.ad==='CONFORME')c++;else if(r.ad==='NAO')n++;else if(r.ad==='NA')na++;});
+  var av=sup+c+n;
+  return{sup:sup,c:c,n:n,na:na,tot:activeCL.items.length,resp:sup+c+n+na,av:av,pct:av>0?Math.round((sup+c)/av*100):0};
 }
 function calcPS(a,pilar){
   var its=activeCL.items.filter(function(i){return i.p===pilar});
-  var c=0,n=0,na=0;
-  its.forEach(function(it){var r=a.respostas[it.id];if(!r||!r.ad)return;if(r.ad==='CONFORME')c++;else if(r.ad==='NAO')n++;else if(r.ad==='NA')na++;});
-  var av=c+n,pts=c;
-  return{c:c,n:n,na:na,tot:its.length,av:av,pct:av>0?Math.round(pts/av*100):0};
+  var sup=0,c=0,n=0,na=0;
+  its.forEach(function(it){var r=a.respostas[it.id];if(!r||!r.ad)return;if(r.ad==='SUPEROU')sup++;else if(r.ad==='CONFORME')c++;else if(r.ad==='NAO')n++;else if(r.ad==='NA')na++;});
+  var av=sup+c+n;
+  return{sup:sup,c:c,n:n,na:na,tot:its.length,av:av,pct:av>0?Math.round((sup+c)/av*100):0};
 }
 
 function loadData(){
@@ -373,6 +298,13 @@ function sv(){
   svMem(k,data);
   if(typeof window.storage!=='undefined'){window.storage.set(k,data).catch(function(){});return;}
   try{localStorage.setItem(k,data);}catch(e){}
+}
+
+function showToast(msg,dur){
+  var t=document.getElementById('toast');if(!t)return;
+  t.textContent=msg;t.style.display='block';
+  clearTimeout(window._toastTimer);
+  window._toastTimer=setTimeout(function(){t.style.display='none';},dur||3000);
 }
 
 function checkPw(){
@@ -412,7 +344,6 @@ function updProg(){
   if(pfl)pfl.style.width=pct+'%';
   if(pinf)pinf.textContent=r+' de '+activeCL.items.length+' respondidos';
   if(ppct)ppct.textContent=pct+'%';
-  // atualiza dots
   var pils=getPil();
   pils.forEach(function(pl,idx){
     var d=document.getElementById('dot'+idx);
@@ -434,7 +365,7 @@ function render(){
 function rHome(){
   var sorted=audits.slice().sort(function(a,b){return b.dat.localeCompare(a.dat)});
   var list='';
-  if(!sorted.length){list='<div class="emp"><div style="font-size:40px;margin-bottom:12px">📋</div><div>Nenhuma auditoria ainda.<br>Toque em + para começar.</div></div>';}
+  if(!sorted.length){list='<div class="emp"><div style="font-size:40px;margin-bottom:12px">&#128203;</div><div>Nenhuma auditoria ainda.<br>Toque em + para começar.</div></div>';}
   else{
     list='<div class="sec-lbl">Auditorias</div>';
     sorted.forEach(function(a){
@@ -456,9 +387,9 @@ function rSetup(){
     +'<div class="fg"><label class="fl">Cargo</label><input id="iC" type="text" placeholder="Ex: Analista de Processos"></div>'
     +'<div class="fg"><label class="fl">E-mail</label><input id="iE" type="email" placeholder="seu@email.com.br" autocomplete="email"></div>'
     +'<div class="fg"><label class="fl">Unidade</label><select id="iU"><option value="">Selecione a unidade</option><option>Brasília</option><option>Campinas</option><option>São Paulo</option></select></div>'
-    +'<div class="fg" style="margin-bottom:0"><label class="fl">Data da visita</label><input id="iD" type="date" value="'+td+'"></div>'
+    +'<div class="fg" style="margin-bottom:0"><label class="fl">Data da visita</label><input id="iD" type="date" value="'+td+'" readonly style="background:#f0f0f0;color:#888;cursor:not-allowed"></div>'
     +'</div></div>'
-    +'<div class="bottom-action"><button class="btn-main" onclick="startA()">▶ Iniciar '+activeCL.title+'</button></div>';
+    +'<div class="bottom-action"><button class="btn-main" onclick="startA()">&#9654; Iniciar '+activeCL.title+'</button></div>';
 }
 
 function fotosHtml(itemId,fotos){
@@ -475,8 +406,6 @@ function rAudit(){
   var pits=activeCL.items.filter(function(i){return i.p===pl});
   var pDone=pits.filter(function(i){return a.respostas[i.id]&&a.respostas[i.id].ad}).length;
   var isLast=curPil===pils.length-1;
-
-  // dots
   var dots='<div class="pil-dots">';
   pils.forEach(function(p,idx){
     var pits2=activeCL.items.filter(function(i){return i.p===p});
@@ -486,7 +415,6 @@ function rAudit(){
     dots+='<div id="dot'+idx+'" style="height:8px;width:'+w+';border-radius:4px;background:'+bg+';transition:all .2s"></div>';
   });
   dots+='</div>';
-
   var h='<div class="hdr"><button class="btn-back" onclick="if(confirm(\'Sair? O progresso foi salvo.\'))goHome()">&#8592;</button><div><div class="hdr-title">'+a.uni+'</div><div class="hdr-sub">'+a.aud+'</div></div></div>'
     +'<div class="body">'
     +'<div class="prog-wrap"><div class="prog-info"><span id="pinf" style="font-size:13px;color:#888">'+rCnt+' de '+activeCL.items.length+' respondidos</span><span class="prog-pct" id="ppct">'+pct+'%</span></div><div class="ptr"><div class="pfl" id="pfl" style="width:'+pct+'%"></div></div></div>'
@@ -496,33 +424,32 @@ function rAudit(){
     +'<div class="pil-nav-info"><div class="pil-nav-title">'+pilIcon(pl)+' '+pl+'</div><div class="pil-nav-count">'+pDone+'/'+pits.length+' respondidos · Pilar '+(curPil+1)+' de '+pils.length+'</div></div>'
     +'<button class="btn-nav" onclick="navPil(1)" '+(isLast?'disabled':'')+'>&#8594;</button>'
     +'</div>';
-
   pits.forEach(function(it){
     var r=a.respostas[it.id]||{};
     var dk=activeCL.dicas[it.id]||'';
     var fotos=r.fotos||[];
     var showPlan=r.ad==='NAO';
-    h+='<div class="card-sm">'
+    h+='<div class="card-sm" id="ic'+it.id+'">'
       +'<div style="font-size:15px;font-weight:600;line-height:1.45;margin-bottom:10px">'+it.q+'</div>'
-      +(dk?'<button class="db" onclick="tgDk(\''+it.id+'\')">💡 Ver dica do auditor</button><div class="dc" id="dk'+it.id+'"></div>':'')
+      +(dk?'<button class="db" onclick="tgDk(\''+it.id+'\')">&#128161; Ver dica do auditor</button><div class="dc" id="dk'+it.id+'"></div>':'')
       +'<div class="ag" id="ag'+it.id+'">'
-      +'<button class="ab ac'+(r.ad==='CONFORME'?' sel':'')+'" onclick="setAd(\''+it.id+'\',\'CONFORME\',this)"><span style="font-size:30px">😊</span><span class="lbl">Conforme</span></button>'
-      +'<button class="ab an'+(r.ad==='NAO'?' sel':'')+'" onclick="setAd(\''+it.id+'\',\'NAO\',this)"><span style="font-size:30px">😟</span><span class="lbl">Não conf.</span></button>'
-      +'<button class="ab aa'+(r.ad==='NA'?' sel':'')+'" onclick="setAd(\''+it.id+'\',\'NA\',this)"><span style="font-size:30px">😶</span><span class="lbl">N/A</span></button>'
+      +'<button class="ab as'+(r.ad==='SUPEROU'?' sel':'')+'" onclick="setAd(\''+it.id+'\',\'SUPEROU\',this)"><span style="font-size:26px">&#127941;</span><span class="lbl">Superou</span></button>'
+      +'<button class="ab ac'+(r.ad==='CONFORME'?' sel':'')+'" onclick="setAd(\''+it.id+'\',\'CONFORME\',this)"><span style="font-size:26px">&#128522;</span><span class="lbl">Conforme</span></button>'
+      +'<button class="ab an'+(r.ad==='NAO'?' sel':'')+'" onclick="setAd(\''+it.id+'\',\'NAO\',this)"><span style="font-size:26px">&#128543;</span><span class="lbl">Não conf.</span></button>'
+      +'<button class="ab aa'+(r.ad==='NA'?' sel':'')+'" onclick="setAd(\''+it.id+'\',\'NA\',this)"><span style="font-size:26px">&#128566;</span><span class="lbl">N/A</span></button>'
       +'</div>'
       +'<span class="ta-lbl">Observações</span>'
       +'<textarea placeholder="Descreva o que foi observado..." style="height:60px" onblur="setField(\''+it.id+'\',\'obs\',this.value)">'+(r.obs||'')+'</textarea>'
       +'<div id="plan'+it.id+'" style="margin-top:8px;'+(showPlan?'':'display:none')+'">'
-      +'<div class="plan-box"><span class="plan-lbl">📋 Plano de ação</span><textarea placeholder="Descreva o plano de ação..." style="height:60px;color:#633806" onblur="setField(\''+it.id+'\',\'plan\',this.value)">'+(r.plan||'')+'</textarea></div>'
+      +'<div class="plan-box"><span class="plan-lbl">&#128203; Plano de ação</span><textarea placeholder="Descreva o plano de ação..." style="height:60px;color:#633806" onblur="setField(\''+it.id+'\',\'plan\',this.value)">'+(r.plan||'')+'</textarea></div>'
       +'</div>'
       +'<div class="foto-area"><div id="ft'+it.id+'">'+fotosHtml(it.id,fotos)+'</div>'
-      +(fotos.length<3?'<input type="file" accept="image/*" id="fi'+it.id+'" style="display:none" onchange="addFoto(\''+it.id+'\',this)"><button class="foto-btn" onclick="document.getElementById(\'fi'+it.id+'\').click()">📷 Foto</button>':'<span style="font-size:12px;color:#aaa">Máx. 3 fotos</span>')
+      +(fotos.length<3?'<input type="file" accept="image/*" id="fi'+it.id+'" style="display:none" onchange="addFoto(\''+it.id+'\',this)"><button class="foto-btn" onclick="document.getElementById(\'fi'+it.id+'\').click()">&#128247; Foto</button>':'<span style="font-size:12px;color:#aaa">Máx. 3 fotos</span>')
       +'</div></div>';
   });
-
   h+='</div><div class="bottom-action">';
   if(isLast){
-    h+='<button class="btn-main green" onclick="finA()">✓ Finalizar auditoria</button>';
+    h+='<button class="btn-main green" onclick="finA()">&#10003; Finalizar auditoria</button>';
   } else {
     h+='<button class="btn-main" onclick="navPil(1)">Próximo pilar: '+pilIcon(pils[curPil+1])+' '+pils[curPil+1]+' &#8594;</button>';
   }
@@ -532,18 +459,18 @@ function rAudit(){
 
 function rSum(){
   var a=gA();if(!a)return'';var s=calcS(a);
-  var h='<div class="hdr"><button class="btn-back" onclick="goHome()">&#8592;</button><div><div class="hdr-title">Resultado</div><div class="hdr-sub">'+a.uni+' · '+fD(a.dat)+'</div></div><button onclick="printS()" style="background:none;border:none;color:#E8A800;font-size:22px;cursor:pointer;padding:4px;min-width:36px">📄</button></div>'
+  var h='<div class="hdr"><button class="btn-back" onclick="goHome()">&#8592;</button><div><div class="hdr-title">Resultado</div><div class="hdr-sub">'+a.uni+' · '+fD(a.dat)+'</div></div><button onclick="printS()" style="background:none;border:none;color:#E8A800;font-size:22px;cursor:pointer;padding:4px;min-width:36px">&#128196;</button></div>'
     +'<div class="body"><div class="metrics-grid">'
     +'<div class="metric-big"><div class="mv">'+s.pct+'%</div><div class="ml">Conformidade geral</div></div>'
-    +'<div class="mc"><div class="mv" style="color:#27500A">'+s.c+'</div><div class="ml">😊 Conformes</div></div>'
-    +'<div class="mc"><div class="mv" style="color:#791F1F">'+s.n+'</div><div class="ml">😟 Não conf.</div></div>'
-    +'<div class="mc"><div class="mv">'+s.na+'</div><div class="ml">😶 N/A</div></div>'
+    +'<div class="mc"><div class="mv" style="color:#27500A">'+s.c+'</div><div class="ml">&#128522; Conformes</div></div>'
+    +'<div class="mc"><div class="mv" style="color:#791F1F">'+s.n+'</div><div class="ml">&#128543; Não conf.</div></div>'
+    +'<div class="mc"><div class="mv">'+s.na+'</div><div class="ml">&#128566; N/A</div></div>'
     +'</div><div class="sec-lbl">Por pilar</div>';
   getPil().forEach(function(pl){
     var ps=calcPS(a,pl);
     h+='<div class="psrow"><div class="pstop"><span class="psn">'+pilIcon(pl)+' '+pl+'</span><span style="color:'+pC(ps.pct)+';font-weight:700">'+(ps.av>0?ps.pct+'%':'—')+'</span></div>'
       +'<div class="btr"><div class="bfl" style="width:'+ps.pct+'%;background:'+pB(ps.pct)+'"></div></div>'
-      +'<div style="font-size:11px;color:#aaa;margin-top:5px">😊'+ps.c+' · 😟'+ps.n+' · 😶'+ps.na+'</div></div>';
+      +'<div style="font-size:11px;color:#aaa;margin-top:5px">&#128522;'+ps.c+' · &#128543;'+ps.n+' · &#128566;'+ps.na+'</div></div>';
   });
   h+='<div class="sec-lbl">Detalhamento</div>';
   getPil().forEach(function(pl){
@@ -559,12 +486,12 @@ function rSum(){
         +'</div>';
     });
   });
-  if(!a.done){h+='<button class="btn-main outline" onclick="scr=\'audit\';curPil=0;render()" style="margin-bottom:8px">✏️ Continuar preenchendo</button>';}
-  h+='<button class="btn-main gold" onclick="sendEmail()" style="margin-bottom:8px">📧 Enviar e-mail + anexar PDF</button>'
-    +'<button class="btn-main" onclick="printS()" style="margin-bottom:8px">📄 Exportar PDF</button>'
-    +'<button class="btn-main outline" style="color:#791F1F;border-color:#f5c0c0" onclick="if(confirm(\'Excluir?\'))delA()">🗑 Excluir</button>'
+  if(!a.done){h+='<button class="btn-main outline" onclick="scr=\'audit\';curPil=0;render()" style="margin-bottom:8px">&#9998; Continuar preenchendo</button>';}
+  h+='<button class="btn-main gold" onclick="sendEmail()" style="margin-bottom:8px">&#128231; Enviar e-mail + anexar PDF</button>'
+    +'<button class="btn-main" onclick="printS()" style="margin-bottom:8px">&#128196; Exportar PDF</button>'
+    +'<button class="btn-main outline" style="color:#791F1F;border-color:#f5c0c0" onclick="if(confirm(\'Excluir?\'))delA()">&#128465; Excluir</button>'
     +'</div>';
-  if(!a.done){h+='<div class="bottom-action"><button class="btn-main green" onclick="finA()">✓ Concluir auditoria</button></div>';}
+  if(!a.done){h+='<div class="bottom-action"><button class="btn-main green" onclick="finA()">&#10003; Concluir auditoria</button></div>';}
   return h;
 }
 
@@ -575,8 +502,7 @@ function navPil(dir){
   var pils=getPil();
   var next=curPil+dir;
   if(next<0||next>=pils.length)return;
-  curPil=next;
-  render();
+  curPil=next;render();
 }
 
 function startA(){
@@ -598,13 +524,8 @@ function setAd(itemId,value,btn){
   if(grp)grp.querySelectorAll('.ab').forEach(function(b){b.classList.toggle('sel',b===btn);});
   var planDiv=document.getElementById('plan'+itemId);
   if(planDiv)planDiv.style.display=(value==='NAO')?'block':'none';
-  // Remove destaque de pendência
   var card=document.getElementById('ic'+itemId);
-  if(card){
-    card.classList.remove('ic-pending');
-    var badge=card.querySelector('.ic-pending-badge');
-    if(badge)badge.remove();
-  }
+  if(card){card.classList.remove('ic-pending');var badge=card.querySelector('.ic-pending-badge');if(badge)badge.remove();}
   updProg();sv();
 }
 function setField(itemId,field,value){var a=gA();if(!a)return;if(!a.respostas[itemId])a.respostas[itemId]={};a.respostas[itemId][field]=value;sv();}
@@ -635,105 +556,189 @@ function removeFoto(itemId,idx){
 }
 function finA(){
   var a=gA();if(!a)return;
-  var s=calcS(a);var missing=activeCL.items.length-s.resp;
-  if(missing>0&&!confirm('Há '+missing+' item(ns) sem resposta. Finalizar mesmo assim?'))return;
+  var pils=getPil();
+  var pilPending=[];
+  pils.forEach(function(pl){
+    var cnt=activeCL.items.filter(function(i){return i.p===pl&&(!a.respostas[i.id]||!a.respostas[i.id].ad);}).length;
+    if(cnt>0)pilPending.push(pl+' ('+cnt+')');
+  });
+  if(pilPending.length>0){
+    var firstIdx=pils.findIndex(function(pl){return activeCL.items.some(function(i){return i.p===pl&&(!a.respostas[i.id]||!a.respostas[i.id].ad);});});
+    if(firstIdx>=0)curPil=firstIdx;
+    render();
+    setTimeout(function(){
+      var pl=pils[firstIdx];
+      activeCL.items.filter(function(i){return i.p===pl&&(!a.respostas[i.id]||!a.respostas[i.id].ad);}).forEach(function(it){
+        var card=document.getElementById('ic'+it.id);
+        if(card){card.classList.add('ic-pending');if(!card.querySelector('.ic-pending-badge')){var nb=document.createElement('div');nb.className='ic-pending-badge';nb.textContent='Pendente';card.insertBefore(nb,card.firstChild);}}
+      });
+      showToast('Preencha todos os itens antes de finalizar. Pendentes: '+pilPending.join(', '),5000);
+    },200);
+    return;
+  }
   a.done=true;a.endTime=new Date().toISOString();sv();scr='summary';render();
-  setTimeout(function(){
-    // Gera PDF automaticamente
-    printS();
-    // Após fechar o diálogo de impressão, abre o e-mail
-    setTimeout(function(){sendEmail();},1500);
-  },400);
+  setTimeout(function(){printS();setTimeout(function(){sendEmail();},1500);},400);
 }
 function delA(){audits=audits.filter(function(a){return a.id!==curId;});sv();goHome();}
+
 function sendEmail(){
   var a=gA();if(!a)return;var s=calcS(a);
   var dest=a.email&&a.email.length?a.email:EMAIL_GESTOR;
-  var lines=[activeCL.title.toUpperCase()+' — MANDIC','━━━━━━━━━━━━━━━━━━━━━━━━','Unidade: '+a.uni,'Auditor: '+a.aud+(a.cargo?' | '+a.cargo:'')+(a.email?' | '+a.email:''),'Data: '+fD(a.dat),'Início: '+fTime(a.startTime)+(a.endTime?' | Fim: '+fTime(a.endTime):''),'Score geral: '+s.pct+'%','','RESULTADO POR PILAR','────────────────────'];
-  getPil().forEach(function(pl){var ps=calcPS(a,pl);lines.push((ps.pct>=80?'✓':ps.pct>=50?'~':'✗')+' '+pl+': '+(ps.av>0?ps.pct+'%':'—'));});
+  var lines=[activeCL.title.toUpperCase()+' - MANDIC','========================','Unidade: '+a.uni,'Auditor: '+a.aud+(a.cargo?' | '+a.cargo:'')+(a.email?' | '+a.email:''),'Data: '+fD(a.dat),'Inicio: '+fTime(a.startTime)+(a.endTime?' | Fim: '+fTime(a.endTime):''),'Score geral: '+s.pct+'%','','RESULTADO POR PILAR','--------------------'];
+  getPil().forEach(function(pl){var ps=calcPS(a,pl);lines.push((ps.pct>=80?'OK':ps.pct>=50?'~':'X')+' '+pl+': '+(ps.av>0?ps.pct+'%':'—'));});
   var ncs=[];
-  activeCL.items.forEach(function(it){var r=a.respostas[it.id];if(!r||!r.ad)return;if(r.ad==='NAO'){ncs.push('😟 '+it.q+(r.obs?' → '+r.obs:'')+(r.plan?' | Plano: '+r.plan:''));}});
-  if(ncs.length){lines.push('','NÃO CONFORMES ('+ncs.length+')','────────────────────');ncs.forEach(function(n){lines.push(n);});}
-  lines.push('','━━━━━━━━━━━━━━━━━━━━━━━━','São Leopoldo Mandic · Central de Checklists');
-  var subj=encodeURIComponent('['+activeCL.emailTag+'] '+a.uni+' — '+fD(a.dat)+' ('+s.pct+'%)');
+  activeCL.items.forEach(function(it){var r=a.respostas[it.id];if(!r||!r.ad)return;if(r.ad==='NAO'){ncs.push('X '+it.q+(r.obs?' -> '+r.obs:'')+(r.plan?' | Plano: '+r.plan:''));}});
+  if(ncs.length){lines.push('','NAO CONFORMES ('+ncs.length+')','--------------------');ncs.forEach(function(n){lines.push(n);});}
+  lines.push('','========================','Sao Leopoldo Mandic - Central de Checklists');
+  var subj=encodeURIComponent('['+activeCL.emailTag+'] '+a.uni+' - '+fD(a.dat)+' ('+s.pct+'%)');
   var body=encodeURIComponent(lines.join('\n'));
   var mailto='mailto:'+dest+(dest!==EMAIL_GESTOR?'?cc='+encodeURIComponent(EMAIL_GESTOR)+'&':'?')+'subject='+subj+'&body='+body;
   window.location.href=mailto;
 }
+
 function printS(){
-  var a=gA();if(!a)return;var s=calcS(a);var now=new Date().toLocaleDateString('pt-BR');
+  var a=gA();if(!a)return;
+  var s=calcS(a);
   var pils=getPil();
-  var execRows='';
+  var now=new Date().toLocaleDateString('pt-BR');
+  var dur='--';
+  if(a.startTime&&a.endTime){
+    var dm=Math.round((new Date(a.endTime)-new Date(a.startTime))/60000);
+    dur=dm>=60?Math.floor(dm/60)+'h '+(dm%60)+'min':dm+'min';
+  }
+  var N='#1A3272';
+  var G='#E8A800';
+  var W='#ffffff';
+  var h=[];
+
+  function infoCell(lbl,val,vc){
+    h.push('<div style="background:rgba(255,255,255,.1);border-radius:5px;padding:7px 10px">');
+    h.push('<div style="font-size:8px;color:rgba(255,255,255,.45);text-transform:uppercase;margin-bottom:2px">'+lbl+'</div>');
+    h.push('<div style="font-size:11px;font-weight:700;color:'+(vc||W)+'">'+val+'</div>');
+    h.push('</div>');
+  }
+
+  // CAPA
+  h.push('<div style="background:'+N+';color:'+W+';padding:20px;font-family:Arial,sans-serif;page-break-after:always">');
+  h.push('<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px">');
+  h.push('<div>');
+  h.push('<div style="font-size:9px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:5px">Sao Leopoldo Mandic</div>');
+  h.push('<div style="font-size:20px;font-weight:700;color:'+G+'">'+activeCL.title+'</div>');
+  h.push('<div style="font-size:10px;color:rgba(255,255,255,.5);margin-top:3px">Relatorio de Auditoria Operacional</div>');
+  h.push('</div>');
+  h.push('<div style="background:'+G+';border-radius:10px;padding:10px 18px;text-align:center">');
+  h.push('<div style="font-size:32px;font-weight:700;color:'+N+';line-height:1">'+s.pct+'%</div>');
+  h.push('<div style="font-size:9px;color:'+N+';opacity:.75;margin-top:2px">conformidade</div>');
+  h.push('</div></div>');
+  h.push('<div style="background:'+G+';height:2px;margin-bottom:14px"></div>');
+
+  h.push('<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:8px">');
+  infoCell('Data',fD(a.dat));
+  infoCell('Inicio',fTime(a.startTime));
+  infoCell('Fim',fTime(a.endTime));
+  infoCell('Duracao',dur);
+  h.push('</div>');
+
+  h.push('<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">');
+  infoCell('Unidade',a.uni);
+  infoCell('Auditor',a.aud+(a.cargo?' - '+a.cargo:''));
+  h.push('</div>');
+
+  h.push('<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px">');
+  infoCell('Conformes',s.c,'#7fc77f');
+  infoCell('Nao conformes',s.n,'#e08080');
+  infoCell('N/A',s.na);
+  h.push('</div>');
+
+  h.push('<div style="font-size:10px;font-weight:700;color:'+G+';border-bottom:1px solid rgba(255,255,255,.2);padding-bottom:5px;margin-bottom:8px">Resultado por Pilar</div>');
+  h.push('<table style="width:100%;border-collapse:collapse">');
+  h.push('<thead><tr>');
+  h.push('<th style="font-size:8px;font-weight:400;color:rgba(255,255,255,.4);text-align:left;padding:4px 8px;border-bottom:1px solid rgba(255,255,255,.1)">Pilar</th>');
+  h.push('<th style="font-size:8px;font-weight:400;color:rgba(255,255,255,.4);text-align:center;padding:4px 8px;border-bottom:1px solid rgba(255,255,255,.1)">Conf.</th>');
+  h.push('<th style="font-size:8px;font-weight:400;color:rgba(255,255,255,.4);text-align:center;padding:4px 8px;border-bottom:1px solid rgba(255,255,255,.1)">N.Conf.</th>');
+  h.push('<th style="font-size:8px;font-weight:400;color:rgba(255,255,255,.4);text-align:center;padding:4px 8px;border-bottom:1px solid rgba(255,255,255,.1)">N/A</th>');
+  h.push('<th style="font-size:8px;font-weight:400;color:rgba(255,255,255,.4);text-align:right;padding:4px 8px;border-bottom:1px solid rgba(255,255,255,.1)">Score</th>');
+  h.push('</tr></thead><tbody>');
   pils.forEach(function(pl){
-    var ps=calcPS(a,pl);var pct=ps.av>0?ps.pct:null;var color=pct===null?'#999':pC(pct);
-    var bar=pct===null?0:pct;
-    var bg=pct===null?'':pct>=80?'rgba(39,80,10,.12)':pct>=50?'rgba(99,56,6,.1)':'rgba(121,31,31,.1)';
-    var border=pct===null?'#ccc':pct>=80?'#639922':pct>=50?'#BA7517':'#E24B4A';
-    execRows+='<tr style="background:'+bg+'">'
-      +'<td style="border-left:3px solid '+border+';padding-left:8px">'+pilIcon(pl)+' <b>'+pl+'</b></td>'
-      +'<td style="text-align:center;color:green">😊 '+ps.c+'</td>'
-      +'<td style="text-align:center;color:red">😟 '+ps.n+'</td>'
-      +'<td style="text-align:center;color:#888">😶 '+ps.na+'</td>'
-      +'<td style="width:80px"><div style="background:#e0e0e0;border-radius:3px;height:10px;overflow:hidden"><div style="width:'+bar+'%;height:100%;background:'+border+';border-radius:3px"></div></div></td>'
-      +'<td style="text-align:right;font-weight:700;font-size:13px;color:'+color+'">'+(pct===null?'—':pct+'%')+'</td>'
-      +'</tr>';
+    var ps=calcPS(a,pl);
+    var pct=ps.av>0?ps.pct:null;
+    var cor=pct===null?'#888':pct>=80?'#7fc77f':pct>=50?G:'#e08080';
+    var bg=pct===null?'transparent':pct>=80?'rgba(39,201,95,.12)':pct>=50?'rgba(232,168,0,.12)':'rgba(226,75,74,.12)';
+    h.push('<tr style="background:'+bg+'">');
+    h.push('<td style="padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.07);font-size:10px;color:'+W+'">'+pl+'</td>');
+    h.push('<td style="padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.07);text-align:center;font-size:11px;color:#7fc77f">'+ps.c+'</td>');
+    h.push('<td style="padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.07);text-align:center;font-size:11px;color:#e08080">'+ps.n+'</td>');
+    h.push('<td style="padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.07);text-align:center;font-size:11px;color:#aaa">'+ps.na+'</td>');
+    h.push('<td style="padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.07);text-align:right;font-weight:700;font-size:12px;color:'+cor+'">'+(pct===null?'--':pct+'%')+'</td>');
+    h.push('</tr>');
   });
-  var cover='<div class="pr-cover">'
-    +'<div style="font-size:11px;color:rgba(255,255,255,.4);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px">São Leopoldo Mandic</div>'
-    +'<h1>'+activeCL.title+'</h1><div class="sub">Relatório de Auditoria Operacional</div>'
-    +'<div class="pr-score-box"><div class="sc">'+s.pct+'%</div><div class="sc-lbl">Conformidade geral</div></div>'
-    +'<div class="info-row"><div><div class="info-lbl">Unidade</div><div class="info-val">'+a.uni+'</div></div></div>'
-    +'<div class="info-row"><div><div class="info-lbl">Auditor</div><div class="info-val">'+a.aud+(a.cargo?' · '+a.cargo:'')+'</div></div></div>'
-    +'<div class="info-row" style="justify-content:space-between">'
-    +'<div><div class="info-lbl">📅 Data</div><div class="info-val">'+fD(a.dat)+'</div></div>'
-    +'<div><div class="info-lbl">🕐 Início</div><div class="info-val">'+fTime(a.startTime)+'</div></div>'
-    +'<div><div class="info-lbl">🕑 Fim</div><div class="info-val">'+fTime(a.endTime)+'</div></div>'
-    +'<div><div class="info-lbl">⏱ Duração</div><div class="info-val">'+(function(){if(!a.startTime||!a.endTime)return'—';var diff=Math.round((new Date(a.endTime)-new Date(a.startTime))/60000);return diff+'min';})()+'</div></div>'
-    +'</div>'
-    +'<div class="info-row" style="justify-content:space-between">'
-    +'<div><div class="info-lbl">😊 Conformes</div><div class="info-val" style="color:#7fc77f">'+s.c+'</div></div>'
-    +'<div><div class="info-lbl">😟 Não conf.</div><div class="info-val" style="color:#e08080">'+s.n+'</div></div>'
-    +'<div><div class="info-lbl">😶 N/A</div><div class="info-val">'+s.na+'</div></div>'
-    +'<div><div class="info-lbl">Sem resp.</div><div class="info-val" style="color:#aaa">'+(s.tot-s.resp)+'</div></div>'
-    +'</div>'
-    +'<div class="pr-exec"><h2>Resumo Executivo por Pilar</h2>'
-    +'<table><thead><tr><th>Pilar</th><th style="text-align:center">😊</th><th style="text-align:center">😟</th><th style="text-align:center">😶</th><th>Progresso</th><th style="text-align:right">Score</th></tr></thead>'
-    +'<tbody>'+execRows+'</tbody></table>'
-    // Não conformes destaque
-    +(s.n>0?(function(){
-      var nc='<div style="margin-top:20px"><div style="font-size:13px;font-weight:700;color:#E8A800;margin-bottom:8px;border-bottom:1px solid rgba(255,255,255,.2);padding-bottom:5px">⚠ Itens Não Conformes ('+s.n+')</div>';
-      activeCL.items.forEach(function(it){var r=a.respostas[it.id];if(r&&r.ad==='NAO'){nc+='<div style="font-size:10px;color:rgba(255,255,255,.8);padding:4px 0;border-bottom:1px solid rgba(255,255,255,.08)">😟 '+it.q+(r.obs?' — '+r.obs:'')+'</div>';}});
-      nc+='</div>';return nc;
-    })():'')
-    +'</div></div>';
-  var pilPages='';
-  pils.forEach(function(pl){
-    var ps=calcPS(a,pl);var rows='';var num=0;
-    activeCL.items.filter(function(i){return i.p===pl}).forEach(function(it){
-      num++;var r=a.respostas[it.id]||{};
-      var bg=r.ad==='CONFORME'?'rgba(39,80,10,.05)':r.ad==='NAO'?'rgba(226,75,74,.05)':'';
-    var rowClass=r.ad==='CONFORME'?'row-ok':r.ad==='NAO'?'row-no':'';
-      var fc=(r.fotos&&r.fotos.length)?'<div class="pr-fotos">'+r.fotos.map(function(f){return'<img src="'+f+'">';}).join('')+'</div>':'';
-      var planCell=r.plan?'<div class="pr-plan"><b>Plano:</b> '+r.plan+'</div>':'';
-      var obsCell=r.obs?'<div class="pr-obs">'+r.obs+'</div>':'';
-      rows+='<tr class="'+rowClass+'"><td>'+num+'</td><td style="color:#1A3272;font-weight:500">'+it.q+'</td>'
-        +'<td style="font-size:18px;text-align:center">'+adEmoji(r.ad||'')+'</td>'
-        +'<td>'+obsCell+planCell+fc+'</td></tr>';
+  h.push('</tbody></table>');
+
+  var ncList=activeCL.items.filter(function(it){var r=a.respostas[it.id];return r&&r.ad==='NAO';});
+  if(ncList.length){
+    h.push('<div style="margin-top:12px">');
+    h.push('<div style="font-size:9px;font-weight:700;color:'+G+';border-bottom:1px solid rgba(255,255,255,.2);padding-bottom:3px;margin-bottom:5px">Nao Conformes ('+ncList.length+')</div>');
+    ncList.forEach(function(it){
+      var r=a.respostas[it.id];
+      h.push('<div style="font-size:9px;color:rgba(255,255,255,.8);padding:3px 0;border-bottom:1px solid rgba(255,255,255,.06)">X '+it.q+(r.obs?' - '+r.obs:'')+'</div>');
     });
-    pilPages+='<div class="pr-page">'
-      +'<div class="pr-page-band">'
-      +'<div><div class="pl-title">'+pilIcon(pl)+' '+pl+'</div><div class="pl-sub">'+ps.tot+' itens · '+(ps.av>0?ps.pct+'% conformidade':'sem avaliação')+'</div></div>'
-      +'<div class="pl-emojis">😊 '+ps.c+' &nbsp; 😟 '+ps.n+' &nbsp; 😶 '+ps.na+'</div>'
-      +'</div>'
-      +'<div class="pr-gold-line"></div>'
-      +'<div class="pr-page-body">'
-      +'<table class="pr-table"><colgroup><col class="c1"><col class="c2"><col class="c3"><col class="c4"></colgroup>'
-      +'<thead><tr><th>#</th><th>Prática auditada</th><th>Status</th><th>Observações / Plano / Fotos</th></tr></thead>'
-      +'<tbody>'+rows+'</tbody></table>'
-      +'</div></div>';
+    h.push('</div>');
+  }
+  h.push('<div style="margin-top:10px;font-size:7px;color:rgba(255,255,255,.25);text-align:center;border-top:1px solid rgba(255,255,255,.1);padding-top:6px">Gerado em '+now+'</div>');
+  h.push('</div>');
+
+  // PÁGINAS POR PILAR
+  pils.forEach(function(pl){
+    var ps=calcPS(a,pl);
+    var pct=ps.av>0?ps.pct:null;
+    var corPct=pct===null?'#aaa':pct>=80?'#7fc77f':pct>=50?G:'#e08080';
+    h.push('<div style="page-break-before:always;font-family:Arial,sans-serif">');
+    h.push('<div style="background:'+N+';padding:12px 16px;display:flex;justify-content:space-between;align-items:center">');
+    h.push('<div>');
+    h.push('<div style="font-size:15px;font-weight:700;color:'+G+'">'+pl+'</div>');
+    h.push('<div style="font-size:9px;color:rgba(255,255,255,.5);margin-top:2px">'+ps.tot+' itens</div>');
+    h.push('</div>');
+    h.push('<div style="text-align:right">');
+    h.push('<div style="font-size:26px;font-weight:700;color:'+corPct+'">'+(pct===null?'--':pct+'%')+'</div>');
+    h.push('<div style="font-size:9px;color:rgba(255,255,255,.5)">C:'+ps.c+' NC:'+ps.n+' N/A:'+ps.na+'</div>');
+    h.push('</div></div>');
+    h.push('<div style="background:'+G+';height:3px"></div>');
+    h.push('<div style="padding:10px 12px 14px">');
+
+    var num=0;
+    activeCL.items.filter(function(i){return i.p===pl;}).forEach(function(it){
+      num++;
+      var r=a.respostas[it.id]||{};
+      var bgCard=r.ad==='CONFORME'?'#f0fbe8':r.ad==='NAO'?'#fff0f0':'#fafafa';
+      var bdCard=r.ad==='CONFORME'?'#b8e0a0':r.ad==='NAO'?'#f5b8b8':'#dde3f0';
+      var statusTxt=r.ad==='CONFORME'?'Conforme':r.ad==='NAO'?'Nao conforme':r.ad==='NA'?'N/A':'Sem resposta';
+      var statusColor=r.ad==='CONFORME'?'#27A800':r.ad==='NAO'?'#cc0000':r.ad==='NA'?'#888':'#aaa';
+
+      h.push('<div style="display:flex;gap:10px;padding:8px 10px;margin-bottom:5px;background:'+bgCard+';border:1px solid '+bdCard+';border-radius:5px;page-break-inside:avoid;break-inside:avoid">');
+      h.push('<div style="flex-shrink:0;width:28px;text-align:center;padding-top:2px">');
+      h.push('<div style="font-size:8px;color:#aaa;margin-bottom:3px">'+num+'</div>');
+      h.push('<div style="font-size:10px;font-weight:700;color:'+statusColor+'">'+statusTxt+'</div>');
+      h.push('</div>');
+      h.push('<div style="flex:1">');
+      h.push('<div style="font-size:11px;font-weight:600;color:'+N+';line-height:1.5">'+it.q+'</div>');
+      if(r.obs){h.push('<div style="margin-top:4px;font-size:10px;color:#444;padding:3px 7px;background:rgba(0,0,0,.04);border-radius:3px">Obs: '+r.obs+'</div>');}
+      if(r.plan){h.push('<div style="margin-top:4px;font-size:10px;color:#633806;padding:3px 7px;background:#FFF8E8;border-left:3px solid '+G+';border-radius:0 3px 3px 0">Plano: '+r.plan+'</div>');}
+      if(r.fotos&&r.fotos.length){
+        h.push('<div style="margin-top:5px;display:flex;flex-wrap:wrap;gap:4px">');
+        r.fotos.forEach(function(f){h.push('<img src="'+f+'" style="width:50px;height:50px;object-fit:cover;border-radius:3px;border:1px solid #ddd">');});
+        h.push('</div>');
+      }
+      h.push('</div></div>');
+    });
+    h.push('</div>');
+    h.push('<div style="background:'+N+';padding:5px 14px;font-size:8px;color:'+G+';text-align:center">Sao Leopoldo Mandic - '+activeCL.title+' - '+a.uni+' - '+fD(a.dat)+'</div>');
+    h.push('</div>');
   });
-  document.getElementById('pr').innerHTML=cover+pilPages
-    +'<div class="pr-foot">⚜ São Leopoldo Mandic &nbsp;·&nbsp; '+activeCL.title+' &nbsp;·&nbsp; '+fD(a.dat)+' &nbsp;·&nbsp; '+fTime(a.startTime)+' → '+fTime(a.endTime)+'</div>';
+
+  var pr=document.getElementById('pr');
+  pr.innerHTML=h.join('');
+  pr.style.display='block';
   window.print();
+  pr.style.display='none';
 }
 </script>
