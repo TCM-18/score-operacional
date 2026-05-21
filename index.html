@@ -141,7 +141,7 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:#1A3272;backgr
       <div class="dir-sub">Selecione o checklist para iniciar</div>
     </div>
     <div class="body">
-      <div class="sec-lbl">Disponível</div>
+      <div class="sec-lbl">Disponivel</div>
       <div class="dir-card active" onclick="openChecklist('score')">
         <div class="dir-icon dark">&#128203;</div>
         <div class="dir-info"><div class="dir-name">Score Operacional</div><div class="dir-desc">44 itens · 9 pilares · Auditoria completa da unidade</div></div>
@@ -149,12 +149,25 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:#1A3272;backgr
       </div>
       <div class="dir-card active" onclick="openChecklist('reg')">
         <div class="dir-icon dark">&#128737;</div>
-        <div class="dir-info"><div class="dir-name">Regulatórios e Biossegurança</div><div class="dir-desc">13 itens · 1 pilar · EPIs, documentações e biossegurança</div></div>
+        <div class="dir-info"><div class="dir-name">Regulatorios e Biosseguranca</div><div class="dir-desc">13 itens · 1 pilar · EPIs, documentacoes e biosseguranca</div></div>
+        <span class="dir-badge badge-ok">Ativo</span>
+      </div>
+      <div class="dir-card active" onclick="openChecklist('odonto')">
+        <div class="dir-icon dark">&#129463;</div>
+        <div class="dir-info"><div class="dir-name">Visita PG Odonto</div><div class="dir-desc">34 itens · 7 pilares · Auditoria operacional das unidades odonto</div></div>
         <span class="dir-badge badge-ok">Ativo</span>
       </div>
       <div class="sec-lbl" style="margin-top:20px">Em desenvolvimento</div>
-      <div class="dir-card wip"><div class="dir-icon gray">&#128295;</div><div class="dir-info"><div class="dir-name">Manutenção e Conservação</div><div class="dir-desc">Equipamentos, infraestrutura e conservação da unidade</div></div><span class="dir-badge badge-wip">Em breve</span></div>
-      <div class="dir-card wip"><div class="dir-icon gray">&#127891;</div><div class="dir-info"><div class="dir-name">Educacional</div><div class="dir-desc">Cursos, ensalamentos, notas, gravações e gestão acadêmica</div></div><span class="dir-badge badge-wip">Em breve</span></div>
+      <div class="dir-card wip">
+        <div class="dir-icon gray">&#128295;</div>
+        <div class="dir-info"><div class="dir-name">Manutencao e Conservacao</div><div class="dir-desc">Equipamentos, infraestrutura e conservacao da unidade</div></div>
+        <span class="dir-badge badge-wip">Em breve</span>
+      </div>
+      <div class="dir-card wip">
+        <div class="dir-icon gray">&#127891;</div>
+        <div class="dir-info"><div class="dir-name">Educacional</div><div class="dir-desc">Cursos, ensalamentos, notas, gravacoes e gestao academica</div></div>
+        <span class="dir-badge badge-wip">Em breve</span>
+      </div>
     </div>
   </div>
   <div id="sCL" style="display:none">
@@ -167,578 +180,718 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:#1A3272;backgr
 <div id="pr"></div>
 
 <script>
-var SENHA='pgmed2025';
-var EMAIL_GESTOR='gestor@pgmed.com.br';
+var SENHA = 'pgmed2025';
+var EMAIL_GESTOR = 'gestor@pgmed.com.br';
 
-function adEmoji(v){return v==='SUPEROU'?'&#127941;':v==='CONFORME'?'&#128522;':v==='NAO'?'&#128543;':v==='NA'?'&#128566;':'?';}
-function adLbl(v){return v==='SUPEROU'?'Superou':v==='CONFORME'?'Conforme':v==='NAO'?'Nao conforme':v==='NA'?'N/A':'—';}
-function pC(v){return v>=80?'#27500A':v>=50?'#633806':'#791F1F'}
-function pB(v){return v>=80?'#27A800':v>=50?'#BA7517':'#E24B4A'}
-function pilIcon(pl){var m={'Atendimento':'&#128101;','Clinica':'&#127973;','Clínica':'&#127973;','Educacional':'&#127891;','Estrutura':'&#127970;','Infra (Tech)':'&#128187;','G&G':'&#129309;','Reg. / Biossegurança':'&#128737;','Liderança':'&#128202;','Exp. do Aluno':'&#11088;'};return m[pl]||'&#128203;';}
+function adEmoji(v) {
+  if (v === 'SUPEROU') return '&#127941;';
+  if (v === 'CONFORME') return '&#128522;';
+  if (v === 'NAO') return '&#128543;';
+  if (v === 'NA') return '&#128566;';
+  return '?';
+}
+function adLbl(v) {
+  if (v === 'SUPEROU') return 'Superou';
+  if (v === 'CONFORME') return 'Conforme';
+  if (v === 'NAO') return 'Nao conforme';
+  if (v === 'NA') return 'N/A';
+  return '--';
+}
+function pC(v) { return v >= 80 ? '#27500A' : v >= 50 ? '#633806' : '#791F1F'; }
+function pB(v) { return v >= 80 ? '#27A800' : v >= 50 ? '#BA7517' : '#E24B4A'; }
+function pilIcon(pl) {
+  var m = {
+    'Atendimento': '&#128101;',
+    'Clinica': '&#127973;',
+    'Cl\u00ednica': '&#127973;',
+    'Educacional': '&#127891;',
+    'Estrutura': '&#127970;',
+    'Infra (Tech)': '&#128187;',
+    'G&G': '&#129309;',
+    'Reg. / Biosseguran\u00e7a': '&#128737;',
+    'Lideran\u00e7a': '&#128202;',
+    'Exp. do Aluno': '&#11088;'
+  };
+  return m[pl] || '&#128203;';
+}
 
-var CHECKLISTS={
-  score:{title:'Score Operacional',sub:'44 itens · 9 pilares',key:'pgmed-score',emailTag:'Score Operacional',
-    items:[
-      {id:'s1',p:'Atendimento',q:'O operador realiza a conferência do documento e atualiza os dados cadastrais?'},
-      {id:'s2',p:'Atendimento',q:'O operador realiza a admissão do paciente seguindo o script de atendimento?'},
-      {id:'s3',p:'Atendimento',q:'O colaborador realiza o atendimento seguindo todos os passos do pós consulta?'},
-      {id:'s4',p:'Atendimento',q:'O operador pós consulta soube ofertar o plano de tratamento e incentivou o pagamento?'},
-      {id:'s5',p:'Atendimento',q:'Os colaboradores estão usando uniforme completo e em bom estado de uso?'},
-      {id:'s6',p:'Clínica',q:'Os movimentos de finalização de orçamento foram realizados no TOTVS?'},
-      {id:'s7',p:'Clínica',q:'As notas fiscais de pagamento de fornecedor estão lançadas dentro da competência/mês?'},
-      {id:'s8',p:'Clínica',q:'As agendas de triagem estão abertas todos os dias conforme padronizados?'},
-      {id:'s9',p:'Clínica',q:'Os equipamentos da unidade estão funcionando, calibrados e com registros de uso atualizados?'},
-      {id:'s10',p:'Clínica',q:'Os medicamentos/reagentes abertos estão com identificação (data de abertura, nome e validade)?'},
-      {id:'s11',p:'Clínica',q:'O controle de temperatura e limpeza da geladeira estão acontecendo dentro do prazo?'},
-      {id:'s12',p:'Clínica',q:'As biópsias estão armazenadas em ambiente com temperatura controlada e trancado?'},
-      {id:'s13',p:'Clínica',q:'Os termos de consentimento dos pacientes estão preenchidos de forma correta?'},
-      {id:'s14',p:'Educacional',q:'Os professores e alunos dos módulos Mandic estão contratados e o espaço físico reservado?'},
-      {id:'s15',p:'Educacional',q:'As lideranças estão acompanhando a divulgação do CQ Code do CSAT?'},
-      {id:'s16',p:'Educacional',q:'Os cursos com baixa captação estão sendo remanejados/cancelados com antecedência mínima de 30 dias?'},
-      {id:'s17',p:'Educacional',q:'Os ensalamentos/calendários dos cursos próximos da capacidade máxima já estão prontos?'},
-      {id:'s18',p:'Educacional',q:'As notas e frequência estão sendo lançadas dentro de 24h?'},
-      {id:'s19',p:'Educacional',q:'As gravações das aulas estão sendo disponibilizadas no prazo de 48h?'},
-      {id:'s20',p:'Estrutura',q:'A unidade está organizada e limpa?'},
-      {id:'s21',p:'Estrutura',q:'A infraestrutura elétrica e hidráulica está completamente funcional?'},
-      {id:'s22',p:'Estrutura',q:'O sistema de refrigeração e exaustão está completamente funcional?'},
-      {id:'s23',p:'Estrutura',q:'A unidade possui todos os Certificados e Calibrações válidos?'},
-      {id:'s24',p:'Infra (Tech)',q:'Os computadores e periféricos das estações de trabalho estão funcionando corretamente?'},
-      {id:'s25',p:'Infra (Tech)',q:'Os sistemas utilizados na unidade estão com acesso estável e atualizados?'},
-      {id:'s26',p:'Infra (Tech)',q:'A rede Wi-Fi e cabeada está estável e com cobertura adequada em todos os ambientes?'},
-      {id:'s27',p:'G&G',q:'Colaboradores no período de experiência receberam feedback?'},
+var CHECKLISTS = {
+  score: {
+    title: 'Score Operacional',
+    sub: '44 itens · 9 pilares',
+    key: 'pgmed-score',
+    emailTag: 'Score Operacional',
+    units: ['Brasilia', 'Campinas', 'Sao Paulo'],
+    items: [
+      {id:'s1',p:'Atendimento',q:'O operador realiza a conferencia do documento e atualiza os dados cadastrais?'},
+      {id:'s2',p:'Atendimento',q:'O operador realiza a admissao do paciente seguindo o script de atendimento?'},
+      {id:'s3',p:'Atendimento',q:'O colaborador realiza o atendimento seguindo todos os passos do pos consulta?'},
+      {id:'s4',p:'Atendimento',q:'O operador pos consulta soube ofertar o plano de tratamento e incentivou o pagamento?'},
+      {id:'s5',p:'Atendimento',q:'Os colaboradores estao usando uniforme completo e em bom estado de uso?'},
+      {id:'s6',p:'Clinica',q:'Os movimentos de finalizacao de orcamento foram realizados no TOTVS?'},
+      {id:'s7',p:'Clinica',q:'As notas fiscais de pagamento de fornecedor estao lancadas dentro da competencia/mes?'},
+      {id:'s8',p:'Clinica',q:'As agendas de triagem estao abertas todos os dias conforme padronizados?'},
+      {id:'s9',p:'Clinica',q:'Os equipamentos da unidade estao funcionando, calibrados e com registros de uso atualizados?'},
+      {id:'s10',p:'Clinica',q:'Os medicamentos/reagentes abertos estao com identificacao (data de abertura, nome e validade)?'},
+      {id:'s11',p:'Clinica',q:'O controle de temperatura e limpeza da geladeira estao acontecendo dentro do prazo?'},
+      {id:'s12',p:'Clinica',q:'As biopsias estao armazenadas em ambiente com temperatura controlada e trancado?'},
+      {id:'s13',p:'Clinica',q:'Os termos de consentimento dos pacientes estao preenchidos de forma correta?'},
+      {id:'s14',p:'Educacional',q:'Os professores e alunos dos modulos Mandic estao contratados e o espaco fisico reservado?'},
+      {id:'s15',p:'Educacional',q:'As liderancas estao acompanhando a divulgacao do CQ Code do CSAT?'},
+      {id:'s16',p:'Educacional',q:'Os cursos com baixa captacao estao sendo remanejados/cancelados com antecedencia minima de 30 dias?'},
+      {id:'s17',p:'Educacional',q:'Os ensalamentos/calendarios dos cursos proximos da capacidade maxima ja estao prontos?'},
+      {id:'s18',p:'Educacional',q:'As notas e frequencia estao sendo lancadas dentro de 24h?'},
+      {id:'s19',p:'Educacional',q:'As gravacoes das aulas estao sendo disponibilizadas no prazo de 48h?'},
+      {id:'s20',p:'Estrutura',q:'A unidade esta organizada e limpa?'},
+      {id:'s21',p:'Estrutura',q:'A infraestrutura eletrica e hidraulica esta completamente funcional?'},
+      {id:'s22',p:'Estrutura',q:'O sistema de refrigeracao e exaustao esta completamente funcional?'},
+      {id:'s23',p:'Estrutura',q:'A unidade possui todos os Certificados e Calibracoes validos?'},
+      {id:'s24',p:'Infra (Tech)',q:'Os computadores e perifericos das estacoes de trabalho estao funcionando corretamente?'},
+      {id:'s25',p:'Infra (Tech)',q:'Os sistemas utilizados na unidade estao com acesso estavel e atualizados?'},
+      {id:'s26',p:'Infra (Tech)',q:'A rede Wi-Fi e cabeada esta estavel e com cobertura adequada em todos os ambientes?'},
+      {id:'s27',p:'G&G',q:'Colaboradores no periodo de experiencia receberam feedback?'},
       {id:'s28',p:'G&G',q:'O onboarding dos novos colaboradores foi realizado?'},
-      {id:'s29',p:'G&G',q:'Os colaboradores com banco de horas têm plano de ação para compensação?'},
-      {id:'s30',p:'G&G',q:'Todos os colaboradores com mais de 12 meses possuem férias programadas?'},
-      {id:'s31',p:'G&G',q:'Os colaboradores conhecem o ciclo de gente e a sua importância?'},
-      {id:'s32',p:'Reg. / Biossegurança',q:'Os receituários controlados estão guardados em local seguro e trancado?'},
-      {id:'s33',p:'Reg. / Biossegurança',q:'Os canhotos dos receituários controlados estão sendo guardados para envio à VISA?'},
-      {id:'s34',p:'Reg. / Biossegurança',q:'Os EPIs estão sendo fornecidos conforme as atividades e em boas condições de uso?'},
-      {id:'s35',p:'Reg. / Biossegurança',q:'As caixas coletoras de perfurocortantes estão montadas, instaladas e dentro do limite de capacidade?'},
-      {id:'s36',p:'Reg. / Biossegurança',q:'Todos os insumos, medicamentos, componentes e implantes estão dentro do prazo de validade?'},
-      {id:'s37',p:'Reg. / Biossegurança',q:'A unidade está com todas as documentações legais aplicáveis dentro da validade?'},
-      {id:'s38',p:'Liderança',q:'A unidade está seguindo os rituais de gestão estabelecidos?'},
-      {id:'s39',p:'Liderança',q:'O coordenador conhece os principais indicadores e analisa os resultados com a equipe?'},
-      {id:'s40',p:'Liderança',q:'O coordenador tem PDI formalizado para os colaboradores-chave da unidade?'},
-      {id:'s41',p:'Exp. do Aluno',q:'O CSAT da unidade está acima de 8?'},
-      {id:'s42',p:'Exp. do Aluno',q:'Os alunos receberam o kit completo de boas-vindas até o 2º módulo?'},
-      {id:'s43',p:'Exp. do Aluno',q:'A tratativa dos casos do Zendesk está dentro do SLA de resposta?'},
-      {id:'s44',p:'Exp. do Aluno',q:'O NPS está acima de 70%?'}
+      {id:'s29',p:'G&G',q:'Os colaboradores com banco de horas tem plano de acao para compensacao?'},
+      {id:'s30',p:'G&G',q:'Todos os colaboradores com mais de 12 meses possuem ferias programadas?'},
+      {id:'s31',p:'G&G',q:'Os colaboradores conhecem o ciclo de gente e a sua importancia?'},
+      {id:'s32',p:'Reg. / Biosseguran\u00e7a',q:'Os receitarios controlados estao guardados em local seguro e trancado?'},
+      {id:'s33',p:'Reg. / Biosseguran\u00e7a',q:'Os canhotos dos receitarios controlados estao sendo guardados para envio a VISA?'},
+      {id:'s34',p:'Reg. / Biosseguran\u00e7a',q:'Os EPIs estao sendo fornecidos conforme as atividades e em boas condicoes de uso?'},
+      {id:'s35',p:'Reg. / Biosseguran\u00e7a',q:'As caixas coletoras de perfurocortantes estao montadas, instaladas e dentro do limite de capacidade?'},
+      {id:'s36',p:'Reg. / Biosseguran\u00e7a',q:'Todos os insumos, medicamentos, componentes e implantes estao dentro do prazo de validade?'},
+      {id:'s37',p:'Reg. / Biosseguran\u00e7a',q:'A unidade esta com todas as documentacoes legais aplicaveis dentro da validade?'},
+      {id:'s38',p:'Lideran\u00e7a',q:'A unidade esta seguindo os rituais de gestao estabelecidos?'},
+      {id:'s39',p:'Lideran\u00e7a',q:'O coordenador conhece os principais indicadores e analisa os resultados com a equipe?'},
+      {id:'s40',p:'Lideran\u00e7a',q:'O coordenador tem PDI formalizado para os colaboradores-chave da unidade?'},
+      {id:'s41',p:'Exp. do Aluno',q:'O CSAT da unidade esta acima de 8?'},
+      {id:'s42',p:'Exp. do Aluno',q:'Os alunos receberam o kit completo de boas-vindas ate o 2o modulo?'},
+      {id:'s43',p:'Exp. do Aluno',q:'A tratativa dos casos do Zendesk esta dentro do SLA de resposta?'},
+      {id:'s44',p:'Exp. do Aluno',q:'O NPS esta acima de 70%?'}
     ],
-    dicas:{'s1':'*Confere documento original\n*Valida dados obrigatórios\n*Atualiza contatos\n*Amostra 3 pacientes','s2':'*Atendimento humanizado\n*Esclarece dúvidas\n*Explica próximo passo\n*Amostra 3 pacientes','s3':'*Tela pós-consulta aberta\n*Apresenta plano de tratamento\n*Imprime orçamento\n*Agenda próximo passo','s4':'*Explica plano de forma clara\n*Destaca benefícios\n*Estimula fechamento','s5':'*Uniforme completo e limpo\n*Uso correto de crachá','s6':'*1 paciente da semana anterior\n*Revisar movimentos no TOTVS','s7':'*NF lançada em até 5 dias','s8':'*Triagem aberta conforme escala\n*Verificar horários no Consulta Já','s9':'*Registro de manutenção\n*Equipamentos funcionando?','s10':'*Entrar em 3 consultórios','s11':'*Temperatura: diário\n*Limpeza: semanal','s12':'*Controle de temperatura\n*Ambiente seguro e lacrado?','s13':'*Todos os campos preenchidos?\n*Amostragem 3 pacientes','s14':'*Quando será o próximo Módulo Mandic?\n*Evidência ao coordenador','s15':'*Há módulo finalizando hoje?','s16':'*BI: cursos com início em < 30 dias','s17':'*BI: cursos com 18 alunos\n*Calendário do coordenador','s18':'*TOTVS — turmas anteriores\n*Mínimo 3 turmas','s19':'*Blackboard — turmas anteriores\n*Mínimo 3 turmas','s20':'*Controles de limpeza 3x/semana\n*Sem caixas em locais indevidos','s21':'*Lâmpadas? Torneiras? Filtros?','s22':'*Ambiente confortável?','s23':'*Pasta física e drive','s24':'*Computadores e maquininhas ok\n*Testar 2 estações','s25':'*Logins ok\n*Lentidão nos últimos 7 dias?','s26':'*Sinal em 3 pontos','s27':'*Colaboradores < 3 meses receberam feedback?','s28':'','s29':'*Book de gente\n*Plano de ação para horas?','s30':'*"meu RH" > "Gestor" > férias','s31':'*Ciclo e valores\n*Entrevistar 2 colaboradores','s32':'*Onde as receitas estão armazenadas?','s33':'*Filipetas controladas?','s34':'*EPIs sem sinais de dano\n*Ficha de EPI do mês anterior','s35':'*Verificar clínicas e clínica de apoio','s36':'*Expedição e clínica de apoio\n*5 amostras','s37':'*AVCB, Vigilância, Alvará\n*Cert. caixa d agua, PMOC, Dedetização\n*CNPJ, Contrato de resíduos','s38':'*RS, Daily, RMR\n*RS da última semana','s39':'*Indicadores acompanhados?\n*Planos de ação para desvios','s40':'*PDI formalizado\n*Capacitações 90 dias?','s41':'*BI\n*Se < 8, plano de ação','s42':'*Concierge: pendências?','s43':'*Zendesk: pendências?','s44':'*NPS vigente\n*Maio ou Outubro'}
+    dicas: {
+      's1':'*Confere documento original\n*Valida dados obrigatorios\n*Atualiza contatos\n*Amostra 3 pacientes',
+      's2':'*Atendimento humanizado\n*Esclarece duvidas\n*Explica proximo passo\n*Amostra 3 pacientes',
+      's3':'*Tela pos-consulta aberta\n*Apresenta plano de tratamento\n*Imprime orcamento\n*Agenda proximo passo',
+      's4':'*Explica plano de forma clara\n*Destaca beneficios\n*Estimula fechamento',
+      's5':'*Uniforme completo e limpo\n*Uso correto de cracha',
+      's6':'*1 paciente da semana anterior\n*Revisar movimentos no TOTVS',
+      's7':'*NF lancada em ate 5 dias',
+      's8':'*Triagem aberta conforme escala\n*Verificar horarios no Consulta Ja',
+      's9':'*Registro de manutencao\n*Equipamentos funcionando?',
+      's10':'*Entrar em 3 consultorios',
+      's11':'*Temperatura: diario\n*Limpeza: semanal',
+      's12':'*Controle de temperatura\n*Ambiente seguro e lacrado?',
+      's13':'*Todos os campos preenchidos?\n*Amostragem 3 pacientes',
+      's14':'*Quando sera o proximo Modulo Mandic?\n*Evidencia ao coordenador',
+      's15':'*Ha modulo finalizando hoje?',
+      's16':'*BI: cursos com inicio em < 30 dias',
+      's17':'*BI: cursos com 18 alunos\n*Calendario do coordenador',
+      's18':'*TOTVS — turmas anteriores\n*Minimo 3 turmas',
+      's19':'*Blackboard — turmas anteriores\n*Minimo 3 turmas',
+      's20':'*Controles de limpeza 3x/semana\n*Sem caixas em locais indevidos',
+      's21':'*Lampadas? Torneiras? Filtros?',
+      's22':'*Ambiente confortavel?',
+      's23':'*Pasta fisica e drive',
+      's24':'*Computadores e maquininhas ok\n*Testar 2 estacoes',
+      's25':'*Logins ok\n*Lentidao nos ultimos 7 dias?',
+      's26':'*Sinal em 3 pontos',
+      's27':'*Colaboradores < 3 meses receberam feedback?',
+      's28':'',
+      's29':'*Book de gente\n*Plano de acao para horas?',
+      's30':'*meu RH > Gestor > ferias',
+      's31':'*Ciclo e valores\n*Entrevistar 2 colaboradores',
+      's32':'*Onde as receitas estao armazenadas?',
+      's33':'*Filipetas controladas?',
+      's34':'*EPIs sem sinais de dano\n*Ficha de EPI do mes anterior',
+      's35':'*Verificar clinicas e clinica de apoio',
+      's36':'*Expedicao e clinica de apoio\n*5 amostras',
+      's37':'*AVCB, Vigilancia, Alvara\n*Cert. caixa d agua, PMOC, Dedetizacao\n*CNPJ, Contrato de residuos',
+      's38':'*RS, Daily, RMR\n*RS da ultima semana',
+      's39':'*Indicadores acompanhados?\n*Planos de acao para desvios',
+      's40':'*PDI formalizado\n*Capacitacoes 90 dias?',
+      's41':'*BI\n*Se < 8, plano de acao',
+      's42':'*Concierge: pendencias?',
+      's43':'*Zendesk: pendencias?',
+      's44':'*NPS vigente\n*Maio ou Outubro'
+    }
   },
-  reg:{title:'Regulatórios e Biossegurança',sub:'13 itens · 1 pilar',key:'pgmed-reg',emailTag:'Regulatórios e Biossegurança',
-    items:[
-      {id:'r1',p:'Reg. / Biossegurança',q:'Os receituários controlados estão guardados em local seguro e trancado?'},
-      {id:'r2',p:'Reg. / Biossegurança',q:'Os canhotos dos receituários controlados estão sendo guardados para posterior envio à VISA?'},
-      {id:'r3',p:'Reg. / Biossegurança',q:'Os EPIs estão sendo fornecidos de acordo com as atividades da unidade e em boas condições de uso?'},
-      {id:'r4',p:'Reg. / Biossegurança',q:'As caixas coletoras de materiais perfurocortantes estão montadas, instaladas e dentro do limite da capacidade?'},
-      {id:'r5',p:'Reg. / Biossegurança',q:'Todos os insumos, medicamentos, componentes e implantes estão dentro do prazo de validade?'},
-      {id:'r6',p:'Reg. / Biossegurança',q:'A unidade está com todas as documentações legais aplicáveis dentro da validade?'},
-      {id:'r7',p:'Reg. / Biossegurança',q:'Todos os colaboradores com função assistencial utilizam calçados fechados?'},
-      {id:'r8',p:'Reg. / Biossegurança',q:'Todos os colaboradores com função assistencial estão SEM nenhum tipo de adornos?'},
-      {id:'r9',p:'Reg. / Biossegurança',q:'Os resíduos infectantes/perfurocortantes estão sendo descartados na caixa coletora e/ou no coletor de lixo infectante adequadamente?'},
-      {id:'r10',p:'Reg. / Biossegurança',q:'Todos os extintores estão dentro da validade, sinalizados, desobstruídos e prontos para uso em emergência?'},
-      {id:'r11',p:'Reg. / Biossegurança',q:'As FISPQs estão atualizadas e disponíveis no CM?'},
-      {id:'r12',p:'Reg. / Biossegurança',q:'Todos os colaboradores conhecem o procedimento e como atuar caso ocorra algum acidente de trabalho?'},
-      {id:'r13',p:'Reg. / Biossegurança',q:'Há ausência de acidentes nos últimos 6 meses no Centro Médico?'}
+  reg: {
+    title: 'Regulatorios e Biosseguranca',
+    sub: '13 itens · 1 pilar',
+    key: 'pgmed-reg',
+    emailTag: 'Regulatorios e Biosseguranca',
+    units: ['Brasilia', 'Campinas', 'Sao Paulo'],
+    items: [
+      {id:'r1',p:'Reg. / Biosseguran\u00e7a',q:'Os receitarios controlados estao guardados em local seguro e trancado?'},
+      {id:'r2',p:'Reg. / Biosseguran\u00e7a',q:'Os canhotos dos receitarios controlados estao sendo guardados para posterior envio a VISA?'},
+      {id:'r3',p:'Reg. / Biosseguran\u00e7a',q:'Os EPIs estao sendo fornecidos de acordo com as atividades da unidade e em boas condicoes de uso?'},
+      {id:'r4',p:'Reg. / Biosseguran\u00e7a',q:'As caixas coletoras de materiais perfurocortantes estao montadas, instaladas e dentro do limite da capacidade?'},
+      {id:'r5',p:'Reg. / Biosseguran\u00e7a',q:'Todos os insumos, medicamentos, componentes e implantes estao dentro do prazo de validade?'},
+      {id:'r6',p:'Reg. / Biosseguran\u00e7a',q:'A unidade esta com todas as documentacoes legais aplicaveis dentro da validade?'},
+      {id:'r7',p:'Reg. / Biosseguran\u00e7a',q:'Todos os colaboradores com funcao assistencial utilizam calcados fechados?'},
+      {id:'r8',p:'Reg. / Biosseguran\u00e7a',q:'Todos os colaboradores com funcao assistencial estao SEM nenhum tipo de adornos?'},
+      {id:'r9',p:'Reg. / Biosseguran\u00e7a',q:'Os residuos infectantes/perfurocortantes estao sendo descartados adequadamente?'},
+      {id:'r10',p:'Reg. / Biosseguran\u00e7a',q:'Todos os extintores estao dentro da validade, sinalizados, desobstruidos e prontos para uso?'},
+      {id:'r11',p:'Reg. / Biosseguran\u00e7a',q:'As FISPQs estao atualizadas e disponiveis no CM?'},
+      {id:'r12',p:'Reg. / Biosseguran\u00e7a',q:'Todos os colaboradores conhecem o procedimento caso ocorra algum acidente de trabalho?'},
+      {id:'r13',p:'Reg. / Biosseguran\u00e7a',q:'Ha ausencia de acidentes nos ultimos 6 meses no Centro Medico?'}
     ],
-    dicas:{
-      'r1':'*Verificar onde as receitas estão sendo armazenadas',
-      'r2':'*As filipetas estão sendo controladas',
-      'r3':'*EPIs disponíveis para todas as funções\n*Quantidade suficiente para a operação\n*Itens adequados ao tipo de procedimento\n*Sem sinais de dano ou desgaste\n*Abordar um ou mais colaboradores e perguntar se possui os EPIs da função\n*Solicitar a ficha de EPI assinada do mês anterior',
-      'r4':'*Verificar dentro de uma ou mais clínicas\n*Verificar dentro da clínica de apoio',
-      'r5':'*Realizar a auditoria dentro da expedição e clínica de apoio\n*Fazer ao menos 5 amostras',
-      'r6':'*AVCB\n*Vigilância sanitária\n*Alvará de funcionamento\n*Certificado de limpeza da caixa d\'água\n*PMOC\n*Certificado de dedetização\n*Cartão CNPJ\n*Contrato de coleta de resíduos\n*Solicitar documentos impressos ou no drive\n*Sem documento: apresentar protocolo\n*Sem protocolo: apresentar plano de ação',
-      'r7':'*Verificar se os profissionais da saúde estão usando sapato fechado',
-      'r8':'*O time assistencial deve estar sem adornos\n*Ex: brinco, anéis ou qualquer coisa que se caracterize como adorno',
-      'r9':'*Verificar se os descarpacks estão fechados corretamente\n*Verificar se o lixo infectante está num abrigo separado\n*Verificar se está dentro da caixa coletora branca',
-      'r10':'*Verificar validade\n*Verificar se o local está sinalizado\n*Verificar se não tem nada obstruindo o uso',
-      'r11':'*Verificar se no Arsenal e DML tem ficha dos produtos químicos utilizados no local',
-      'r12':'*Solicitar que expliquem o processo caso ocorra algum acidente\n*Abrir o POP na Intranet',
-      'r13':'*Verificar se houve algum acidente nos últimos 6 meses'
+    dicas: {
+      'r1':'*Verificar onde as receitas estao sendo armazenadas',
+      'r2':'*As filipetas estao sendo controladas',
+      'r3':'*EPIs disponiveis para todas as funcoes\n*Quantidade suficiente\n*Itens sem sinais de dano\n*Solicitar ficha de EPI assinada do mes anterior',
+      'r4':'*Verificar dentro de uma ou mais clinicas\n*Verificar dentro da clinica de apoio',
+      'r5':'*Auditoria dentro da expedicao e clinica de apoio\n*Ao menos 5 amostras',
+      'r6':'*AVCB\n*Vigilancia sanitaria\n*Alvara de funcionamento\n*Certificado de limpeza da caixa d agua\n*PMOC\n*Certificado de dedetizacao\n*Cartao CNPJ\n*Contrato de coleta de residuos',
+      'r7':'*Verificar se os profissionais da saude estao usando sapato fechado',
+      'r8':'*Time assistencial sem adornos\n*Ex: brinco, aneis ou qualquer adorno',
+      'r9':'*Verificar se os descarpacks estao fechados corretamente\n*Lixo infectante em abrigo separado\n*Dentro da caixa coletora branca',
+      'r10':'*Verificar validade\n*Local sinalizado\n*Sem obstrucoes',
+      'r11':'*Verificar Arsenal e DML: ficha dos produtos quimicos utilizados',
+      'r12':'*Solicitar que expliquem o processo caso ocorra acidente\n*Abrir o POP na Intranet',
+      'r13':'*Verificar se houve algum acidente nos ultimos 6 meses'
+    }
+  },
+  odonto: {
+    title: 'Visita PG Odonto',
+    sub: '34 itens \u00b7 7 pilares',
+    key: 'pgmed-odonto',
+    emailTag: 'Visita PG Odonto',
+    units: ['Bras\u00edlia','Campinas','S\u00e3o Paulo','Rio de Janeiro','Belo Horizonte','Curitiba','Grande Vit\u00f3ria','Araras','Fortaleza'],
+    items: [
+      {id:'o1',p:'Atendimento',q:'O operador realiza a confer\u00eancia do documento e atualiza os dados cadastrais?'},
+      {id:'o2',p:'Atendimento',q:'O operador realiza a admiss\u00e3o do paciente seguindo o script de atendimento?'},
+      {id:'o3',p:'Atendimento',q:'O colaborador realiza o atendimento seguindo todos os passos do p\u00f3s consulta?'},
+      {id:'o4',p:'Atendimento',q:'O Operador p\u00f3s consulta soube ofertar o plano de tratamento e incentivou o paciente a realizar o pagamento?'},
+      {id:'o5',p:'Atendimento',q:'O time de atendimento entende a importancia do NPS e do P\u00f3s consulta?'},
+      {id:'o6',p:'Atendimento',q:'Os colaboradores est\u00e3o usando uniforme completo e em bom estado de uso?'},
+      {id:'o7',p:'Cl\u00ednica',q:'Os movimentos de finaliza\u00e7\u00e3o de or\u00e7amento foram realizados no TOTVS?'},
+      {id:'o8',p:'Cl\u00ednica',q:'As notas fiscais de pagamento de fornecedor est\u00e3o lan\u00e7adas para pagamento dentro da compet\u00eancia/m\u00eas?'},
+      {id:'o9',p:'Cl\u00ednica',q:'As agendas de triagem est\u00e3o abertas todos os dias conforme padronizados?'},
+      {id:'o10',p:'Cl\u00ednica',q:'Os equipamentos de radiologia (raio-X, tom\u00f3grafo) est\u00e3o funcionando, calibrados e com os registros de uso atualizados?'},
+      {id:'o11',p:'Educacional',q:'Os professores e alunos dos m\u00f3dulos Mandic est\u00e3o devidamente contratados e avisados? Unidade fez reserva do espa\u00e7o f\u00edsico?'},
+      {id:'o12',p:'Educacional',q:'Os coordenadores das unidades est\u00e3o acompanhando a divulga\u00e7\u00e3o do CQ Code do CSAT?'},
+      {id:'o13',p:'Educacional',q:'Os cursos com baixa capta\u00e7\u00e3o est\u00e3o sendo remanejados/cancelados com antecedencia m\u00ednima de 30 dias?'},
+      {id:'o14',p:'Educacional',q:'Os ensalamentos/calend\u00e1rios dos cursos que est\u00e3o se aproximando da capacidade m\u00e1xima j\u00e1 est\u00e3o prontos?'},
+      {id:'o15',p:'Educacional',q:'Os ensalamentos dos cursos est\u00e3o sendo disponibilizados na pasta da Gest\u00e3o Educacional com anteced\u00eancia m\u00ednima de 10 dias da data de in\u00edcio?'},
+      {id:'o16',p:'Estrutura',q:'A unidade est\u00e1 organizada e limpa?'},
+      {id:'o17',p:'Estrutura',q:'A infraestrutura el\u00e9trica e hidr\u00e1ulica est\u00e1 completamente funcional?'},
+      {id:'o18',p:'Estrutura',q:'O sistema de refrigera\u00e7\u00e3o e exaust\u00e3o est\u00e1 completamente funcional?'},
+      {id:'o19',p:'Estrutura',q:'A unidade possui todos os Certificados e Calibra\u00e7\u00f5es v\u00e1lidos?'},
+      {id:'o20',p:'Infra (Tech)',q:'Os computadores e perif\u00e9ricos das esta\u00e7\u00f5es de trabalho est\u00e3o funcionando corretamente?'},
+      {id:'o21',p:'Infra (Tech)',q:'Os sistemas operacionais utilizados na unidade (Odontosig, TOTVS, etc.) est\u00e3o com acesso est\u00e1vel e atualizado?'},
+      {id:'o22',p:'Infra (Tech)',q:'A rede Wi-Fi e cabeada da unidade est\u00e1 est\u00e1vel e com cobertura adequada em todos os ambientes?'},
+      {id:'o23',p:'G&G',q:'Colaboradores no per\u00edodo de experi\u00eancia receberam feedback?'},
+      {id:'o24',p:'G&G',q:'Onboarding dos novos colaboradores foi realizado?'},
+      {id:'o25',p:'G&G',q:'Os colaboradores que possuem banco de horas t\u00eam plano de a\u00e7\u00e3o para compensa\u00e7\u00e3o?'},
+      {id:'o26',p:'G&G',q:'Todos os colaboradores com mais de 12 meses possuem f\u00e9rias programadas?'},
+      {id:'o27',p:'G&G',q:'Os colaboradores conhecem o ciclo de gente e a sua import\u00e2ncia?'},
+      {id:'o28',p:'Regulat\u00f3rio/Biosseguran\u00e7a',q:'Os equipamentos de prote\u00e7\u00e3o individual (EPIs) est\u00e3o sendo fornecidos de acordo com as atividades da unidade e em boas condi\u00e7\u00f5es de uso?'},
+      {id:'o29',p:'Regulat\u00f3rio/Biosseguran\u00e7a',q:'As caixas coletoras de materiais perfurocortantes est\u00e3o montadas, instaladas e dentro do limite da capacidade?'},
+      {id:'o30',p:'Regulat\u00f3rio/Biosseguran\u00e7a',q:'A unidade est\u00e1 gerenciando os dosimetros corretamente?'},
+      {id:'o31',p:'Regulat\u00f3rio/Biosseguran\u00e7a',q:'Todos os insumos, medicamentos, componentes e implantes est\u00e3o dentro do prazo de validade?'},
+      {id:'o32',p:'Regulat\u00f3rio/Biosseguran\u00e7a',q:'A unidade est\u00e1 com todas as documenta\u00e7\u00f5es legais aplic\u00e1veis dentro da validade?'},
+      {id:'o33',p:'Lideran\u00e7a',q:'A unidade est\u00e1 seguindo os rituais de gest\u00e3o estabelecidos?'},
+      {id:'o34',p:'Lideran\u00e7a',q:'O coordenador conhece os principais indicadores da unidade e consegue analisar os resultados com a equipe?'},
+      {id:'o35',p:'Lideran\u00e7a',q:'O coordenador tem plano de desenvolvimento individual para os colaboradores-chave da unidade?'}
+    ],
+    dicas: {
+      'o1':'*Confere documento original com aten\u00e7\u00e3o (nome completo, CPF e data de nascimento)\n*Valida dados obrigat\u00f3rios no sistema antes de finalizar\n*Atualiza telefone, e-mail e endere\u00e7o com confirma\u00e7\u00e3o do paciente\n*Evita seguir com cadastro incompleto ou desatualizado\n*Amostra de 3 pacientes\n*Se poss\u00edvel mais de um colaborador',
+      'o2':'*Colaborador est\u00e1 atendendo de forma humanizada\n*Colaborador esclarece todas as d\u00favidas do paciente\n*Informa o envio da pesquisa do NPS\n*Explica o pr\u00f3ximo passo dele dentro da cl\u00ednica\n*Amostra de 3 pacientes\n*Se poss\u00edvel mais de um colaborador',
+      'o3':'*Mant\u00e9m a tela do p\u00f3s-consulta aberta durante todo o atendimento\n*Confere e apresenta o plano de tratamento no sistema\n*Imprime o or\u00e7amento e entrega ao paciente\n*Informa formas de pagamento dispon\u00edveis\n*Agenda pr\u00f3ximo passo (in\u00edcio ou retorno) antes do paciente sair\n*Amostra de 3 pacientes\n*Se poss\u00edvel mais de um colaborador',
+      'o4':'*Explica o plano de tratamento de forma clara e objetiva\n*Destaca benef\u00edcios e import\u00e2ncia da continuidade\n*Tira d\u00favidas financeiras com seguran\u00e7a\n*Estimula fechamento no momento, sem press\u00e3o excessiva\n*Amostra de 3 pacientes\n*Se poss\u00edvel mais de um colaborador',
+      'o5':'*Demonstra conhecimento sobre o que \u00e9 NPS\n*Entende impacto da experi\u00eancia do paciente nos resultados da unidade\n*Incentiva o paciente a responder a pesquisa\n*Atua com foco em excel\u00eancia no atendimento\n*Amostra de 3 pacientes\n*Se poss\u00edvel mais de um colaborador',
+      'o6':'*Utiliza uniforme completo conforme padr\u00e3o da empresa\n*Apresenta boa higiene e organiza\u00e7\u00e3o pessoal\n*Uniforme limpo, sem desgaste excessivo\n*Uso correto de crach\u00e1 (quando aplic\u00e1vel)',
+      'o7':'*Identificar pacientes atendidos na semana anterior no Odontosig e selecionar 1 paciente para revisar todos os movimentos no TOTVS (ex.: 2.1.11, 2.2.12, 2.1.13)\n*Na tela de atendimento do Odontosig, identificar 1 paciente atendido com itens e solicitar a verifica\u00e7\u00e3o do movimento 2.1.13 finalizado no TOTVS',
+      'o8':'*Exemplo de 1 NF de implante (SIN, Neodent ou Implacil) lan\u00e7ada dentro do prazo (at\u00e9 5 dias depois do recebimento)\n*Exemplo de 1 NF de professor emitida e lan\u00e7ada at\u00e9 dia 24\n*Pedir uma NF recebida via e-mail e pedir para mostrar o movimento finalizado dentro do TOTVS',
+      'o9':'*Triagem aberta por dentista e turno conforme escala padr\u00e3o\n*Validar agendamentos realizados a cada 15 minutos como padr\u00e3o\n*Verificar no sistema (Odontosig) se os hor\u00e1rios da semana est\u00e3o todos dispon\u00edveis\n*Nenhum dia da semana deve estar com agenda fechada sem justificativa\n*Perguntar ao coordenador se houve algum fechamento e qual foi o motivo\n*Em caso de aus\u00eancia de dentista, verificar se h\u00e1 cobertura ou reagendamento',
+      'o10':'*Verificar se h\u00e1 registro do \u00faltimo controle de qualidade ou manuten\u00e7\u00e3o preventiva\n*Solicitar ao respons\u00e1vel pela radiologia o registro de manuten\u00e7\u00e3o\n*Confirmar se o dos\u00edmetro dos operadores est\u00e1 sendo utilizado e registrado\n*Pedir ao coordenador o relat\u00f3rio de envio de dos\u00edmetro mensal\n*Observar visualmente a sinaliza\u00e7\u00e3o da sala',
+      'o11':'*Questionar quando acontecer\u00e1 o pr\u00f3ximo M\u00f3dulo Mandic na Unidade e quais s\u00e3o os nomes dos professores contratados\n*Solicitar alguma evid\u00eancia ao coordenador',
+      'o12':'*Questionar se no dia da visita temos algum m\u00f3dulo finalizando e perguntar se o coordenador ir\u00e1 projetar o QR Code na sala de aula',
+      'o13':'*Abrir o BI e verificar se h\u00e1 algum curso com in\u00edcio em menos de 30 dias',
+      'o14':'*Abrir o BI e verificar se h\u00e1 cursos com 18 alunos inscritos\n*Coordenador apresentar o calend\u00e1rio',
+      'o15':'*Abrir o BI e verificar se h\u00e1 curso com in\u00edcio em 10 dias e pedir para ver o ensalamento na pasta da Gest\u00e3o Educacional',
+      'o16':'*Analisando 3x na semana se os controles de limpeza nos banheiros est\u00e3o preenchidos e assinados\n*Unidade n\u00e3o tem caixas armazenadas em locais indevidos',
+      'o17':'*Possui alguma l\u00e2mpada ou ilumina\u00e7\u00e3o queimada?\n*Todas torneiras e banheiros est\u00e3o funcionando?\n*Filtros funcionando?',
+      'o18':'',
+      'o19':'',
+      'o20':'*Verificar se todos os computadores ligam e acessam o sistema sem erros\n*Checar se impressoras e leitores de documentos est\u00e3o operacionais\n*Checar as maquininhas de cart\u00e3o\n*Confirmar aus\u00eancia de equipamentos travados ou com defeito sem registro de chamado\n*Testar ao menos 2 esta\u00e7\u00f5es de atendimento\n*Solicitar ao coordenador o registro de chamados abertos de TI',
+      'o21':'*Confirmar que todos os usu\u00e1rios conseguem logar normalmente\n*Verificar se h\u00e1 atualiza\u00e7\u00e3o pendente no sistema\n*Checar se h\u00e1 relatos de lentid\u00e3o ou queda frequente nos \u00faltimos 7 dias\n*Testar acesso ao sistema em 1 esta\u00e7\u00e3o\n*Perguntar ao coordenador se houve instabilidade recente',
+      'o22':'*Verificar sinal de internet nas \u00e1reas de atendimento, recep\u00e7\u00e3o e salas cl\u00ednicas\n*Confirmar que dispositivos m\u00f3veis conectam sem quedas\n*Checar se o roteador est\u00e1 dentro do prazo de suporte do contrato\n*Testar conectividade em ao menos 3 pontos da unidade\n*Verificar se h\u00e1 chamado aberto relacionado \u00e0 rede',
+      'o23':'*Entrevistar todos os colaboradores que possuem menos de 3 meses de casa e perguntar se receberam feedback\n*Solicitar ao coordenador que mostre o feedback na ferramenta',
+      'o24':'',
+      'o25':'*Verificar no book de gente\n*Se possuir horas precisa apresentar o plano de a\u00e7\u00e3o',
+      'o26':'*Verificar dentro da plataforma do "meu RH" > "Gestor" > "gest\u00e3o de f\u00e9rias"\n*Perguntar ao coordenador',
+      'o27':'*Perguntar sobre o ciclo\n*Quais s\u00e3o os nossos valores\n*Qual se identifica mais\n*Entrevistar ao menos 2 colaboradores',
+      'o28':'*EPIs dispon\u00edveis para todas as fun\u00e7\u00f5es\n*Quantidade suficiente para a opera\u00e7\u00e3o\n*Itens adequados ao tipo de procedimento\n*Sem sinais de dano ou desgaste\n*Controle b\u00e1sico de reposi\u00e7\u00e3o\n*Abordar um ou mais colaboradores e perguntar se possui os EPIs da fun\u00e7\u00e3o\n*Solicitar \u00e0 gest\u00e3o da unidade a ficha de EPI assinada do m\u00eas anterior',
+      'o29':'*Verificar dentro de uma ou mais cl\u00ednicas\n*Verificar dentro da cl\u00ednica de apoio',
+      'o30':'',
+      'o31':'*Realizar a auditoria dentro da expedi\u00e7\u00e3o e cl\u00ednica de apoio\n*Dentro destes setores fazer ao menos 5 amostras',
+      'o32':'*AVCB\n*Vigilancia sanit\u00e1ria\n*Alvara de funcionamento\n*Certificado de limpeza da caixa d\u2019\u00e1gua\n*Cart\u00e3o CNPJ\n*Contrato de coleta de res\u00edduos\n*Solicitar ao coordenador que apresente os documentos impressos ou no drive\n*Caso n\u00e3o tenha o documento ele precisa apresentar o protocolo\n*Caso n\u00e3o tenha o protocolo apresentar o plano de a\u00e7\u00e3o',
+      'o33':'*RS\n*Daily\n*RMR\n*Solicitar ao coordenador ou algum l\u00edder que apresente a RS da \u00faltima semana',
+      'o34':'*Perguntar ao coordenador quais indicadores acompanha (Receita educacional, receita de cl\u00ednica, NPS, cancelamento, ocupa\u00e7\u00e3o dos cursos)\n*Confirmar se h\u00e1 an\u00e1lise cr\u00edtica dos resultados com plano de a\u00e7\u00e3o\n*Solicite ao coordenador que mostre seus planos de a\u00e7\u00e3o para os indicadores com desvios',
+      'o35':'*Verificar se h\u00e1 PDI formalizado para ao menos os colaboradores em cargo de refer\u00eancia\n*Confirmar se o coordenador conhece as compet\u00eancias a desenvolver de cada colaborador-chave\n*Checar se h\u00e1 trilha de capacita\u00e7\u00e3o sendo seguida (cursos, treinamentos, mentorias)\n*Solicitar ao coordenador PDI de ao menos 1 colaborador-chave\n*Perguntar ao coordenador quais capacita\u00e7\u00f5es est\u00e3o previstas para os pr\u00f3ximos 90 dias'
     }
   }
 };
 
-var activeCL=null,audits=[],curId=null,scr='home',curPil=0;
-var _mem={};
-function svMem(k,v){_mem[k]=v;}
-function gtMem(k){return _mem[k]||null;}
-function gA(){return audits.find(function(a){return a.id===curId})||null;}
-function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,5)}
-function getPil(){return activeCL.items.reduce(function(acc,i){if(acc.indexOf(i.p)<0)acc.push(i.p);return acc;},[])}
-function fD(d){if(!d)return'';var p=d.split('-');return p[2]+'/'+p[1]+'/'+p[0]}
-function fTime(ts){if(!ts)return'--';var d=new Date(ts);return d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});}
+var activeCL = null, audits = [], curId = null, scr = 'home', curPil = 0;
+var _mem = {};
+function svMem(k, v) { _mem[k] = v; }
+function gtMem(k) { return _mem[k] || null; }
+function gA() { return audits.find(function(a) { return a.id === curId; }) || null; }
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 5); }
+function getPil() { return activeCL.items.reduce(function(acc, i) { if (acc.indexOf(i.p) < 0) acc.push(i.p); return acc; }, []); }
+function fD(d) { if (!d) return ''; var p = d.split('-'); return p[2] + '/' + p[1] + '/' + p[0]; }
+function fTime(ts) { if (!ts) return '--'; var d = new Date(ts); return d.toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'}); }
 
-function calcS(a){
-  var sup=0,c=0,n=0,na=0;
-  activeCL.items.forEach(function(it){var r=a.respostas[it.id];if(!r||!r.ad)return;if(r.ad==='SUPEROU')sup++;else if(r.ad==='CONFORME')c++;else if(r.ad==='NAO')n++;else if(r.ad==='NA')na++;});
-  var av=sup+c+n;
-  return{sup:sup,c:c,n:n,na:na,tot:activeCL.items.length,resp:sup+c+n+na,av:av,pct:av>0?Math.round((sup+c)/av*100):0};
+function calcS(a) {
+  var sup = 0, c = 0, n = 0, na = 0;
+  activeCL.items.forEach(function(it) {
+    var r = a.respostas[it.id];
+    if (!r || !r.ad) return;
+    if (r.ad === 'SUPEROU') sup++;
+    else if (r.ad === 'CONFORME') c++;
+    else if (r.ad === 'NAO') n++;
+    else if (r.ad === 'NA') na++;
+  });
+  var av = sup + c + n;
+  return {sup: sup, c: c, n: n, na: na, tot: activeCL.items.length, resp: sup + c + n + na, av: av, pct: av > 0 ? Math.round((sup + c) / av * 100) : 0};
 }
-function calcPS(a,pilar){
-  var its=activeCL.items.filter(function(i){return i.p===pilar});
-  var sup=0,c=0,n=0,na=0;
-  its.forEach(function(it){var r=a.respostas[it.id];if(!r||!r.ad)return;if(r.ad==='SUPEROU')sup++;else if(r.ad==='CONFORME')c++;else if(r.ad==='NAO')n++;else if(r.ad==='NA')na++;});
-  var av=sup+c+n;
-  return{sup:sup,c:c,n:n,na:na,tot:its.length,av:av,pct:av>0?Math.round((sup+c)/av*100):0};
+function calcPS(a, pilar) {
+  var its = activeCL.items.filter(function(i) { return i.p === pilar; });
+  var sup = 0, c = 0, n = 0, na = 0;
+  its.forEach(function(it) {
+    var r = a.respostas[it.id];
+    if (!r || !r.ad) return;
+    if (r.ad === 'SUPEROU') sup++;
+    else if (r.ad === 'CONFORME') c++;
+    else if (r.ad === 'NAO') n++;
+    else if (r.ad === 'NA') na++;
+  });
+  var av = sup + c + n;
+  return {sup: sup, c: c, n: n, na: na, tot: its.length, av: av, pct: av > 0 ? Math.round((sup + c) / av * 100) : 0};
 }
 
-function loadData(){
-  var k=activeCL.key;
-  if(typeof window.storage!=='undefined'){
-    window.storage.get(k).then(function(r){if(r)try{audits=JSON.parse(r.value);}catch(e){}render();}).catch(function(){render();});return;
+function loadData() {
+  var k = activeCL.key;
+  if (typeof window.storage !== 'undefined') {
+    window.storage.get(k).then(function(r) { if (r) try { audits = JSON.parse(r.value); } catch(e) {} render(); }).catch(function() { render(); });
+    return;
   }
-  try{var v=localStorage.getItem(k);if(v)audits=JSON.parse(v);}
-  catch(e){var v2=gtMem(k);if(v2)try{audits=JSON.parse(v2);}catch(e2){}}
+  try { var v = localStorage.getItem(k); if (v) audits = JSON.parse(v); }
+  catch(e) { var v2 = gtMem(k); if (v2) try { audits = JSON.parse(v2); } catch(e2) {} }
   render();
 }
-function sv(){
-  var data=JSON.stringify(audits);var k=activeCL.key;
-  svMem(k,data);
-  if(typeof window.storage!=='undefined'){window.storage.set(k,data).catch(function(){});return;}
-  try{localStorage.setItem(k,data);}catch(e){}
+function sv() {
+  var data = JSON.stringify(audits), k = activeCL.key;
+  svMem(k, data);
+  if (typeof window.storage !== 'undefined') { window.storage.set(k, data).catch(function() {}); return; }
+  try { localStorage.setItem(k, data); } catch(e) {}
 }
 
-function showToast(msg,dur){
-  var t=document.getElementById('toast');if(!t)return;
-  t.textContent=msg;t.style.display='block';
+function showToast(msg, dur) {
+  var t = document.getElementById('toast'); if (!t) return;
+  t.textContent = msg; t.style.display = 'block';
   clearTimeout(window._toastTimer);
-  window._toastTimer=setTimeout(function(){t.style.display='none';},dur||3000);
+  window._toastTimer = setTimeout(function() { t.style.display = 'none'; }, dur || 3000);
 }
 
-function checkPw(){
-  var v=document.getElementById('pwInput').value;
-  if(v===SENHA){
-    var lock=document.getElementById('lock'),app=document.getElementById('appRoot');
-    lock.style.opacity='0';lock.style.transition='opacity .2s';
-    setTimeout(function(){
-      lock.style.display='none';app.style.display='block';app.style.opacity='1';
-      requestAnimationFrame(function(){requestAnimationFrame(function(){window.scrollTo(0,0);document.body.style.background='#f0f0f0';});});
-    },200);
+function checkPw() {
+  var v = document.getElementById('pwInput').value;
+  if (v === SENHA) {
+    var lock = document.getElementById('lock'), app = document.getElementById('appRoot');
+    lock.style.opacity = '0'; lock.style.transition = 'opacity .2s';
+    setTimeout(function() {
+      lock.style.display = 'none'; app.style.display = 'block'; app.style.opacity = '1';
+      requestAnimationFrame(function() { requestAnimationFrame(function() { window.scrollTo(0, 0); document.body.style.background = '#f0f0f0'; }); });
+    }, 200);
   } else {
-    var e=document.getElementById('pwErr');e.style.display='block';
-    document.getElementById('pwInput').value='';document.getElementById('pwInput').focus();
+    var e = document.getElementById('pwErr'); e.style.display = 'block';
+    document.getElementById('pwInput').value = ''; document.getElementById('pwInput').focus();
   }
 }
 document.getElementById('pwInput').focus();
 
-function openChecklist(id){
-  activeCL=CHECKLISTS[id];audits=[];curId=null;scr='home';curPil=0;
+function openChecklist(id) {
+  activeCL = CHECKLISTS[id]; audits = []; curId = null; scr = 'home'; curPil = 0;
   document.getElementById('sDir').classList.remove('on');
-  document.getElementById('sCL').style.display='block';
-  requestAnimationFrame(function(){window.scrollTo(0,0);});
+  document.getElementById('sCL').style.display = 'block';
+  requestAnimationFrame(function() { window.scrollTo(0, 0); });
   loadData();
 }
-function backToDir(){
-  document.getElementById('sCL').style.display='none';
+function backToDir() {
+  document.getElementById('sCL').style.display = 'none';
   document.getElementById('sDir').classList.add('on');
-  requestAnimationFrame(function(){window.scrollTo(0,0);});
+  requestAnimationFrame(function() { window.scrollTo(0, 0); });
 }
 
-function updProg(){
-  var a=gA();if(!a)return;
-  var r=activeCL.items.filter(function(i){return a.respostas[i.id]&&a.respostas[i.id].ad}).length;
-  var pct=Math.round(r/activeCL.items.length*100);
-  var pfl=document.getElementById('pfl'),pinf=document.getElementById('pinf'),ppct=document.getElementById('ppct');
-  if(pfl)pfl.style.width=pct+'%';
-  if(pinf)pinf.textContent=r+' de '+activeCL.items.length+' respondidos';
-  if(ppct)ppct.textContent=pct+'%';
-  var pils=getPil();
-  pils.forEach(function(pl,idx){
-    var d=document.getElementById('dot'+idx);
-    if(d){var pits=activeCL.items.filter(function(i){return i.p===pl});var done=pits.every(function(i){return a.respostas[i.id]&&a.respostas[i.id].ad});d.style.background=done?'#27A800':'#e0e0e0';if(idx===curPil)d.style.background=done?'#27A800':'#1A3272';}
+function updProg() {
+  var a = gA(); if (!a) return;
+  var r = activeCL.items.filter(function(i) { return a.respostas[i.id] && a.respostas[i.id].ad; }).length;
+  var pct = Math.round(r / activeCL.items.length * 100);
+  var pfl = document.getElementById('pfl'), pinf = document.getElementById('pinf'), ppct = document.getElementById('ppct');
+  if (pfl) pfl.style.width = pct + '%';
+  if (pinf) pinf.textContent = r + ' de ' + activeCL.items.length + ' respondidos';
+  if (ppct) ppct.textContent = pct + '%';
+  var pils = getPil();
+  pils.forEach(function(pl, idx) {
+    var d = document.getElementById('dot' + idx);
+    if (d) { var pits = activeCL.items.filter(function(i) { return i.p === pl; }); var done = pits.every(function(i) { return a.respostas[i.id] && a.respostas[i.id].ad; }); d.style.background = done ? '#27A800' : '#e0e0e0'; if (idx === curPil) d.style.background = done ? '#27A800' : '#1A3272'; }
   });
 }
 
-function render(){
-  document.querySelectorAll('#sCL .scr').forEach(function(s){s.classList.remove('on');s.innerHTML='';});
-  var mp={home:'sh',setup:'ss',audit:'sa',summary:'sm'};
-  var el=document.getElementById(mp[scr]);if(!el)return;
+function render() {
+  document.querySelectorAll('#sCL .scr').forEach(function(s) { s.classList.remove('on'); s.innerHTML = ''; });
+  var mp = {home: 'sh', setup: 'ss', audit: 'sa', summary: 'sm'};
+  var el = document.getElementById(mp[scr]); if (!el) return;
   el.classList.add('on');
-  if(scr==='home')el.innerHTML=rHome();
-  else if(scr==='setup')el.innerHTML=rSetup();
-  else if(scr==='audit'){el.innerHTML=rAudit();setTimeout(function(){window.scrollTo(0,0);},50);}
-  else if(scr==='summary')el.innerHTML=rSum();
+  if (scr === 'home') el.innerHTML = rHome();
+  else if (scr === 'setup') el.innerHTML = rSetup();
+  else if (scr === 'audit') { el.innerHTML = rAudit(); setTimeout(function() { window.scrollTo(0, 0); }, 50); }
+  else if (scr === 'summary') el.innerHTML = rSum();
 }
 
-function rHome(){
-  var sorted=audits.slice().sort(function(a,b){return b.dat.localeCompare(a.dat)});
-  var list='';
-  if(!sorted.length){list='<div class="emp"><div style="font-size:40px;margin-bottom:12px">&#128203;</div><div>Nenhuma auditoria ainda.<br>Toque em + para começar.</div></div>';}
-  else{
-    list='<div class="sec-lbl">Auditorias</div>';
-    sorted.forEach(function(a){
-      var s=calcS(a);
-      var right=a.done?'<div><div class="ar-pct" style="color:'+pC(s.pct)+'">'+s.pct+'%</div><div style="font-size:11px;color:#aaa">conformidade</div></div>':'<div style="text-align:right"><span style="background:#f0f0f0;color:#666;font-size:10px;font-weight:600;padding:3px 8px;border-radius:999px">andamento</span><div style="font-size:11px;color:#aaa;margin-top:4px">'+s.resp+'/'+activeCL.items.length+'</div></div>';
-      list+='<div class="ar" onclick="openA(\''+a.id+'\')"><div><div class="ar-name">'+a.uni+'</div><div class="ar-sub">'+a.aud+(a.cargo?' · '+a.cargo:'')+' · '+fD(a.dat)+'</div></div>'+right+'</div>';
-    });
-  }
-  return '<div class="hdr"><button class="btn-back" onclick="backToDir()">&#8592;</button><div><div class="hdr-title">'+activeCL.title+'</div><div class="hdr-sub">'+activeCL.sub+'</div></div></div>'
-    +'<div class="body">'+list+'</div>'
-    +'<div class="fab"><button onclick="scr=\'setup\';render()" aria-label="Nova auditoria">+</button></div>';
-}
-
-function rSetup(){
-  var td=new Date().toISOString().split('T')[0];
-  return '<div class="hdr"><button class="btn-back" onclick="scr=\'home\';render()">&#8592;</button><div><div class="hdr-title">Nova auditoria</div><div class="hdr-sub">'+activeCL.items.length+' itens · 9 pilares</div></div></div>'
-    +'<div class="body"><div class="card">'
-    +'<div class="fg"><label class="fl">Nome completo</label><input id="iA" type="text" placeholder="Nome completo do auditor" autocomplete="name"></div>'
-    +'<div class="fg"><label class="fl">Cargo</label><input id="iC" type="text" placeholder="Ex: Analista de Processos"></div>'
-    +'<div class="fg"><label class="fl">E-mail</label><input id="iE" type="email" placeholder="seu@email.com.br" autocomplete="email"></div>'
-    +'<div class="fg"><label class="fl">Unidade</label><select id="iU"><option value="">Selecione a unidade</option><option>Brasília</option><option>Campinas</option><option>São Paulo</option></select></div>'
-    +'<div class="fg" style="margin-bottom:0"><label class="fl">Data da visita</label><input id="iD" type="date" value="'+td+'" readonly style="background:#f0f0f0;color:#888;cursor:not-allowed"></div>'
-    +'</div></div>'
-    +'<div class="bottom-action"><button class="btn-main" onclick="startA()">&#9654; Iniciar '+activeCL.title+'</button></div>';
-}
-
-function fotosHtml(itemId,fotos){
-  if(!fotos||!fotos.length)return'';
-  return fotos.map(function(f,i){return'<div class="foto-thumb-wrap"><img src="'+f+'" alt="foto '+(i+1)+'"><button class="foto-del" onclick="removeFoto(\''+itemId+'\','+i+')">×</button></div>';}).join('');
-}
-
-function rAudit(){
-  var a=gA();if(!a)return'';
-  var pils=getPil();
-  var rCnt=activeCL.items.filter(function(i){return a.respostas[i.id]&&a.respostas[i.id].ad}).length;
-  var pct=Math.round(rCnt/activeCL.items.length*100);
-  var pl=pils[curPil];
-  var pits=activeCL.items.filter(function(i){return i.p===pl});
-  var pDone=pits.filter(function(i){return a.respostas[i.id]&&a.respostas[i.id].ad}).length;
-  var isLast=curPil===pils.length-1;
-  var dots='<div class="pil-dots">';
-  pils.forEach(function(p,idx){
-    var pits2=activeCL.items.filter(function(i){return i.p===p});
-    var done=pits2.every(function(i){return a.respostas[i.id]&&a.respostas[i.id].ad});
-    var bg=idx===curPil?(done?'#27A800':'#1A3272'):(done?'#27A800':'#e0e0e0');
-    var w=idx===curPil?'20px':'8px';
-    dots+='<div id="dot'+idx+'" style="height:8px;width:'+w+';border-radius:4px;background:'+bg+';transition:all .2s"></div>';
-  });
-  dots+='</div>';
-  var h='<div class="hdr"><button class="btn-back" onclick="if(confirm(\'Sair? O progresso foi salvo.\'))goHome()">&#8592;</button><div><div class="hdr-title">'+a.uni+'</div><div class="hdr-sub">'+a.aud+'</div></div></div>'
-    +'<div class="body">'
-    +'<div class="prog-wrap"><div class="prog-info"><span id="pinf" style="font-size:13px;color:#888">'+rCnt+' de '+activeCL.items.length+' respondidos</span><span class="prog-pct" id="ppct">'+pct+'%</span></div><div class="ptr"><div class="pfl" id="pfl" style="width:'+pct+'%"></div></div></div>'
-    +dots
-    +'<div class="pil-nav">'
-    +'<button class="btn-nav" onclick="navPil(-1)" '+(curPil===0?'disabled':'')+'>&#8592;</button>'
-    +'<div class="pil-nav-info"><div class="pil-nav-title">'+pilIcon(pl)+' '+pl+'</div><div class="pil-nav-count">'+pDone+'/'+pits.length+' respondidos · Pilar '+(curPil+1)+' de '+pils.length+'</div></div>'
-    +'<button class="btn-nav" onclick="navPil(1)" '+(isLast?'disabled':'')+'>&#8594;</button>'
-    +'</div>';
-  pits.forEach(function(it){
-    var r=a.respostas[it.id]||{};
-    var dk=activeCL.dicas[it.id]||'';
-    var fotos=r.fotos||[];
-    var showPlan=r.ad==='NAO';
-    h+='<div class="card-sm" id="ic'+it.id+'">'
-      +'<div style="font-size:15px;font-weight:600;line-height:1.45;margin-bottom:10px">'+it.q+'</div>'
-      +(dk?'<button class="db" onclick="tgDk(\''+it.id+'\')">&#128161; Ver dica do auditor</button><div class="dc" id="dk'+it.id+'"></div>':'')
-      +'<div class="ag" id="ag'+it.id+'">'
-      +'<button class="ab as'+(r.ad==='SUPEROU'?' sel':'')+'" onclick="setAd(\''+it.id+'\',\'SUPEROU\',this)"><span style="font-size:26px">&#127941;</span><span class="lbl">Superou</span></button>'
-      +'<button class="ab ac'+(r.ad==='CONFORME'?' sel':'')+'" onclick="setAd(\''+it.id+'\',\'CONFORME\',this)"><span style="font-size:26px">&#128522;</span><span class="lbl">Conforme</span></button>'
-      +'<button class="ab an'+(r.ad==='NAO'?' sel':'')+'" onclick="setAd(\''+it.id+'\',\'NAO\',this)"><span style="font-size:26px">&#128543;</span><span class="lbl">Não conf.</span></button>'
-      +'<button class="ab aa'+(r.ad==='NA'?' sel':'')+'" onclick="setAd(\''+it.id+'\',\'NA\',this)"><span style="font-size:26px">&#128566;</span><span class="lbl">N/A</span></button>'
-      +'</div>'
-      +'<span class="ta-lbl">Observações</span>'
-      +'<textarea placeholder="Descreva o que foi observado..." style="height:60px" onblur="setField(\''+it.id+'\',\'obs\',this.value)">'+(r.obs||'')+'</textarea>'
-      +'<div id="plan'+it.id+'" style="margin-top:8px;'+(showPlan?'':'display:none')+'">'
-      +'<div class="plan-box"><span class="plan-lbl">&#128203; Plano de ação</span><textarea placeholder="Descreva o plano de ação..." style="height:60px;color:#633806" onblur="setField(\''+it.id+'\',\'plan\',this.value)">'+(r.plan||'')+'</textarea></div>'
-      +'</div>'
-      +'<div class="foto-area"><div id="ft'+it.id+'">'+fotosHtml(it.id,fotos)+'</div>'
-      +(fotos.length<3?'<input type="file" accept="image/*" id="fi'+it.id+'" style="display:none" onchange="addFoto(\''+it.id+'\',this)"><button class="foto-btn" onclick="document.getElementById(\'fi'+it.id+'\').click()">&#128247; Foto</button>':'<span style="font-size:12px;color:#aaa">Máx. 3 fotos</span>')
-      +'</div></div>';
-  });
-  h+='</div><div class="bottom-action">';
-  if(isLast){
-    h+='<button class="btn-main green" onclick="finA()">&#10003; Finalizar auditoria</button>';
+function rHome() {
+  var sorted = audits.slice().sort(function(a, b) { return b.dat.localeCompare(a.dat); });
+  var list = '';
+  if (!sorted.length) {
+    list = '<div class="emp"><div style="font-size:40px;margin-bottom:12px">&#128203;</div><div>Nenhuma auditoria ainda.<br>Toque em + para comecar.</div></div>';
   } else {
-    h+='<button class="btn-main" onclick="navPil(1)">Próximo pilar: '+pilIcon(pils[curPil+1])+' '+pils[curPil+1]+' &#8594;</button>';
+    list = '<div class="sec-lbl">Auditorias</div>';
+    sorted.forEach(function(a) {
+      var s = calcS(a);
+      var right = a.done ? '<div><div class="ar-pct" style="color:' + pC(s.pct) + '">' + s.pct + '%</div><div style="font-size:11px;color:#aaa">conformidade</div></div>' : '<div style="text-align:right"><span style="background:#f0f0f0;color:#666;font-size:10px;font-weight:600;padding:3px 8px;border-radius:999px">andamento</span><div style="font-size:11px;color:#aaa;margin-top:4px">' + s.resp + '/' + activeCL.items.length + '</div></div>';
+      list += '<div class="ar" onclick="openA(\'' + a.id + '\')"><div><div class="ar-name">' + a.uni + '</div><div class="ar-sub">' + a.aud + (a.cargo ? ' · ' + a.cargo : '') + ' · ' + fD(a.dat) + '</div></div>' + right + '</div>';
+    });
   }
-  h+='</div>';
+  return '<div class="hdr"><button class="btn-back" onclick="backToDir()">&#8592;</button><div><div class="hdr-title">' + activeCL.title + '</div><div class="hdr-sub">' + activeCL.sub + '</div></div></div>'
+    + '<div class="body">' + list + '</div>'
+    + '<div class="fab"><button onclick="scr=\'setup\';render()" aria-label="Nova auditoria">+</button></div>';
+}
+
+function rSetup() {
+  var td = new Date().toISOString().split('T')[0];
+  var opts = activeCL.units.map(function(u) { return '<option>' + u + '</option>'; }).join('');
+  return '<div class="hdr"><button class="btn-back" onclick="scr=\'home\';render()">&#8592;</button><div><div class="hdr-title">Nova auditoria</div><div class="hdr-sub">' + activeCL.items.length + ' itens</div></div></div>'
+    + '<div class="body"><div class="card">'
+    + '<div class="fg"><label class="fl">Nome completo</label><input id="iA" type="text" placeholder="Nome completo do auditor" autocomplete="name"></div>'
+    + '<div class="fg"><label class="fl">Cargo</label><input id="iC" type="text" placeholder="Ex: Analista de Processos"></div>'
+    + '<div class="fg"><label class="fl">E-mail</label><input id="iE" type="email" placeholder="seu@email.com.br" autocomplete="email"></div>'
+    + '<div class="fg"><label class="fl">Unidade</label><select id="iU"><option value="">Selecione a unidade</option>' + opts + '</select></div>'
+    + '<div class="fg" style="margin-bottom:0"><label class="fl">Data da visita</label><input id="iD" type="date" value="' + td + '" readonly style="background:#f0f0f0;color:#888;cursor:not-allowed"></div>'
+    + '</div></div>'
+    + '<div class="bottom-action"><button class="btn-main" onclick="startA()">&#9654; Iniciar ' + activeCL.title + '</button></div>';
+}
+
+function fotosHtml(itemId, fotos) {
+  if (!fotos || !fotos.length) return '';
+  return fotos.map(function(f, i) { return '<div class="foto-thumb-wrap"><img src="' + f + '" alt="foto ' + (i + 1) + '"><button class="foto-del" onclick="removeFoto(\'' + itemId + '\',' + i + ')">x</button></div>'; }).join('');
+}
+
+function rAudit() {
+  var a = gA(); if (!a) return '';
+  var pils = getPil();
+  var rCnt = activeCL.items.filter(function(i) { return a.respostas[i.id] && a.respostas[i.id].ad; }).length;
+  var pct = Math.round(rCnt / activeCL.items.length * 100);
+  var pl = pils[curPil];
+  var pits = activeCL.items.filter(function(i) { return i.p === pl; });
+  var pDone = pits.filter(function(i) { return a.respostas[i.id] && a.respostas[i.id].ad; }).length;
+  var isLast = curPil === pils.length - 1;
+
+  var dots = '<div class="pil-dots">';
+  pils.forEach(function(p, idx) {
+    var pits2 = activeCL.items.filter(function(i) { return i.p === p; });
+    var done = pits2.every(function(i) { return a.respostas[i.id] && a.respostas[i.id].ad; });
+    var bg = idx === curPil ? (done ? '#27A800' : '#1A3272') : (done ? '#27A800' : '#e0e0e0');
+    var w = idx === curPil ? '20px' : '8px';
+    dots += '<div id="dot' + idx + '" style="height:8px;width:' + w + ';border-radius:4px;background:' + bg + ';transition:all .2s"></div>';
+  });
+  dots += '</div>';
+
+  var h = '<div class="hdr"><button class="btn-back" onclick="if(confirm(\'Sair? O progresso foi salvo.\'))goHome()">&#8592;</button><div><div class="hdr-title">' + a.uni + '</div><div class="hdr-sub">' + a.aud + '</div></div></div>'
+    + '<div class="body">'
+    + '<div class="prog-wrap"><div class="prog-info"><span id="pinf" style="font-size:13px;color:#888">' + rCnt + ' de ' + activeCL.items.length + ' respondidos</span><span class="prog-pct" id="ppct">' + pct + '%</span></div><div class="ptr"><div class="pfl" id="pfl" style="width:' + pct + '%"></div></div></div>'
+    + dots
+    + '<div class="pil-nav">'
+    + '<button class="btn-nav" onclick="navPil(-1)" ' + (curPil === 0 ? 'disabled' : '') + '>&#8592;</button>'
+    + '<div class="pil-nav-info"><div class="pil-nav-title">' + pilIcon(pl) + ' ' + pl + '</div><div class="pil-nav-count">' + pDone + '/' + pits.length + ' respondidos · Pilar ' + (curPil + 1) + ' de ' + pils.length + '</div></div>'
+    + '<button class="btn-nav" onclick="navPil(1)" ' + (isLast ? 'disabled' : '') + '>&#8594;</button>'
+    + '</div>';
+
+  pits.forEach(function(it) {
+    var r = a.respostas[it.id] || {};
+    var dk = activeCL.dicas[it.id] || '';
+    var fotos = r.fotos || [];
+    var showPlan = r.ad === 'NAO';
+    h += '<div class="card-sm" id="ic' + it.id + '">'
+      + '<div style="font-size:15px;font-weight:600;line-height:1.45;margin-bottom:10px">' + it.q + '</div>'
+      + (dk ? '<button class="db" onclick="tgDk(\'' + it.id + '\')">&#128161; Ver dica do auditor</button><div class="dc" id="dk' + it.id + '"></div>' : '')
+      + '<div class="ag" id="ag' + it.id + '">'
+      + '<button class="ab as' + (r.ad === 'SUPEROU' ? ' sel' : '') + '" onclick="setAd(\'' + it.id + '\',\'SUPEROU\',this)"><span style="font-size:26px">&#127941;</span><span class="lbl">Superou</span></button>'
+      + '<button class="ab ac' + (r.ad === 'CONFORME' ? ' sel' : '') + '" onclick="setAd(\'' + it.id + '\',\'CONFORME\',this)"><span style="font-size:26px">&#128522;</span><span class="lbl">Conforme</span></button>'
+      + '<button class="ab an' + (r.ad === 'NAO' ? ' sel' : '') + '" onclick="setAd(\'' + it.id + '\',\'NAO\',this)"><span style="font-size:26px">&#128543;</span><span class="lbl">Nao conf.</span></button>'
+      + '<button class="ab aa' + (r.ad === 'NA' ? ' sel' : '') + '" onclick="setAd(\'' + it.id + '\',\'NA\',this)"><span style="font-size:26px">&#128566;</span><span class="lbl">N/A</span></button>'
+      + '</div>'
+      + '<span class="ta-lbl">Observacoes</span>'
+      + '<textarea placeholder="Descreva o que foi observado..." style="height:60px" onblur="setField(\'' + it.id + '\',\'obs\',this.value)">' + (r.obs || '') + '</textarea>'
+      + '<div id="plan' + it.id + '" style="margin-top:8px;' + (showPlan ? '' : 'display:none') + '">'
+      + '<div class="plan-box"><span class="plan-lbl">&#128203; Plano de acao</span><textarea placeholder="Descreva o plano de acao..." style="height:60px;color:#633806" onblur="setField(\'' + it.id + '\',\'plan\',this.value)">' + (r.plan || '') + '</textarea></div>'
+      + '</div>'
+      + '<div class="foto-area"><div id="ft' + it.id + '">' + fotosHtml(it.id, fotos) + '</div>'
+      + (fotos.length < 3 ? '<input type="file" accept="image/*" id="fi' + it.id + '" style="display:none" onchange="addFoto(\'' + it.id + '\',this)"><button class="foto-btn" onclick="document.getElementById(\'fi' + it.id + '\').click()">&#128247; Foto</button>' : '<span style="font-size:12px;color:#aaa">Max. 3 fotos</span>')
+      + '</div></div>';
+  });
+
+  h += '</div><div class="bottom-action">';
+  if (isLast) {
+    h += '<button class="btn-main green" onclick="finA()">&#10003; Finalizar auditoria</button>';
+  } else {
+    h += '<button class="btn-main" onclick="navPil(1)">Proximo pilar: ' + pilIcon(pils[curPil + 1]) + ' ' + pils[curPil + 1] + ' &#8594;</button>';
+  }
+  h += '</div>';
   return h;
 }
 
-function rSum(){
-  var a=gA();if(!a)return'';var s=calcS(a);
-  var h='<div class="hdr"><button class="btn-back" onclick="goHome()">&#8592;</button><div><div class="hdr-title">Resultado</div><div class="hdr-sub">'+a.uni+' · '+fD(a.dat)+'</div></div><button onclick="printS()" style="background:none;border:none;color:#E8A800;font-size:22px;cursor:pointer;padding:4px;min-width:36px">&#128196;</button></div>'
-    +'<div class="body"><div class="metrics-grid">'
-    +'<div class="metric-big"><div class="mv">'+s.pct+'%</div><div class="ml">Conformidade geral</div></div>'
-    +'<div class="mc"><div class="mv" style="color:#27500A">'+s.c+'</div><div class="ml">&#128522; Conformes</div></div>'
-    +'<div class="mc"><div class="mv" style="color:#791F1F">'+s.n+'</div><div class="ml">&#128543; Não conf.</div></div>'
-    +'<div class="mc"><div class="mv">'+s.na+'</div><div class="ml">&#128566; N/A</div></div>'
-    +'</div><div class="sec-lbl">Por pilar</div>';
-  getPil().forEach(function(pl){
-    var ps=calcPS(a,pl);
-    h+='<div class="psrow"><div class="pstop"><span class="psn">'+pilIcon(pl)+' '+pl+'</span><span style="color:'+pC(ps.pct)+';font-weight:700">'+(ps.av>0?ps.pct+'%':'—')+'</span></div>'
-      +'<div class="btr"><div class="bfl" style="width:'+ps.pct+'%;background:'+pB(ps.pct)+'"></div></div>'
-      +'<div style="font-size:11px;color:#aaa;margin-top:5px">&#128522;'+ps.c+' · &#128543;'+ps.n+' · &#128566;'+ps.na+'</div></div>';
+function rSum() {
+  var a = gA(); if (!a) return '';
+  var s = calcS(a);
+  var h = '<div class="hdr"><button class="btn-back" onclick="goHome()">&#8592;</button><div><div class="hdr-title">Resultado</div><div class="hdr-sub">' + a.uni + ' · ' + fD(a.dat) + '</div></div><button onclick="printS()" style="background:none;border:none;color:#E8A800;font-size:22px;cursor:pointer;padding:4px;min-width:36px">&#128196;</button></div>'
+    + '<div class="body"><div class="metrics-grid">'
+    + '<div class="metric-big"><div class="mv">' + s.pct + '%</div><div class="ml">Conformidade geral</div></div>'
+    + '<div class="mc"><div class="mv" style="color:#1A3272">' + s.sup + '</div><div class="ml">&#127941; Superou</div></div>'
+    + '<div class="mc"><div class="mv" style="color:#27500A">' + s.c + '</div><div class="ml">&#128522; Conformes</div></div>'
+    + '<div class="mc"><div class="mv" style="color:#791F1F">' + s.n + '</div><div class="ml">&#128543; Nao conf.</div></div>'
+    + '<div class="mc"><div class="mv">' + s.na + '</div><div class="ml">&#128566; N/A</div></div>'
+    + '</div><div class="sec-lbl">Por pilar</div>';
+
+  getPil().forEach(function(pl) {
+    var ps = calcPS(a, pl);
+    h += '<div class="psrow"><div class="pstop"><span class="psn">' + pilIcon(pl) + ' ' + pl + '</span><span style="color:' + pC(ps.pct) + ';font-weight:700">' + (ps.av > 0 ? ps.pct + '%' : '--') + '</span></div>'
+      + '<div class="btr"><div class="bfl" style="width:' + ps.pct + '%;background:' + pB(ps.pct) + '"></div></div>'
+      + '<div style="font-size:11px;color:#aaa;margin-top:5px">&#127941;' + ps.sup + ' &#128522;' + ps.c + ' &#128543;' + ps.n + ' &#128566;' + ps.na + '</div></div>';
   });
-  h+='<div class="sec-lbl">Detalhamento</div>';
-  getPil().forEach(function(pl){
-    var pits=activeCL.items.filter(function(i){return i.p===pl});
-    h+='<div style="font-size:12px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;padding:12px 4px 6px">'+pl+'</div>';
-    pits.forEach(function(it){
-      var r=a.respostas[it.id]||{};var fotos=r.fotos||[];
-      h+='<div class="card-sm" style="margin-bottom:8px">'
-        +'<div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:6px"><span style="font-size:22px;flex-shrink:0">'+adEmoji(r.ad||'')+'</span><span style="font-size:13px;line-height:1.4">'+it.q+'</span></div>'
-        +(r.obs?'<div style="font-size:13px;color:#555;padding:8px;background:#f8f8f8;border-radius:8px;margin-bottom:6px"><b style="font-size:10px;color:#aaa;display:block;margin-bottom:2px">OBSERVAÇÃO</b>'+r.obs+'</div>':'')
-        +(r.plan?'<div style="font-size:13px;color:#633806;padding:8px;background:#FFF8E8;border-radius:8px;border-left:3px solid #BA7517;margin-bottom:6px"><b style="font-size:10px;color:#BA7517;display:block;margin-bottom:2px">PLANO DE AÇÃO</b>'+r.plan+'</div>':'')
-        +(fotos.length?'<div style="display:flex;flex-wrap:wrap;gap:6px">'+fotos.map(function(f){return'<img src="'+f+'" style="width:72px;height:72px;object-fit:cover;border-radius:8px">';}).join('')+'</div>':'')
-        +'</div>';
+
+  h += '<div class="sec-lbl">Detalhamento</div>';
+  getPil().forEach(function(pl) {
+    var pits = activeCL.items.filter(function(i) { return i.p === pl; });
+    h += '<div style="font-size:12px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.5px;padding:12px 4px 6px">' + pl + '</div>';
+    pits.forEach(function(it) {
+      var r = a.respostas[it.id] || {}, fotos = r.fotos || [];
+      h += '<div class="card-sm" style="margin-bottom:8px">'
+        + '<div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:6px"><span style="font-size:22px;flex-shrink:0">' + adEmoji(r.ad || '') + '</span><span style="font-size:13px;line-height:1.4">' + it.q + '</span></div>'
+        + (r.obs ? '<div style="font-size:13px;color:#555;padding:8px;background:#f8f8f8;border-radius:8px;margin-bottom:6px"><b style="font-size:10px;color:#aaa;display:block;margin-bottom:2px">OBSERVACAO</b>' + r.obs + '</div>' : '')
+        + (r.plan ? '<div style="font-size:13px;color:#633806;padding:8px;background:#FFF8E8;border-radius:8px;border-left:3px solid #BA7517;margin-bottom:6px"><b style="font-size:10px;color:#BA7517;display:block;margin-bottom:2px">PLANO DE ACAO</b>' + r.plan + '</div>' : '')
+        + (fotos.length ? '<div style="display:flex;flex-wrap:wrap;gap:6px">' + fotos.map(function(f) { return '<img src="' + f + '" style="width:72px;height:72px;object-fit:cover;border-radius:8px">'; }).join('') + '</div>' : '')
+        + '</div>';
     });
   });
-  if(!a.done){h+='<button class="btn-main outline" onclick="scr=\'audit\';curPil=0;render()" style="margin-bottom:8px">&#9998; Continuar preenchendo</button>';}
-  h+='<button class="btn-main gold" onclick="sendEmail()" style="margin-bottom:8px">&#128231; Enviar e-mail + anexar PDF</button>'
-    +'<button class="btn-main" onclick="printS()" style="margin-bottom:8px">&#128196; Exportar PDF</button>'
-    +'<button class="btn-main outline" style="color:#791F1F;border-color:#f5c0c0" onclick="if(confirm(\'Excluir?\'))delA()">&#128465; Excluir</button>'
-    +'</div>';
-  if(!a.done){h+='<div class="bottom-action"><button class="btn-main green" onclick="finA()">&#10003; Concluir auditoria</button></div>';}
+
+  if (!a.done) { h += '<button class="btn-main outline" onclick="scr=\'audit\';curPil=0;render()" style="margin-bottom:8px">&#9998; Continuar preenchendo</button>'; }
+  h += '<button class="btn-main gold" onclick="sendEmail()" style="margin-bottom:8px">&#128231; Enviar e-mail + anexar PDF</button>'
+    + '<button class="btn-main" onclick="printS()" style="margin-bottom:8px">&#128196; Exportar PDF</button>'
+    + '<button class="btn-main outline" style="color:#791F1F;border-color:#f5c0c0" onclick="if(confirm(\'Excluir?\'))delA()">&#128465; Excluir</button>'
+    + '</div>';
+  if (!a.done) { h += '<div class="bottom-action"><button class="btn-main green" onclick="finA()">&#10003; Concluir auditoria</button></div>'; }
   return h;
 }
 
-function goHome(){scr='home';render();}
-function openA(id){curId=id;curPil=0;var a=audits.find(function(x){return x.id===id});scr=a.done?'summary':'audit';render();}
+function goHome() { scr = 'home'; render(); }
+function openA(id) { curId = id; curPil = 0; var a = audits.find(function(x) { return x.id === id; }); scr = a.done ? 'summary' : 'audit'; render(); }
+function navPil(dir) { var pils = getPil(); var next = curPil + dir; if (next < 0 || next >= pils.length) return; curPil = next; render(); }
 
-function navPil(dir){
-  var pils=getPil();
-  var next=curPil+dir;
-  if(next<0||next>=pils.length)return;
-  curPil=next;render();
+function startA() {
+  var au = document.getElementById('iA').value.trim();
+  var ca = document.getElementById('iC').value.trim();
+  var em = document.getElementById('iE').value.trim();
+  var un = document.getElementById('iU').value;
+  var dt = document.getElementById('iD').value;
+  if (!au || !un) { alert('Preencha o nome completo e selecione a unidade.'); return; }
+  audits.push({id: uid(), aud: au, cargo: ca, email: em, uni: un, dat: dt, done: false, startTime: new Date().toISOString(), endTime: null, respostas: {}});
+  curId = audits[audits.length - 1].id; curPil = 0; sv(); scr = 'audit'; render();
 }
-
-function startA(){
-  var au=document.getElementById('iA').value.trim();
-  var ca=document.getElementById('iC').value.trim();
-  var em=document.getElementById('iE').value.trim();
-  var un=document.getElementById('iU').value;
-  var dt=document.getElementById('iD').value;
-  if(!au||!un){alert('Preencha o nome completo e selecione a unidade.');return;}
-  audits.push({id:uid(),aud:au,cargo:ca,email:em,uni:un,dat:dt,done:false,startTime:new Date().toISOString(),endTime:null,respostas:{}});
-  curId=audits[audits.length-1].id;curPil=0;sv();scr='audit';render();
+function tgDk(id) { var el = document.getElementById('dk' + id); if (!el) return; if (!el.textContent) el.textContent = activeCL.dicas[id] || ''; el.style.display = el.style.display === 'block' ? 'none' : 'block'; }
+function setAd(itemId, value, btn) {
+  var a = gA(); if (!a) return;
+  if (!a.respostas[itemId]) a.respostas[itemId] = {};
+  a.respostas[itemId].ad = value;
+  var grp = document.getElementById('ag' + itemId);
+  if (grp) grp.querySelectorAll('.ab').forEach(function(b) { b.classList.toggle('sel', b === btn); });
+  var planDiv = document.getElementById('plan' + itemId);
+  if (planDiv) planDiv.style.display = (value === 'NAO') ? 'block' : 'none';
+  var card = document.getElementById('ic' + itemId);
+  if (card) { card.classList.remove('ic-pending'); var badge = card.querySelector('.ic-pending-badge'); if (badge) badge.remove(); }
+  updProg(); sv();
 }
-function tgDk(id){var el=document.getElementById('dk'+id);if(!el)return;if(!el.textContent)el.textContent=activeCL.dicas[id]||'';el.style.display=el.style.display==='block'?'none':'block';}
-function setAd(itemId,value,btn){
-  var a=gA();if(!a)return;
-  if(!a.respostas[itemId])a.respostas[itemId]={};
-  a.respostas[itemId].ad=value;
-  var grp=document.getElementById('ag'+itemId);
-  if(grp)grp.querySelectorAll('.ab').forEach(function(b){b.classList.toggle('sel',b===btn);});
-  var planDiv=document.getElementById('plan'+itemId);
-  if(planDiv)planDiv.style.display=(value==='NAO')?'block':'none';
-  var card=document.getElementById('ic'+itemId);
-  if(card){card.classList.remove('ic-pending');var badge=card.querySelector('.ic-pending-badge');if(badge)badge.remove();}
-  updProg();sv();
+function setField(itemId, field, value) { var a = gA(); if (!a) return; if (!a.respostas[itemId]) a.respostas[itemId] = {}; a.respostas[itemId][field] = value; sv(); }
+function addFoto(itemId, input) {
+  var file = input.files[0]; if (!file) return;
+  var a = gA(); if (!a) return;
+  if (!a.respostas[itemId]) a.respostas[itemId] = {};
+  var fotos = a.respostas[itemId].fotos || [];
+  if (fotos.length >= 3) { alert('Maximo de 3 fotos.'); return; }
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var img = new Image();
+    img.onload = function() {
+      var MAX = 600, q = 0.65, w = img.width, h = img.height;
+      if (w > MAX || h > MAX) { if (w > h) { h = Math.round(h * MAX / w); w = MAX; } else { w = Math.round(w * MAX / h); h = MAX; } }
+      var cv = document.createElement('canvas'); cv.width = w; cv.height = h; cv.getContext('2d').drawImage(img, 0, 0, w, h);
+      var data = cv.toDataURL('image/jpeg', q);
+      a.respostas[itemId].fotos = fotos.concat([data]); sv();
+      var ft = document.getElementById('ft' + itemId); if (ft) ft.innerHTML = fotosHtml(itemId, a.respostas[itemId].fotos);
+      input.value = '';
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
 }
-function setField(itemId,field,value){var a=gA();if(!a)return;if(!a.respostas[itemId])a.respostas[itemId]={};a.respostas[itemId][field]=value;sv();}
-function addFoto(itemId,input){
-  var file=input.files[0];if(!file)return;var a=gA();if(!a)return;
-  if(!a.respostas[itemId])a.respostas[itemId]={};
-  var fotos=a.respostas[itemId].fotos||[];
-  if(fotos.length>=3){alert('Máximo de 3 fotos.');return;}
-  var reader=new FileReader();
-  reader.onload=function(e){
-    var img=new Image();
-    img.onload=function(){
-      var MAX=600,q=0.65,w=img.width,h=img.height;
-      if(w>MAX||h>MAX){if(w>h){h=Math.round(h*MAX/w);w=MAX;}else{w=Math.round(w*MAX/h);h=MAX;}}
-      var cv=document.createElement('canvas');cv.width=w;cv.height=h;cv.getContext('2d').drawImage(img,0,0,w,h);
-      var data=cv.toDataURL('image/jpeg',q);
-      a.respostas[itemId].fotos=fotos.concat([data]);sv();
-      var ft=document.getElementById('ft'+itemId);if(ft)ft.innerHTML=fotosHtml(itemId,a.respostas[itemId].fotos);
-      input.value='';
-    };img.src=e.target.result;
-  };reader.readAsDataURL(file);
+function removeFoto(itemId, idx) {
+  var a = gA(); if (!a) return;
+  if (!a.respostas[itemId] || !a.respostas[itemId].fotos) return;
+  a.respostas[itemId].fotos.splice(idx, 1); sv();
+  var ft = document.getElementById('ft' + itemId); if (ft) ft.innerHTML = fotosHtml(itemId, a.respostas[itemId].fotos);
 }
-function removeFoto(itemId,idx){
-  var a=gA();if(!a)return;
-  if(!a.respostas[itemId]||!a.respostas[itemId].fotos)return;
-  a.respostas[itemId].fotos.splice(idx,1);sv();
-  var ft=document.getElementById('ft'+itemId);if(ft)ft.innerHTML=fotosHtml(itemId,a.respostas[itemId].fotos);
-}
-function finA(){
-  var a=gA();if(!a)return;
-  var pils=getPil();
-  var pilPending=[];
-  pils.forEach(function(pl){
-    var cnt=activeCL.items.filter(function(i){return i.p===pl&&(!a.respostas[i.id]||!a.respostas[i.id].ad);}).length;
-    if(cnt>0)pilPending.push(pl+' ('+cnt+')');
+function finA() {
+  var a = gA(); if (!a) return;
+  var pils = getPil();
+  var pilPending = [];
+  pils.forEach(function(pl) {
+    var cnt = activeCL.items.filter(function(i) { return i.p === pl && (!a.respostas[i.id] || !a.respostas[i.id].ad); }).length;
+    if (cnt > 0) pilPending.push(pl + ' (' + cnt + ')');
   });
-  if(pilPending.length>0){
-    var firstIdx=pils.findIndex(function(pl){return activeCL.items.some(function(i){return i.p===pl&&(!a.respostas[i.id]||!a.respostas[i.id].ad);});});
-    if(firstIdx>=0)curPil=firstIdx;
+  if (pilPending.length > 0) {
+    var firstIdx = pils.findIndex(function(pl) { return activeCL.items.some(function(i) { return i.p === pl && (!a.respostas[i.id] || !a.respostas[i.id].ad); }); });
+    if (firstIdx >= 0) curPil = firstIdx;
     render();
-    setTimeout(function(){
-      var pl=pils[firstIdx];
-      activeCL.items.filter(function(i){return i.p===pl&&(!a.respostas[i.id]||!a.respostas[i.id].ad);}).forEach(function(it){
-        var card=document.getElementById('ic'+it.id);
-        if(card){card.classList.add('ic-pending');if(!card.querySelector('.ic-pending-badge')){var nb=document.createElement('div');nb.className='ic-pending-badge';nb.textContent='Pendente';card.insertBefore(nb,card.firstChild);}}
+    setTimeout(function() {
+      var pl = pils[firstIdx];
+      activeCL.items.filter(function(i) { return i.p === pl && (!a.respostas[i.id] || !a.respostas[i.id].ad); }).forEach(function(it) {
+        var card = document.getElementById('ic' + it.id);
+        if (card) { card.classList.add('ic-pending'); if (!card.querySelector('.ic-pending-badge')) { var nb = document.createElement('div'); nb.className = 'ic-pending-badge'; nb.textContent = 'Pendente'; card.insertBefore(nb, card.firstChild); } }
       });
-      showToast('Preencha todos os itens antes de finalizar. Pendentes: '+pilPending.join(', '),5000);
-    },200);
+      showToast('Preencha todos os itens antes de finalizar. Pendentes: ' + pilPending.join(', '), 5000);
+    }, 200);
     return;
   }
-  a.done=true;a.endTime=new Date().toISOString();sv();scr='summary';render();
-  setTimeout(function(){printS();setTimeout(function(){sendEmail();},1500);},400);
+  a.done = true; a.endTime = new Date().toISOString(); sv(); scr = 'summary'; render();
+  setTimeout(function() { printS(); setTimeout(function() { sendEmail(); }, 1500); }, 400);
 }
-function delA(){audits=audits.filter(function(a){return a.id!==curId;});sv();goHome();}
+function delA() { audits = audits.filter(function(a) { return a.id !== curId; }); sv(); goHome(); }
 
-function sendEmail(){
-  var a=gA();if(!a)return;var s=calcS(a);
-  var dest=a.email&&a.email.length?a.email:EMAIL_GESTOR;
-  var lines=[activeCL.title.toUpperCase()+' - MANDIC','========================','Unidade: '+a.uni,'Auditor: '+a.aud+(a.cargo?' | '+a.cargo:'')+(a.email?' | '+a.email:''),'Data: '+fD(a.dat),'Inicio: '+fTime(a.startTime)+(a.endTime?' | Fim: '+fTime(a.endTime):''),'Score geral: '+s.pct+'%','','RESULTADO POR PILAR','--------------------'];
-  getPil().forEach(function(pl){var ps=calcPS(a,pl);lines.push((ps.pct>=80?'OK':ps.pct>=50?'~':'X')+' '+pl+': '+(ps.av>0?ps.pct+'%':'—'));});
-  var ncs=[];
-  activeCL.items.forEach(function(it){var r=a.respostas[it.id];if(!r||!r.ad)return;if(r.ad==='NAO'){ncs.push('X '+it.q+(r.obs?' -> '+r.obs:'')+(r.plan?' | Plano: '+r.plan:''));}});
-  if(ncs.length){lines.push('','NAO CONFORMES ('+ncs.length+')','--------------------');ncs.forEach(function(n){lines.push(n);});}
-  lines.push('','========================','Sao Leopoldo Mandic - Central de Checklists');
-  var subj=encodeURIComponent('['+activeCL.emailTag+'] '+a.uni+' - '+fD(a.dat)+' ('+s.pct+'%)');
-  var body=encodeURIComponent(lines.join('\n'));
-  var mailto='mailto:'+dest+(dest!==EMAIL_GESTOR?'?cc='+encodeURIComponent(EMAIL_GESTOR)+'&':'?')+'subject='+subj+'&body='+body;
-  window.location.href=mailto;
+function sendEmail() {
+  var a = gA(); if (!a) return;
+  var s = calcS(a);
+  var dest = a.email && a.email.length ? a.email : EMAIL_GESTOR;
+  var lines = [activeCL.title.toUpperCase() + ' - MANDIC', '========================', 'Unidade: ' + a.uni, 'Auditor: ' + a.aud + (a.cargo ? ' | ' + a.cargo : '') + (a.email ? ' | ' + a.email : ''), 'Data: ' + fD(a.dat), 'Inicio: ' + fTime(a.startTime) + (a.endTime ? ' | Fim: ' + fTime(a.endTime) : ''), 'Score geral: ' + s.pct + '%', '', 'RESULTADO POR PILAR', '--------------------'];
+  getPil().forEach(function(pl) { var ps = calcPS(a, pl); lines.push((ps.pct >= 80 ? 'OK' : ps.pct >= 50 ? '~' : 'X') + ' ' + pl + ': ' + (ps.av > 0 ? ps.pct + '%' : '--')); });
+  var ncs = [];
+  activeCL.items.forEach(function(it) { var r = a.respostas[it.id]; if (!r || !r.ad) return; if (r.ad === 'NAO') { ncs.push('X ' + it.q + (r.obs ? ' -> ' + r.obs : '') + (r.plan ? ' | Plano: ' + r.plan : '')); } });
+  if (ncs.length) { lines.push('', 'NAO CONFORMES (' + ncs.length + ')', '--------------------'); ncs.forEach(function(n) { lines.push(n); }); }
+  lines.push('', '========================', 'Sao Leopoldo Mandic - Central de Checklists');
+  var subj = encodeURIComponent('[' + activeCL.emailTag + '] ' + a.uni + ' - ' + fD(a.dat) + ' (' + s.pct + '%)');
+  var body = encodeURIComponent(lines.join('\n'));
+  var mailto = 'mailto:' + dest + (dest !== EMAIL_GESTOR ? '?cc=' + encodeURIComponent(EMAIL_GESTOR) + '&' : '?') + 'subject=' + subj + '&body=' + body;
+  window.location.href = mailto;
 }
 
-function printS(){
-  var a=gA();if(!a)return;
-  var s=calcS(a);
-  var pils=getPil();
-  var now=new Date().toLocaleDateString('pt-BR');
-  var dur='--';
-  if(a.startTime&&a.endTime){
-    var dm=Math.round((new Date(a.endTime)-new Date(a.startTime))/60000);
-    dur=dm>=60?Math.floor(dm/60)+'h '+(dm%60)+'min':dm+'min';
-  }
-  var N='#1A3272';
-  var G='#E8A800';
-  var W='#ffffff';
-  var h=[];
+function printS() {
+  var a = gA(); if (!a) return;
+  var s = calcS(a), pils = getPil();
+  var now = new Date().toLocaleDateString('pt-BR');
+  var dur = '--';
+  if (a.startTime && a.endTime) { var dm = Math.round((new Date(a.endTime) - new Date(a.startTime)) / 60000); dur = dm >= 60 ? Math.floor(dm / 60) + 'h ' + (dm % 60) + 'min' : dm + 'min'; }
+  var N = '#1A3272', G = '#E8A800', W = '#ffffff';
+  var h = [];
 
-  function infoCell(lbl,val,vc){
+  function iCell(lbl, val, vc) {
     h.push('<div style="background:rgba(255,255,255,.1);border-radius:5px;padding:7px 10px">');
-    h.push('<div style="font-size:8px;color:rgba(255,255,255,.45);text-transform:uppercase;margin-bottom:2px">'+lbl+'</div>');
-    h.push('<div style="font-size:11px;font-weight:700;color:'+(vc||W)+'">'+val+'</div>');
+    h.push('<div style="font-size:8px;color:rgba(255,255,255,.45);text-transform:uppercase;margin-bottom:2px">' + lbl + '</div>');
+    h.push('<div style="font-size:11px;font-weight:700;color:' + (vc || W) + '">' + val + '</div>');
     h.push('</div>');
   }
 
-  // CAPA
-  h.push('<div style="background:'+N+';color:'+W+';padding:20px;font-family:Arial,sans-serif;page-break-after:always">');
+  h.push('<div style="background:' + N + ';color:' + W + ';padding:20px;font-family:Arial,sans-serif;page-break-after:always">');
   h.push('<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px">');
-  h.push('<div>');
-  h.push('<div style="font-size:9px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:5px">Sao Leopoldo Mandic</div>');
-  h.push('<div style="font-size:20px;font-weight:700;color:'+G+'">'+activeCL.title+'</div>');
-  h.push('<div style="font-size:10px;color:rgba(255,255,255,.5);margin-top:3px">Relatorio de Auditoria Operacional</div>');
-  h.push('</div>');
-  h.push('<div style="background:'+G+';border-radius:10px;padding:10px 18px;text-align:center">');
-  h.push('<div style="font-size:32px;font-weight:700;color:'+N+';line-height:1">'+s.pct+'%</div>');
-  h.push('<div style="font-size:9px;color:'+N+';opacity:.75;margin-top:2px">conformidade</div>');
+  h.push('<div><div style="font-size:9px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:5px">Sao Leopoldo Mandic</div>');
+  h.push('<div style="font-size:20px;font-weight:700;color:' + G + '">' + activeCL.title + '</div>');
+  h.push('<div style="font-size:10px;color:rgba(255,255,255,.5);margin-top:3px">Relatorio de Auditoria</div></div>');
+  h.push('<div style="background:' + G + ';border-radius:10px;padding:10px 18px;text-align:center">');
+  h.push('<div style="font-size:32px;font-weight:700;color:' + N + ';line-height:1">' + s.pct + '%</div>');
+  h.push('<div style="font-size:9px;color:' + N + ';opacity:.75;margin-top:2px">conformidade</div>');
   h.push('</div></div>');
-  h.push('<div style="background:'+G+';height:2px;margin-bottom:14px"></div>');
-
+  h.push('<div style="background:' + G + ';height:2px;margin-bottom:14px"></div>');
   h.push('<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:8px">');
-  infoCell('Data',fD(a.dat));
-  infoCell('Inicio',fTime(a.startTime));
-  infoCell('Fim',fTime(a.endTime));
-  infoCell('Duracao',dur);
+  iCell('Data', fD(a.dat)); iCell('Inicio', fTime(a.startTime)); iCell('Fim', fTime(a.endTime)); iCell('Duracao', dur);
   h.push('</div>');
-
   h.push('<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">');
-  infoCell('Unidade',a.uni);
-  infoCell('Auditor',a.aud+(a.cargo?' - '+a.cargo:''));
+  iCell('Unidade', a.uni); iCell('Auditor', a.aud + (a.cargo ? ' - ' + a.cargo : ''));
   h.push('</div>');
-
-  h.push('<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px">');
-  infoCell('Conformes',s.c,'#7fc77f');
-  infoCell('Nao conformes',s.n,'#e08080');
-  infoCell('N/A',s.na);
+  h.push('<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:16px">');
+  iCell('Superou', s.sup, '#aad4ff'); iCell('Conformes', s.c, '#7fc77f'); iCell('Nao conformes', s.n, '#e08080'); iCell('N/A', s.na);
   h.push('</div>');
-
-  h.push('<div style="font-size:10px;font-weight:700;color:'+G+';border-bottom:1px solid rgba(255,255,255,.2);padding-bottom:5px;margin-bottom:8px">Resultado por Pilar</div>');
+  h.push('<div style="font-size:10px;font-weight:700;color:' + G + ';border-bottom:1px solid rgba(255,255,255,.2);padding-bottom:5px;margin-bottom:8px">Resultado por Pilar</div>');
   h.push('<table style="width:100%;border-collapse:collapse">');
-  h.push('<thead><tr>');
-  h.push('<th style="font-size:8px;font-weight:400;color:rgba(255,255,255,.4);text-align:left;padding:4px 8px;border-bottom:1px solid rgba(255,255,255,.1)">Pilar</th>');
-  h.push('<th style="font-size:8px;font-weight:400;color:rgba(255,255,255,.4);text-align:center;padding:4px 8px;border-bottom:1px solid rgba(255,255,255,.1)">Conf.</th>');
-  h.push('<th style="font-size:8px;font-weight:400;color:rgba(255,255,255,.4);text-align:center;padding:4px 8px;border-bottom:1px solid rgba(255,255,255,.1)">N.Conf.</th>');
-  h.push('<th style="font-size:8px;font-weight:400;color:rgba(255,255,255,.4);text-align:center;padding:4px 8px;border-bottom:1px solid rgba(255,255,255,.1)">N/A</th>');
-  h.push('<th style="font-size:8px;font-weight:400;color:rgba(255,255,255,.4);text-align:right;padding:4px 8px;border-bottom:1px solid rgba(255,255,255,.1)">Score</th>');
-  h.push('</tr></thead><tbody>');
-  pils.forEach(function(pl){
-    var ps=calcPS(a,pl);
-    var pct=ps.av>0?ps.pct:null;
-    var cor=pct===null?'#888':pct>=80?'#7fc77f':pct>=50?G:'#e08080';
-    var bg=pct===null?'transparent':pct>=80?'rgba(39,201,95,.12)':pct>=50?'rgba(232,168,0,.12)':'rgba(226,75,74,.12)';
-    h.push('<tr style="background:'+bg+'">');
-    h.push('<td style="padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.07);font-size:10px;color:'+W+'">'+pl+'</td>');
-    h.push('<td style="padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.07);text-align:center;font-size:11px;color:#7fc77f">'+ps.c+'</td>');
-    h.push('<td style="padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.07);text-align:center;font-size:11px;color:#e08080">'+ps.n+'</td>');
-    h.push('<td style="padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.07);text-align:center;font-size:11px;color:#aaa">'+ps.na+'</td>');
-    h.push('<td style="padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.07);text-align:right;font-weight:700;font-size:12px;color:'+cor+'">'+(pct===null?'--':pct+'%')+'</td>');
+  h.push('<thead><tr><th style="font-size:8px;font-weight:400;color:rgba(255,255,255,.4);text-align:left;padding:4px 8px;border-bottom:1px solid rgba(255,255,255,.1)">Pilar</th><th style="font-size:8px;font-weight:400;color:rgba(255,255,255,.4);text-align:center;padding:4px 8px;border-bottom:1px solid rgba(255,255,255,.1)">Superou</th><th style="font-size:8px;font-weight:400;color:rgba(255,255,255,.4);text-align:center;padding:4px 8px;border-bottom:1px solid rgba(255,255,255,.1)">Conf.</th><th style="font-size:8px;font-weight:400;color:rgba(255,255,255,.4);text-align:center;padding:4px 8px;border-bottom:1px solid rgba(255,255,255,.1)">N.Conf.</th><th style="font-size:8px;font-weight:400;color:rgba(255,255,255,.4);text-align:center;padding:4px 8px;border-bottom:1px solid rgba(255,255,255,.1)">N/A</th><th style="font-size:8px;font-weight:400;color:rgba(255,255,255,.4);text-align:right;padding:4px 8px;border-bottom:1px solid rgba(255,255,255,.1)">Score</th></tr></thead><tbody>');
+  pils.forEach(function(pl) {
+    var ps = calcPS(a, pl);
+    var pct = ps.av > 0 ? ps.pct : null;
+    var cor = pct === null ? '#888' : pct >= 80 ? '#7fc77f' : pct >= 50 ? G : '#e08080';
+    var bg = pct === null ? 'transparent' : pct >= 80 ? 'rgba(39,201,95,.12)' : pct >= 50 ? 'rgba(232,168,0,.12)' : 'rgba(226,75,74,.12)';
+    h.push('<tr style="background:' + bg + '">');
+    h.push('<td style="padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.07);font-size:10px;color:' + W + '">' + pl + '</td>');
+    h.push('<td style="padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.07);text-align:center;font-size:11px;color:#aad4ff">' + ps.sup + '</td>');
+    h.push('<td style="padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.07);text-align:center;font-size:11px;color:#7fc77f">' + ps.c + '</td>');
+    h.push('<td style="padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.07);text-align:center;font-size:11px;color:#e08080">' + ps.n + '</td>');
+    h.push('<td style="padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.07);text-align:center;font-size:11px;color:#aaa">' + ps.na + '</td>');
+    h.push('<td style="padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.07);text-align:right;font-weight:700;font-size:12px;color:' + cor + '">' + (pct === null ? '--' : pct + '%') + '</td>');
     h.push('</tr>');
   });
   h.push('</tbody></table>');
-
-  var ncList=activeCL.items.filter(function(it){var r=a.respostas[it.id];return r&&r.ad==='NAO';});
-  if(ncList.length){
-    h.push('<div style="margin-top:12px">');
-    h.push('<div style="font-size:9px;font-weight:700;color:'+G+';border-bottom:1px solid rgba(255,255,255,.2);padding-bottom:3px;margin-bottom:5px">Nao Conformes ('+ncList.length+')</div>');
-    ncList.forEach(function(it){
-      var r=a.respostas[it.id];
-      h.push('<div style="font-size:9px;color:rgba(255,255,255,.8);padding:3px 0;border-bottom:1px solid rgba(255,255,255,.06)">X '+it.q+(r.obs?' - '+r.obs:'')+'</div>');
-    });
+  var ncList = activeCL.items.filter(function(it) { var r = a.respostas[it.id]; return r && r.ad === 'NAO'; });
+  if (ncList.length) {
+    h.push('<div style="margin-top:12px"><div style="font-size:9px;font-weight:700;color:' + G + ';border-bottom:1px solid rgba(255,255,255,.2);padding-bottom:3px;margin-bottom:5px">Nao Conformes (' + ncList.length + ')</div>');
+    ncList.forEach(function(it) { var r = a.respostas[it.id]; h.push('<div style="font-size:9px;color:rgba(255,255,255,.8);padding:3px 0;border-bottom:1px solid rgba(255,255,255,.06)">X ' + it.q + (r.obs ? ' - ' + r.obs : '') + '</div>'); });
     h.push('</div>');
   }
-  h.push('<div style="margin-top:10px;font-size:7px;color:rgba(255,255,255,.25);text-align:center;border-top:1px solid rgba(255,255,255,.1);padding-top:6px">Gerado em '+now+'</div>');
+  h.push('<div style="margin-top:10px;font-size:7px;color:rgba(255,255,255,.25);text-align:center;border-top:1px solid rgba(255,255,255,.1);padding-top:6px">Gerado em ' + now + '</div>');
   h.push('</div>');
 
-  // PÁGINAS POR PILAR
-  pils.forEach(function(pl){
-    var ps=calcPS(a,pl);
-    var pct=ps.av>0?ps.pct:null;
-    var corPct=pct===null?'#aaa':pct>=80?'#7fc77f':pct>=50?G:'#e08080';
+  pils.forEach(function(pl) {
+    var ps = calcPS(a, pl);
+    var pct = ps.av > 0 ? ps.pct : null;
+    var corPct = pct === null ? '#aaa' : pct >= 80 ? '#7fc77f' : pct >= 50 ? G : '#e08080';
     h.push('<div style="page-break-before:always;font-family:Arial,sans-serif">');
-    h.push('<div style="background:'+N+';padding:12px 16px;display:flex;justify-content:space-between;align-items:center">');
-    h.push('<div>');
-    h.push('<div style="font-size:15px;font-weight:700;color:'+G+'">'+pl+'</div>');
-    h.push('<div style="font-size:9px;color:rgba(255,255,255,.5);margin-top:2px">'+ps.tot+' itens</div>');
-    h.push('</div>');
-    h.push('<div style="text-align:right">');
-    h.push('<div style="font-size:26px;font-weight:700;color:'+corPct+'">'+(pct===null?'--':pct+'%')+'</div>');
-    h.push('<div style="font-size:9px;color:rgba(255,255,255,.5)">C:'+ps.c+' NC:'+ps.n+' N/A:'+ps.na+'</div>');
-    h.push('</div></div>');
-    h.push('<div style="background:'+G+';height:3px"></div>');
+    h.push('<div style="background:' + N + ';padding:12px 16px;display:flex;justify-content:space-between;align-items:center">');
+    h.push('<div><div style="font-size:15px;font-weight:700;color:' + G + '">' + pl + '</div><div style="font-size:9px;color:rgba(255,255,255,.5);margin-top:2px">' + ps.tot + ' itens</div></div>');
+    h.push('<div style="text-align:right"><div style="font-size:26px;font-weight:700;color:' + corPct + '">' + (pct === null ? '--' : pct + '%') + '</div><div style="font-size:9px;color:rgba(255,255,255,.5)">S:' + ps.sup + ' C:' + ps.c + ' NC:' + ps.n + ' N/A:' + ps.na + '</div></div></div>');
+    h.push('<div style="background:' + G + ';height:3px"></div>');
     h.push('<div style="padding:10px 12px 14px">');
-
-    var num=0;
-    activeCL.items.filter(function(i){return i.p===pl;}).forEach(function(it){
+    var num = 0;
+    activeCL.items.filter(function(i) { return i.p === pl; }).forEach(function(it) {
       num++;
-      var r=a.respostas[it.id]||{};
-      var bgCard=r.ad==='CONFORME'?'#f0fbe8':r.ad==='NAO'?'#fff0f0':'#fafafa';
-      var bdCard=r.ad==='CONFORME'?'#b8e0a0':r.ad==='NAO'?'#f5b8b8':'#dde3f0';
-      var statusTxt=r.ad==='CONFORME'?'Conforme':r.ad==='NAO'?'Nao conforme':r.ad==='NA'?'N/A':'Sem resposta';
-      var statusColor=r.ad==='CONFORME'?'#27A800':r.ad==='NAO'?'#cc0000':r.ad==='NA'?'#888':'#aaa';
-
-      h.push('<div style="display:flex;gap:10px;padding:8px 10px;margin-bottom:5px;background:'+bgCard+';border:1px solid '+bdCard+';border-radius:5px;page-break-inside:avoid;break-inside:avoid">');
-      h.push('<div style="flex-shrink:0;width:28px;text-align:center;padding-top:2px">');
-      h.push('<div style="font-size:8px;color:#aaa;margin-bottom:3px">'+num+'</div>');
-      h.push('<div style="font-size:10px;font-weight:700;color:'+statusColor+'">'+statusTxt+'</div>');
-      h.push('</div>');
-      h.push('<div style="flex:1">');
-      h.push('<div style="font-size:11px;font-weight:600;color:'+N+';line-height:1.5">'+it.q+'</div>');
-      if(r.obs){h.push('<div style="margin-top:4px;font-size:10px;color:#444;padding:3px 7px;background:rgba(0,0,0,.04);border-radius:3px">Obs: '+r.obs+'</div>');}
-      if(r.plan){h.push('<div style="margin-top:4px;font-size:10px;color:#633806;padding:3px 7px;background:#FFF8E8;border-left:3px solid '+G+';border-radius:0 3px 3px 0">Plano: '+r.plan+'</div>');}
-      if(r.fotos&&r.fotos.length){
-        h.push('<div style="margin-top:5px;display:flex;flex-wrap:wrap;gap:4px">');
-        r.fotos.forEach(function(f){h.push('<img src="'+f+'" style="width:50px;height:50px;object-fit:cover;border-radius:3px;border:1px solid #ddd">');});
-        h.push('</div>');
-      }
+      var r = a.respostas[it.id] || {};
+      var bgCard = r.ad === 'SUPEROU' ? '#e8eef8' : r.ad === 'CONFORME' ? '#f0fbe8' : r.ad === 'NAO' ? '#fff0f0' : '#fafafa';
+      var bdCard = r.ad === 'SUPEROU' ? '#1A3272' : r.ad === 'CONFORME' ? '#b8e0a0' : r.ad === 'NAO' ? '#f5b8b8' : '#dde3f0';
+      var statusTxt = adLbl(r.ad || '');
+      var statusColor = r.ad === 'SUPEROU' ? '#1A3272' : r.ad === 'CONFORME' ? '#27A800' : r.ad === 'NAO' ? '#cc0000' : r.ad === 'NA' ? '#888' : '#aaa';
+      h.push('<div style="display:flex;gap:10px;padding:8px 10px;margin-bottom:5px;background:' + bgCard + ';border:1px solid ' + bdCard + ';border-radius:5px;page-break-inside:avoid;break-inside:avoid">');
+      h.push('<div style="flex-shrink:0;width:28px;text-align:center;padding-top:2px"><div style="font-size:8px;color:#aaa;margin-bottom:3px">' + num + '</div><div style="font-size:10px;font-weight:700;color:' + statusColor + '">' + statusTxt + '</div></div>');
+      h.push('<div style="flex:1"><div style="font-size:11px;font-weight:600;color:' + N + ';line-height:1.5">' + it.q + '</div>');
+      if (r.obs) h.push('<div style="margin-top:4px;font-size:10px;color:#444;padding:3px 7px;background:rgba(0,0,0,.04);border-radius:3px">Obs: ' + r.obs + '</div>');
+      if (r.plan) h.push('<div style="margin-top:4px;font-size:10px;color:#633806;padding:3px 7px;background:#FFF8E8;border-left:3px solid ' + G + ';border-radius:0 3px 3px 0">Plano: ' + r.plan + '</div>');
+      if (r.fotos && r.fotos.length) { h.push('<div style="margin-top:5px;display:flex;flex-wrap:wrap;gap:4px">'); r.fotos.forEach(function(f) { h.push('<img src="' + f + '" style="width:50px;height:50px;object-fit:cover;border-radius:3px;border:1px solid #ddd">'); }); h.push('</div>'); }
       h.push('</div></div>');
     });
     h.push('</div>');
-    h.push('<div style="background:'+N+';padding:5px 14px;font-size:8px;color:'+G+';text-align:center">Sao Leopoldo Mandic - '+activeCL.title+' - '+a.uni+' - '+fD(a.dat)+'</div>');
+    h.push('<div style="background:' + N + ';padding:5px 14px;font-size:8px;color:' + G + ';text-align:center">Sao Leopoldo Mandic - ' + activeCL.title + ' - ' + a.uni + ' - ' + fD(a.dat) + '</div>');
     h.push('</div>');
   });
 
-  var pr=document.getElementById('pr');
-  pr.innerHTML=h.join('');
-  pr.style.display='block';
+  var pr = document.getElementById('pr');
+  pr.innerHTML = h.join('');
+  pr.style.display = 'block';
   window.print();
-  pr.style.display='none';
+  pr.style.display = 'none';
 }
 </script>
