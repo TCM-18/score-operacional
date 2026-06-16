@@ -1136,7 +1136,7 @@ function openRelatorio(){
   var today = new Date();
   var todayStr = today.toISOString().split('T')[0];
   relState = {
-    unit:'', responsavel:'', turma:'', data: todayStr,
+    unit:'', responsavel:'', turma:'', turmaNum:'', obs:'', data: todayStr,
     total:0, pagantes:0, retorno:0,
     faltas:0, cancelamentos:0, encaixados:0,
     alunos:[]
@@ -1158,8 +1158,26 @@ function renderRelatorio(){
     '<option value="CPS">Campinas (CPS)</option>'+
     '<option value="BSB">Brasília (BSB)</option>'+
     '</select></div>'+
+    '<div class="rel-field full"><label>Especialidade</label>'+
+    '<select id="relEspec" onchange="relState.turma=this.value">'+
+    '<option value="">Selecione...</option>'+
+    '<option>Dermato cirúrgica</option>'+
+    '<option>Dermato One</option>'+
+    '<option>Dermatologia</option>'+
+    '<option>Endocrinologia</option>'+
+    '<option>Gineco estética</option>'+
+    '<option>Neuropediatria</option>'+
+    '<option>Nutrologia</option>'+
+    '<option>Oftalmologia</option>'+
+    '<option>Pediatria</option>'+
+    '<option>Psiquiatria</option>'+
+    '<option>Tricologia</option>'+
+    '</select></div>'+
     '<div class="rel-field full"><label>Turma</label>'+
-    '<input type="text" id="relTurma" placeholder="Ex: Odontologia T12 / Medicina 2024" oninput="relState.turma=this.value"></div>'+
+    '<select id="relTurma" onchange="relState.turmaNum=this.value">'+
+    '<option value="">Selecione...</option>'+
+    (function(){var o='';for(var i=1;i<=50;i++)o+='<option>T'+i+'</option>';return o;}())+
+    '</select></div>'+
     '<div class="rel-field full"><label>Responsável pela recepção</label>'+
     '<input type="text" id="relResp" placeholder="Nome do responsável" oninput="relState.responsavel=this.value"></div>'+
     '<div class="rel-field full"><label>Data</label>'+
@@ -1192,6 +1210,11 @@ function renderRelatorio(){
     // INDICADORES
     '<div class="rel-section" id="relIndicadores"><h3>📊 Indicadores (calculado automaticamente)</h3>'+
     '<div id="indBody"></div></div>'+
+
+    // OBSERVAÇÕES
+    '<div class="rel-section"><h3>📝 Observações</h3>'+
+    '<textarea id="relObs" class="action-input" placeholder="Registre aqui observações relevantes do dia — ocorrências, intercorrências, informações adicionais..." oninput="relState.obs=this.value" style="min-height:100px"></textarea>'+
+    '</div>'+
 
     // AÇÕES
     '<button class="btn-pdf" onclick="gerarRelPDF()">🖨️ Gerar PDF</button>'+
@@ -1287,9 +1310,10 @@ function gerarRelPDF(){
 
     '<table class="pr-rel-table"><tr><td><strong>Unidade</strong></td><td>'+u+'</td>'+
     '<td><strong>Responsável</strong></td><td>'+escHtml(resp)+'</td></tr>'+
-    '<tr><td><strong>Turma</strong></td><td>'+(escHtml(relState.turma)||'—')+'</td>'+
-    '<td><strong>Data</strong></td><td>'+data+'</td></tr>'+
-    '<tr><td><strong>Gerado em</strong></td><td>'+new Date().toLocaleString('pt-BR')+'</td><td></td><td></td></tr></table>'+
+    '<tr><td><strong>Especialidade</strong></td><td>'+(escHtml(relState.turma)||'—')+'</td>'+
+    '<td><strong>Turma</strong></td><td>'+(escHtml(relState.turmaNum)||'—')+'</td></tr>'+
+    '<tr><td><strong>Data</strong></td><td>'+data+'</td>'+
+    '<td><strong>Gerado em</strong></td><td>'+new Date().toLocaleString('pt-BR')+'</td></tr></table>'+
 
     '<div class="pr-rel-grid">'+
     relBox(t,'Total agendados')+
@@ -1313,6 +1337,8 @@ function gerarRelPDF(){
     '<tr><th>#</th><th>Nome do Aluno</th><th>Observação</th></tr>'+
     alunoRows+'</table>'+
 
+    (relState.obs?'<div class="pr-action" style="margin-top:14px"><strong>Observações:</strong><br>'+escHtml(relState.obs).replace(/\n/g,'<br>')+'</div>':'')+
+
     '<div class="pr-rel-footer">Relatório gerado pela Central de Checklists Operacionais — São Leopoldo Mandic</div>';
 
   window.print();
@@ -1331,7 +1357,8 @@ function enviarRelEmail(){
   var body =
     'Relatório Diário de Pacientes\n'+
     'Unidade: '+u+'\n'+
-    'Turma: '+(relState.turma||'—')+'\n'+
+    'Especialidade: '+(relState.turma||'—')+'\n'+
+    'Turma: '+(relState.turmaNum||'—')+'\n'+
     'Responsável: '+(relState.responsavel||'—')+'\n'+
     'Data: '+data+'\n\n'+
     'AGENDAMENTOS\n'+
@@ -1348,6 +1375,7 @@ function enviarRelEmail(){
     'Faltas + cancelamentos: '+(relState._ausencias||0)+'%\n\n'+
     'PROCEDIMENTOS GRATUITOS ('+alunos.length+' aluno(s))\n'+
     (alunos.length ? alunos.map(function(a,i){return (i+1)+'. '+a;}).join('\n') : 'Nenhum aluno registrado.')+
+    (relState.obs?'\n\nOBSERVAÇÕES:\n'+relState.obs:'')+
     '\n\n---\nEnviado pela Central de Checklists — São Leopoldo Mandic';
   window.location.href = 'mailto:'+EMAIL_GESTOR+'?subject='+subj+'&body='+encodeURIComponent(body);
 }
@@ -1355,12 +1383,16 @@ function enviarRelEmail(){
 function syncRelForm(){
   var u = document.getElementById('relUnit');
   var r = document.getElementById('relResp');
-  var t = document.getElementById('relTurma');
+  var e = document.getElementById('relEspec');
+  var tn = document.getElementById('relTurma');
   var d = document.getElementById('relData');
   if(u) relState.unit = u.value;
   if(r) relState.responsavel = r.value;
-  if(t) relState.turma = t.value;
+  if(e) relState.turma = e.value;
+  if(tn) relState.turmaNum = tn.value;
   if(d) relState.data = d.value;
+  var ob = document.getElementById('relObs');
+  if(ob) relState.obs = ob.value;
   // sync aluno inputs
   document.querySelectorAll('.aluno-row input').forEach(function(inp, i){
     if(relState.alunos[i] !== undefined) relState.alunos[i] = inp.value;
