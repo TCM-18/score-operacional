@@ -1137,7 +1137,7 @@ function openRelatorio(){
   var todayStr = today.toISOString().split('T')[0];
   relState = {
     unit:'', responsavel:'', turma:'', turmaNum:'', obs:'', data: todayStr,
-    total:0, pagantes:0, retorno:0,
+    total:0, pagantes:0, retorno:0, gratuitos:0,
     faltas:0, cancelamentos:0, encaixados:0,
     alunos:[]
   };
@@ -1190,10 +1190,11 @@ function renderRelatorio(){
     numField('relTotal','Total de pacientes agendados','total')+
     numField('relPagantes','Pacientes pagantes','pagantes')+
     numField('relRetorno','Consultas de retorno','retorno')+
+    numField('relGratuitos','Procedimentos gratuitos (qtd)','gratuitos')+
     '</div></div>'+
 
-    // AUSÊNCIAS
-    '<div class="rel-section"><h3>❌ Ausências e Cancelamentos</h3>'+
+    // AUSÊNCIAS E ENCAIXES
+    '<div class="rel-section"><h3>❌ Ausências e Encaixes</h3>'+
     '<div class="rel-grid">'+
     numField('relFaltas','Faltas','faltas')+
     numField('relCancel','Cancelamentos &lt;48h','cancelamentos')+
@@ -1201,7 +1202,7 @@ function renderRelatorio(){
     '</div></div>'+
 
     // ALUNOS GRATUITOS
-    '<div class="rel-section"><h3>🎓 Alunos — Procedimentos Gratuitos</h3>'+
+    '<div class="rel-section"><h3>🎓 Alunos — Procedimentos Gratuitos (nomes)</h3>'+
     '<p style="font-size:12px;color:var(--gray);margin-bottom:10px">Adicione o nome de cada aluno que realizou procedimento gratuito no dia.</p>'+
     '<div class="aluno-list" id="alunoList"></div>'+
     '<button class="btn-add-aluno" onclick="addAluno()">+ Adicionar aluno</button>'+
@@ -1258,25 +1259,38 @@ function removeAluno(idx){
 }
 
 function calcIndicadores(){
-  var t = relState.total || 0;
-  var compareceu = t - relState.faltas - relState.cancelamentos + relState.encaixados;
-  compareceu = Math.max(0, compareceu);
-  var presenca = t > 0 ? Math.round(compareceu / t * 100) : 0;
-  var ausencias = t > 0 ? Math.round((relState.faltas + relState.cancelamentos) / t * 100) : 0;
-  var encaixPct = t > 0 ? Math.round(relState.encaixados / t * 100) : 0;
-  relState._compareceu = compareceu;
-  relState._presenca = presenca;
-  relState._ausencias = ausencias;
-  relState._encaixPct = encaixPct;
+  var t    = relState.total        || 0;
+  var pag  = relState.pagantes     || 0;
+  var ret  = relState.retorno      || 0;
+  var grat = relState.gratuitos    || 0;
+  var falt = relState.faltas       || 0;
+  var canc = relState.cancelamentos|| 0;
+  var enc  = relState.encaixados   || 0;
+
+  // Compareceram = pagantes + retornos + gratuitos + encaixes − faltas
+  var comp = Math.max(0, pag + ret + grat + enc - falt);
+  var compPct = t > 0 ? Math.round(comp / t * 100) : 0;
+  var pColor = compPct>=80?'ind-green':compPct>=60?'ind-blue':'ind-red';
+
+  relState._comp    = comp;
+  relState._compPct = compPct;
 
   var body = document.getElementById('indBody');
   if(!body) return;
+
   body.innerHTML =
-    indRow('Comparecimento efetivo', compareceu+' pacientes', compareceu>=t*0.8?'ind-green':'ind-red')+
-    indRow('Taxa de presença', presenca+'%', presenca>=80?'ind-green':presenca>=60?'ind-blue':'ind-red')+
-    indRow('Faltas + Cancelamentos', ausencias+'%', ausencias<=20?'ind-green':'ind-red')+
-    indRow('Encaixados / Total', encaixPct+'%', 'ind-blue')+
-    indRow('Procedimentos gratuitos', relState.alunos.filter(function(a){return a.trim();}).length+' aluno(s)', 'ind-gray');
+    indRow('Total de pacientes agendados', t,    'ind-gray')+
+    indRow('Pacientes gratuitos',          grat, 'ind-gray')+
+    indRow('Pacientes pagantes',           pag,  'ind-gray')+
+    indRow('Consultas de retorno',         ret,  'ind-gray')+
+    indRow('Faltas',                       falt, falt===0?'ind-green':'ind-red')+
+    indRow('Cancelamentos',                canc, canc===0?'ind-green':'ind-red')+
+    indRow('Encaixes',                     enc,  'ind-blue')+
+    '<div style="border-top:2px solid #1A2459;margin:10px 0"></div>'+
+    '<div class="rel-indicador" style="background:#eef0f8;border-radius:8px;padding:10px;margin-top:2px">'+
+    '<span style="font-weight:700;color:#1A2459">Pacientes que compareceram</span>'+
+    '<span class="rel-ind-val '+pColor+'" style="font-size:18px">'+comp+' <span style="font-size:12px;font-weight:400">/ '+t+' ('+compPct+'%)</span></span>'+
+    '</div>';
 }
 
 function indRow(label, val, cls){
@@ -1292,10 +1306,10 @@ function gerarRelPDF(){
   var resp = relState.responsavel || '—';
   var data = fmtDate(relState.data);
   var t = relState.total;
-  var comp = relState._compareceu || 0;
+  var comp = relState._comp || 0;
+  var compPct = relState._compPct || 0;
   var alunos = relState.alunos.filter(function(a){return a.trim();});
-  var presenca = relState._presenca || 0;
-  var pColor = presenca>=80?'#27ae60':presenca>=60?'#1565c0':'#e74c3c';
+  var pColor = compPct>=80?'#27ae60':compPct>=60?'#1565c0':'#e74c3c';
 
   var alunoRows = alunos.length
     ? alunos.map(function(a,i){return '<tr><td>'+(i+1)+'</td><td>'+escHtml(a)+'</td><td>Procedimento gratuito</td></tr>';}).join('')
@@ -1305,7 +1319,7 @@ function gerarRelPDF(){
     '<div class="pr-rel-header">'+
     '<div class="pr-rel-title">São Leopoldo Mandic — Relatório de Pacientes</div>'+
     '<div class="pr-rel-sub">Recepção · '+u+' · '+data+'</div>'+
-    '<span class="pr-rel-badge" style="background:'+pColor+';color:#fff">Presença: '+presenca+'%</span>'+
+    '<span class="pr-rel-badge" style="background:'+pColor+';color:#fff">Compareceram: '+comp+' / '+t+' ('+compPct+'%)</span>'+
     '</div>'+
 
     '<table class="pr-rel-table"><tr><td><strong>Unidade</strong></td><td>'+u+'</td>'+
@@ -1317,19 +1331,18 @@ function gerarRelPDF(){
 
     '<div class="pr-rel-grid">'+
     relBox(t,'Total agendados')+
-    relBox(relState.pagantes,'Pagantes')+
-    relBox(relState.retorno,'Retornos')+
-    relBox(comp,'Compareceram')+
-    relBox(relState.faltas,'Faltas')+
-    relBox(relState.cancelamentos,'Cancelamentos')+
-    relBox(relState.encaixados,'Encaixados')+
-    relBox(alunos.length,'Proc. gratuitos')+
+    relBox(relState.gratuitos||0,'Gratuitos')+
+    relBox(relState.pagantes||0,'Pagantes')+
+    relBox(relState.retorno||0,'Retornos')+
+    relBox(relState.faltas||0,'Faltas')+
+    relBox(relState.cancelamentos||0,'Cancelamentos')+
+    relBox(relState.encaixados||0,'Encaixes')+
     '</div>'+
 
-    '<div style="margin:14px 0"><strong style="font-size:12px">INDICADORES</strong>'+
-    '<div class="pr-rel-ind"><span>Taxa de presença efetiva</span><strong>'+presenca+'%</strong></div>'+
-    '<div class="pr-rel-ind"><span>Faltas + cancelamentos</span><strong>'+relState._ausencias+'%</strong></div>'+
-    '<div class="pr-rel-ind"><span>Encaixados / Total</span><strong>'+relState._encaixPct+'%</strong></div>'+
+    '<div style="margin:14px 0;background:#eef0f8;border-radius:8px;padding:10px;border:2px solid #1A2459">'+
+    '<div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#1A2459;margin-bottom:4px">Pacientes que compareceram</div>'+
+    '<div style="font-size:28px;font-weight:800;color:'+pColor+'">'+comp+' <span style="font-size:14px;color:#555">/ '+t+' agendados ('+compPct+'%)</span></div>'+
+    '<div style="font-size:11px;color:#555;margin-top:4px">Fórmula: pagantes ('+( relState.pagantes||0)+') + retornos ('+(relState.retorno||0)+') + gratuitos ('+(relState.gratuitos||0)+') + encaixes ('+(relState.encaixados||0)+') − faltas ('+(relState.faltas||0)+')</div>'+
     '</div>'+
 
     '<strong style="font-size:12px">ALUNOS — PROCEDIMENTOS GRATUITOS ('+alunos.length+')</strong>'+
@@ -1338,7 +1351,6 @@ function gerarRelPDF(){
     alunoRows+'</table>'+
 
     (relState.obs?'<div class="pr-action" style="margin-top:14px"><strong>Observações:</strong><br>'+escHtml(relState.obs).replace(/\n/g,'<br>')+'</div>':'')+
-
     '<div class="pr-rel-footer">Relatório gerado pela Central de Checklists Operacionais — São Leopoldo Mandic</div>';
 
   window.print();
@@ -1362,18 +1374,25 @@ function enviarRelEmail(){
     'Responsável: '+(relState.responsavel||'—')+'\n'+
     'Data: '+data+'\n\n'+
     'AGENDAMENTOS\n'+
-    'Total de pacientes: '+relState.total+'\n'+
-    'Pagantes: '+relState.pagantes+'\n'+
-    'Retornos: '+relState.retorno+'\n\n'+
+    'Total agendados: '+(relState.total||0)+'\n'+
+    'Pagantes: '+(relState.pagantes||0)+'\n'+
+    'Retornos: '+(relState.retorno||0)+'\n'+
+    'Gratuitos: '+(relState.gratuitos||0)+'\n\n'+
     'AUSÊNCIAS\n'+
-    'Faltas: '+relState.faltas+'\n'+
-    'Cancelamentos <48h: '+relState.cancelamentos+'\n'+
-    'Encaixados pela falta: '+relState.encaixados+'\n\n'+
+    'Faltas: '+(relState.faltas||0)+'\n'+
+    'Cancelamentos <48h: '+(relState.cancelamentos||0)+'\n\n'+
+    'ENCAIXES\n'+
+    'Encaixados no dia: '+(relState.encaixados||0)+'\n\n'+
     'INDICADORES\n'+
-    'Comparecimento efetivo: '+(relState._compareceu||0)+' pacientes\n'+
-    'Taxa de presença: '+(relState._presenca||0)+'%\n'+
-    'Faltas + cancelamentos: '+(relState._ausencias||0)+'%\n\n'+
-    'PROCEDIMENTOS GRATUITOS ('+alunos.length+' aluno(s))\n'+
+    'Total agendados: '+(relState.total||0)+'\n'+
+    'Gratuitos: '+(relState.gratuitos||0)+'\n'+
+    'Pagantes: '+(relState.pagantes||0)+'\n'+
+    'Retornos: '+(relState.retorno||0)+'\n'+
+    'Faltas: '+(relState.faltas||0)+'\n'+
+    'Cancelamentos: '+(relState.cancelamentos||0)+'\n'+
+    'Encaixes: '+(relState.encaixados||0)+'\n'+
+    'Pacientes que compareceram: '+(relState._comp||0)+' / '+(relState.total||0)+' ('+( relState._compPct||0)+'%)\n\n'+
+    'ALUNOS — PROCEDIMENTOS GRATUITOS ('+alunos.length+')\n'+
     (alunos.length ? alunos.map(function(a,i){return (i+1)+'. '+a;}).join('\n') : 'Nenhum aluno registrado.')+
     (relState.obs?'\n\nOBSERVAÇÕES:\n'+relState.obs:'')+
     '\n\n---\nEnviado pela Central de Checklists — São Leopoldo Mandic';
