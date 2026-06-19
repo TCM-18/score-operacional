@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
+<!-- saved from url=(0043)https://tcm-18.github.io/score-operacional/ -->
+<html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Central de Checklists — Mandic</title>
 <style>
@@ -9,6 +9,8 @@
 html,body{min-height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#F5F7FC;color:#1A2459}
 #appRoot{overflow-x:hidden}
 :root{--navy:#1A2459;--blue:#1A2459;--accent:#1A2459;--gold:#F5C518;--green:#27ae60;--yellow:#F5C518;--red:#e74c3c;--gray:#6c757d;--light:#F5F7FC;--white:#fff;--radius:12px;--shadow:0 2px 16px rgba(26,36,89,.10)}
+
+/* LOCK */
 #lock{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:32px 20px;background:linear-gradient(135deg,#1A2459 0%,#2d3a80 100%)}
 #lock .logo-wrap{margin-bottom:32px;text-align:center}
 #lock .logo-wrap svg{width:120px;height:40px}
@@ -20,26 +22,36 @@ html,body{min-height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;font-
 #lock button{width:100%;max-width:320px;padding:14px;background:#F5C518;border:none;border-radius:var(--radius);color:#1A2459;font-size:16px;font-weight:700;cursor:pointer;transition:.2s}
 #lock button:active{opacity:.85}
 #lock .err{color:#ff6b6b;font-size:13px;margin-top:8px;text-align:center;min-height:20px}
+
+/* APP */
 #app{display:none;min-height:100vh}
 .screen{display:none;min-height:100vh;flex-direction:column}
 .screen.active{display:flex}
+
+/* HEADER */
 .hdr{background:var(--navy);color:var(--white);padding:0 16px;display:flex;align-items:center;gap:12px;min-height:56px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.3)}
 .hdr svg{flex-shrink:0}
 .hdr-title{font-size:15px;font-weight:700;flex:1;line-height:1.2}
 .hdr-sub{font-size:11px;opacity:.6;display:block}
 .hdr-back{background:none;border:none;color:var(--white);cursor:pointer;padding:8px;font-size:20px;line-height:1;margin-left:-8px}
+
+/* DIRECTORY */
 .dir-body{padding:20px 16px;flex:1}
 .dir-body h2{font-size:13px;font-weight:600;color:var(--gray);text-transform:uppercase;letter-spacing:.5px;margin-bottom:16px}
 .cl-card{background:var(--white);border-radius:var(--radius);padding:16px;margin-bottom:12px;box-shadow:var(--shadow);cursor:pointer;border:2px solid transparent;transition:.2s;display:flex;align-items:center;gap:14px}
 .cl-card:active{border-color:var(--accent);background:#f0f4ff}
 .cl-card.wip{opacity:.55;cursor:default}
 .cl-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
-.cl-icon.blue{background:#e8f0fe}.cl-icon.green{background:#e8f8f0}.cl-icon.purple{background:#f3e8ff}.cl-icon.orange{background:#fff3e0}
+.cl-icon.blue{background:#e8f0fe}
+.cl-icon.green{background:#e8f8f0}
+.cl-icon.purple{background:#f3e8ff}
+.cl-icon.orange{background:#fff3e0}
 .cl-info{flex:1}
 .cl-name{font-size:15px;font-weight:700;color:var(--navy);margin-bottom:2px}
 .cl-meta{font-size:12px;color:var(--gray)}
 .cl-arrow{color:var(--gray);font-size:18px}
 .wip-badge{font-size:10px;font-weight:700;background:#fff3cd;color:#856404;padding:2px 8px;border-radius:20px;display:inline-block;margin-top:4px}
+/* FOLDERS */
 .folder-section{margin-bottom:8px;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
 .folder-header{background:var(--navy);color:var(--white);padding:12px 16px;display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;-webkit-user-select:none}
 .folder-header:active{opacity:.85}
@@ -51,9 +63,12 @@ html,body{min-height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;font-
 .folder-body{background:#f8f9fc;display:none;padding:10px 10px 4px}
 .folder-body.open{display:block}
 .folder-body .cl-card{margin-bottom:8px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+/* folder accent colors */
 .folder-header.visita{background:linear-gradient(90deg,#1A2459,#2d3a80)}
 .folder-header.diario{background:linear-gradient(90deg,#2d3a80,#1A2459)}
 .folder-header.semanal{background:linear-gradient(90deg,#1a5c3a,#27ae60)}
+
+/* SETUP */
 .setup-body{padding:20px 16px;flex:1}
 .form-group{margin-bottom:20px}
 .form-label{font-size:13px;font-weight:600;color:var(--navy);margin-bottom:8px;display:block}
@@ -64,6 +79,8 @@ html,body{min-height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;font-
 .btn-primary:active{opacity:.85}
 .btn-secondary{width:100%;padding:14px;background:var(--white);border:2px solid var(--navy);border-radius:var(--radius);color:var(--navy);font-size:15px;font-weight:600;cursor:pointer;margin-top:8px;transition:.2s;min-height:54px}
 .btn-danger{width:100%;padding:14px;background:var(--white);border:2px solid var(--red);border-radius:var(--radius);color:var(--red);font-size:15px;font-weight:600;cursor:pointer;margin-top:8px;transition:.2s;min-height:54px}
+
+/* AUDIT */
 .audit-body{padding:16px;flex:1;padding-bottom:100px}
 .pillar-section{margin-bottom:24px}
 .pillar-title{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#1A2459;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid #F5C518}
@@ -84,12 +101,17 @@ html,body{min-height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;font-
 .progress-bar{height:4px;background:#e0e0e0;border-radius:2px;margin-bottom:10px;overflow:hidden}
 .progress-fill{height:100%;background:#F5C518;border-radius:2px;transition:.3s}
 .progress-text{font-size:12px;color:var(--gray);text-align:center;margin-bottom:10px}
+
+/* SUMMARY */
 .summary-body{padding:16px;flex:1;padding-bottom:32px}
 .score-hero{background:linear-gradient(135deg,#1A2459,#2d3a80);border-radius:16px;padding:24px;text-align:center;color:var(--white);margin-bottom:20px}
 .score-num{font-size:56px;font-weight:800;line-height:1;margin-bottom:4px}
 .score-label{font-size:14px;opacity:.8;margin-bottom:12px}
 .score-badge{display:inline-block;padding:6px 16px;border-radius:20px;font-size:13px;font-weight:700}
-.badge-excelente{background:#27ae60;color:#fff}.badge-bom{background:#2980b9;color:#fff}.badge-regular{background:var(--yellow);color:#fff}.badge-critico{background:var(--red);color:#fff}
+.badge-excelente{background:#27ae60;color:#fff}
+.badge-bom{background:#2980b9;color:#fff}
+.badge-regular{background:var(--yellow);color:#fff}
+.badge-critico{background:var(--red);color:#fff}
 .info-card{background:var(--white);border-radius:var(--radius);padding:14px;margin-bottom:12px;box-shadow:var(--shadow)}
 .info-card h3{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--gray);margin-bottom:10px}
 .info-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #f0f0f0;font-size:13px}
@@ -110,15 +132,8 @@ html,body{min-height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;font-
 .action-input:focus{border-color:var(--accent)}
 .btn-pdf{width:100%;padding:16px;background:#F5C518;border:none;border-radius:var(--radius);color:#1A2459;font-size:16px;font-weight:700;cursor:pointer;margin-top:8px;min-height:54px}
 .btn-email{width:100%;padding:14px;background:#1A2459;border:none;border-radius:var(--radius);color:var(--white);font-size:15px;font-weight:600;cursor:pointer;margin-top:8px;min-height:54px}
-/* CAMPO EMAIL */
-.email-field-card{background:var(--white);border-radius:var(--radius);padding:14px;margin-top:12px;box-shadow:var(--shadow)}
-.email-field-card label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--gray);display:block;margin-bottom:8px}
-.email-field-card .email-hint{font-size:11px;color:var(--gray);margin-top:6px}
-.email-row{display:flex;gap:6px;margin-bottom:8px;align-items:center}
-.email-row input[type=email]{flex:1;padding:11px 14px;border:2px solid #e0e0e0;border-radius:10px;font-size:15px;color:var(--navy);outline:none;transition:.2s;background:var(--white)}
-.email-row input[type=email]:focus{border-color:var(--navy)}
-.email-row .btn-del-email{width:38px;height:38px;border:none;border-radius:8px;background:#fdecea;color:var(--red);font-size:20px;cursor:pointer;flex-shrink:0;line-height:1}
-.btn-add-email{width:100%;padding:10px;border:2px dashed #1A2459;background:#eef0f8;border-radius:8px;color:#1A2459;font-size:13px;font-weight:600;cursor:pointer;margin-top:4px}
+
+/* HISTORY */
 .hist-body{padding:16px;flex:1}
 .hist-item{background:var(--white);border-radius:var(--radius);padding:14px;margin-bottom:10px;box-shadow:var(--shadow);display:flex;align-items:center;gap:12px;cursor:pointer}
 .hist-item:active{opacity:.8}
@@ -130,6 +145,8 @@ html,body{min-height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;font-
 .empty-state{text-align:center;padding:48px 20px;color:var(--gray)}
 .empty-state .icon{font-size:48px;margin-bottom:12px}
 .empty-state p{font-size:15px}
+
+/* RELATORIO */
 .rel-section{background:var(--white);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
 .rel-section h3{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--gray);margin-bottom:14px;display:flex;align-items:center;gap:6px}
 .rel-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
@@ -147,7 +164,11 @@ html,body{min-height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;font-
 .rel-indicador{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0f0f0;font-size:13px}
 .rel-indicador:last-child{border-bottom:none}
 .rel-ind-val{font-weight:700;font-size:15px}
-.ind-green{color:var(--green)}.ind-red{color:var(--red)}.ind-blue{color:#1565c0}.ind-gray{color:var(--gray)}
+.ind-green{color:var(--green)}
+.ind-red{color:var(--red)}
+.ind-blue{color:#1565c0}
+.ind-gray{color:var(--gray)}
+/* PDF relatorio print */
 @media print{
   .pr-rel-header{text-align:center;border-bottom:3px solid #1A2459;padding-bottom:14px;margin-bottom:18px}
   .pr-rel-title{font-size:20px;font-weight:bold;color:#1A2459}
@@ -161,8 +182,10 @@ html,body{min-height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;font-
   .pr-rel-table th{background:#1A2459;color:#fff;padding:6px 8px;text-align:left}
   .pr-rel-table td{padding:5px 8px;border-bottom:1px solid #eee}
   .pr-rel-table tr:nth-child(even) td{background:#F5F7FC}
+  .pr-rel-ind{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #eee;font-size:11px}
   .pr-rel-footer{margin-top:20px;text-align:center;font-size:10px;color:#888;border-top:1px solid #ddd;padding-top:8px}
 }
+
 @media print{
   #appRoot,#lock{display:none!important}
   #pr{display:block!important;font-family:Arial,sans-serif;font-size:12px;color:#000;padding:20px}
@@ -178,22 +201,27 @@ html,body{min-height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;font-
   .pr-section-title{font-size:13px;font-weight:bold;background:#1A2459;color:#fff;padding:4px 8px;margin-bottom:8px}
   .pr-item{padding:4px 8px;border-bottom:1px solid #eee;display:flex;gap:8px;align-items:flex-start}
   .pr-item-resp{font-weight:bold;min-width:80px;font-size:10px}
-  .pr-item-resp.superou{color:#1a7340}.pr-item-resp.conforme{color:#1565c0}.pr-item-resp.nao{color:#c0392b}.pr-item-resp.na{color:#888}
+  .pr-item-resp.superou{color:#1a7340}
+  .pr-item-resp.conforme{color:#1565c0}
+  .pr-item-resp.nao{color:#c0392b}
+  .pr-item-resp.na{color:#888}
   .pr-item-label{font-size:11px;flex:1}
   .pr-item-obs{font-size:10px;color:#555;font-style:italic}
   .pr-action{margin-top:16px;background:#fffbe6;border:1px solid #F5C518;padding:10px;border-radius:4px}
   .pr-footer{margin-top:20px;text-align:center;font-size:10px;color:#888;border-top:1px solid #ddd;padding-top:8px}
 }
 </style>
-</head>
+<meta id="dcngeagmmhegagicpcmpinaoklddcgon"></head>
 <body>
-<div id="lock">
+
+<!-- LOCK -->
+<div id="lock" style="display: none;">
   <div class="logo-wrap">
     <svg viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
-      <rect width="200" height="60" fill="none"/>
+      <rect width="200" height="60" fill="none"></rect>
       <text x="10" y="38" font-family="Arial" font-weight="800" font-size="22" fill="#fff">SL</text>
       <text x="40" y="38" font-family="Arial" font-weight="400" font-size="22" fill="#F5C518">Mandic</text>
-      <rect x="10" y="44" width="160" height="2" fill="#F5C518" opacity=".7"/>
+      <rect x="10" y="44" width="160" height="2" fill="#F5C518" opacity=".7"></rect>
       <text x="10" y="56" font-family="Arial" font-size="9" fill="rgba(255,255,255,.5)" letter-spacing="2">CHECKLISTS OPERACIONAIS</text>
     </svg>
   </div>
@@ -204,84 +232,143 @@ html,body{min-height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;font-
   <div class="err" id="pwErr"></div>
 </div>
 
-<div id="app">
-  <div class="screen" id="scrDir">
+<!-- APP -->
+<div id="app" style="display: block;">
+
+  <!-- SCREEN: DIRECTORY -->
+  <div class="screen active" id="scrDir">
     <div class="hdr">
-      <svg width="28" height="28" viewBox="0 0 28 28"><rect width="28" height="28" rx="6" fill="#F5C518"/><text x="14" y="20" font-family="Arial" font-weight="800" font-size="14" fill="#1A2459" text-anchor="middle">M</text></svg>
+      <svg width="28" height="28" viewBox="0 0 28 28"><rect width="28" height="28" rx="6" fill="#F5C518"></rect><text x="14" y="20" font-family="Arial" font-weight="800" font-size="14" fill="#1A2459" text-anchor="middle">M</text></svg>
       <div class="hdr-title">Central de Checklists<span class="hdr-sub">São Leopoldo Mandic</span></div>
       <button class="hdr-back" onclick="showHist()" title="Histórico">📋</button>
     </div>
     <div class="dir-body">
       <h2>Checklists disponíveis</h2>
+
+      <!-- PASTA: CHECKLIST DE VISITA -->
       <div class="folder-section">
-        <div class="folder-header visita" onclick="toggleFolder('fVisita',this)">
-          <span class="folder-icon">📁</span><span class="folder-name">Checklist de Visita</span>
-          <span class="folder-count">2 checklists</span><span class="folder-chevron" id="chev_fVisita">›</span>
+        <div class="folder-header visita" onclick="toggleFolder(&#39;fVisita&#39;,this)">
+          <span class="folder-icon">📁</span>
+          <span class="folder-name">Checklist de Visita</span>
+          <span class="folder-count">2 checklists</span>
+          <span class="folder-chevron" id="chev_fVisita">›</span>
         </div>
         <div class="folder-body" id="fVisita">
-          <div class="cl-card" onclick="openChecklist('score')">
+          <div class="cl-card" onclick="openChecklist(&#39;score&#39;)">
             <div class="cl-icon blue">📋</div>
-            <div class="cl-info"><div class="cl-name">Score Operacional</div><div class="cl-meta">44 itens · 9 pilares · BSB, CPS, SP</div></div>
+            <div class="cl-info">
+              <div class="cl-name">Score Operacional</div>
+              <div class="cl-meta">44 itens · 9 pilares · BSB, CPS, SP</div>
+            </div>
             <div class="cl-arrow">›</div>
           </div>
-          <div class="cl-card" onclick="openChecklist('regulatorio')">
+          <div class="cl-card" onclick="openChecklist(&#39;regulatorio&#39;)">
             <div class="cl-icon green">🛡️</div>
-            <div class="cl-info"><div class="cl-name">Regulatórios e Biossegurança</div><div class="cl-meta">13 itens · 1 pilar · BSB, CPS, SP</div></div>
+            <div class="cl-info">
+              <div class="cl-name">Regulatórios e Biossegurança</div>
+              <div class="cl-meta">13 itens · 1 pilar · BSB, CPS, SP</div>
+            </div>
             <div class="cl-arrow">›</div>
           </div>
         </div>
       </div>
+
+      <!-- PASTA: CHECKLIST DIÁRIO -->
       <div class="folder-section">
-        <div class="folder-header diario" onclick="toggleFolder('fDiario',this)">
-          <span class="folder-icon">📁</span><span class="folder-name">Checklist Diário</span>
-          <span class="folder-count">4 checklists</span><span class="folder-chevron" id="chev_fDiario">›</span>
+        <div class="folder-header diario" onclick="toggleFolder(&#39;fDiario&#39;,this)">
+          <span class="folder-icon">📁</span>
+          <span class="folder-name">Checklist Diário</span>
+          <span class="folder-count">4 checklists</span>
+          <span class="folder-chevron open" id="chev_fDiario">›</span>
         </div>
-        <div class="folder-body" id="fDiario">
+        <div class="folder-body open" id="fDiario">
           <div class="cl-card" onclick="openRelatorio()">
             <div class="cl-icon" style="background:#fce4ec">📊</div>
-            <div class="cl-info"><div class="cl-name">Relatório de Controle de Pacientes</div><div class="cl-meta">Agendamentos · Presenças · Procedimentos gratuitos</div></div>
+            <div class="cl-info">
+              <div class="cl-name">Relatório de Controle de Pacientes</div>
+              <div class="cl-meta">Agendamentos · Presenças · Procedimentos gratuitos</div>
+            </div>
             <div class="cl-arrow">›</div>
           </div>
-          <div class="cl-card" onclick="openChecklist('vistoriaSP')">
+          <div class="cl-card" onclick="openChecklist(&#39;vistoriaSP&#39;)">
             <div class="cl-icon orange">🔍</div>
-            <div class="cl-info"><div class="cl-name">Vistoria Diária SP</div><div class="cl-meta">64 itens · 5 pilares · São Paulo</div></div>
+            <div class="cl-info">
+              <div class="cl-name">Vistoria Diária SP</div>
+              <div class="cl-meta">64 itens · 5 pilares · São Paulo</div>
+            </div>
             <div class="cl-arrow">›</div>
           </div>
           <div class="cl-card wip">
             <div class="cl-icon" style="background:#f5f5f5">🔍</div>
-            <div class="cl-info"><div class="cl-name">Vistoria Diária CPS</div><span class="wip-badge">Em desenvolvimento</span></div>
+            <div class="cl-info">
+              <div class="cl-name">Vistoria Diária CPS</div>
+              <span class="wip-badge">Em desenvolvimento</span>
+            </div>
           </div>
           <div class="cl-card wip">
             <div class="cl-icon" style="background:#f5f5f5">🔍</div>
-            <div class="cl-info"><div class="cl-name">Vistoria Diária BSB</div><span class="wip-badge">Em desenvolvimento</span></div>
+            <div class="cl-info">
+              <div class="cl-name">Vistoria Diária BSB</div>
+              <span class="wip-badge">Em desenvolvimento</span>
+            </div>
           </div>
         </div>
       </div>
+
+      <!-- PASTA: CHECKLIST SEMANAIS -->
       <div class="folder-section">
-        <div class="folder-header semanal" onclick="toggleFolder('fSemanal',this)">
-          <span class="folder-icon">📁</span><span class="folder-name">Checklist Semanais</span>
-          <span class="folder-count">1 checklist</span><span class="folder-chevron" id="chev_fSemanal">›</span>
+        <div class="folder-header semanal" onclick="toggleFolder(&#39;fSemanal&#39;,this)">
+          <span class="folder-icon">📁</span>
+          <span class="folder-name">Checklist Semanais</span>
+          <span class="folder-count">2 checklists</span>
+          <span class="folder-chevron open" id="chev_fSemanal">›</span>
         </div>
-        <div class="folder-body" id="fSemanal">
-          <div class="cl-card" onclick="openChecklist('regulatorioSemanal')">
+        <div class="folder-body open" id="fSemanal">
+          <div class="cl-card" onclick="openChecklist(&#39;regulatorioSemanal&#39;)">
             <div class="cl-icon green">🛡️</div>
-            <div class="cl-info"><div class="cl-name">Regulatórios e Biossegurança</div><div class="cl-meta">Verificação semanal · BSB, CPS, SP</div></div>
+            <div class="cl-info">
+              <div class="cl-name">Regulatórios e Biossegurança</div>
+              <div class="cl-meta">Verificação semanal · BSB, CPS, SP</div>
+            </div>
+            <div class="cl-arrow">›</div>
+          </div>
+          <div class="cl-card" onclick="openChecklist(&#39;quinzenalCPS&#39;)">
+            <div class="cl-icon purple">🏥</div>
+            <div class="cl-info">
+              <div class="cl-name">Checklist Regulatório Quinzenal</div>
+              <div class="cl-meta">47 itens · 8 pilares · Campinas (Quintal SLM)</div>
+            </div>
             <div class="cl-arrow">›</div>
           </div>
         </div>
       </div>
+
     </div>
   </div>
 
+  <!-- SCREEN: SETUP -->
   <div class="screen" id="scrSetup">
     <div class="hdr">
       <button class="hdr-back" onclick="backToDir()">‹</button>
       <div class="hdr-title" id="setupTitle">Checklist<span class="hdr-sub" id="setupSub">Configuração</span></div>
     </div>
     <div class="setup-body">
-      <div class="form-group"><label class="form-label">Unidade</label><select class="form-select" id="selUnit"></select></div>
-      <div class="form-group"><label class="form-label">Auditor</label><input class="form-input" type="text" id="inpAuditor" placeholder="Nome do auditor"></div>
-      <div class="form-group"><label class="form-label">Data</label><input class="form-input" type="date" id="inpDate" readonly></div>
+      <div class="form-group">
+        <label class="form-label">Unidade</label>
+        <select class="form-select" id="selUnit"></select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Nome</label>
+        <input class="form-input" type="text" id="inpAuditor" placeholder="Nome completo">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Cargo</label>
+        <input class="form-input" type="text" id="inpCargo" placeholder="Cargo / função">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Data</label>
+        <input class="form-input" type="date" id="inpDate" readonly="">
+      </div>
       <button class="btn-primary" onclick="startAudit()">Iniciar Checklist</button>
       <div id="histSection" style="margin-top:24px;display:none">
         <h3 style="font-size:13px;font-weight:700;color:var(--gray);text-transform:uppercase;margin-bottom:12px">Auditorias anteriores desta unidade</h3>
@@ -290,32 +377,21 @@ html,body{min-height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;font-
     </div>
   </div>
 
+  <!-- SCREEN: AUDIT -->
   <div class="screen" id="scrAudit">
     <div class="hdr">
       <button class="hdr-back" onclick="confirmBack()">‹</button>
       <div class="hdr-title" id="auditTitle">Auditoria<span class="hdr-sub" id="auditSub"></span></div>
     </div>
-    <div id="pillarNav" style="display:none;background:#eef0f8;padding:10px 16px;border-bottom:1px solid #d0d8f0">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-        <span id="pillarLabel" style="font-size:13px;font-weight:700;color:#1A2459"></span>
-        <span id="pillarCounter" style="font-size:12px;color:#6c757d"></span>
-      </div>
-      <div style="height:4px;background:#d0d8f0;border-radius:2px;overflow:hidden">
-        <div id="pillarFill" style="height:100%;background:#F5C518;border-radius:2px;transition:.3s;width:0%"></div>
-      </div>
-    </div>
     <div class="audit-body" id="auditBody"></div>
     <div class="audit-sticky">
       <div class="progress-bar"><div class="progress-fill" id="progFill" style="width:0%"></div></div>
       <div class="progress-text" id="progText">0 de 0 itens respondidos</div>
-      <div id="auditNavBtns" style="display:flex;gap:8px">
-        <button id="btnPrevPilar" class="btn-secondary" style="display:none;flex:1;margin-top:0;min-height:48px" onclick="prevPilar()">‹ Anterior</button>
-        <button id="btnNextPilar" class="btn-primary" style="display:none;flex:1;margin-top:0;min-height:48px" onclick="nextPilar()">Próximo ›</button>
-        <button id="btnFinish" class="btn-primary" style="flex:1;margin-top:0;min-height:48px" onclick="finishAudit()">Finalizar e Ver Resultado</button>
-      </div>
+      <button class="btn-primary" onclick="finishAudit()">Finalizar e Ver Resultado</button>
     </div>
   </div>
 
+  <!-- SCREEN: SUMMARY -->
   <div class="screen" id="scrSummary">
     <div class="hdr">
       <button class="hdr-back" onclick="backToSetup()">‹</button>
@@ -324,472 +400,1183 @@ html,body{min-height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;font-
     <div class="summary-body" id="summaryBody"></div>
   </div>
 
+  <!-- SCREEN: HISTORY -->
   <div class="screen" id="scrHist">
     <div class="hdr">
-      <button class="hdr-back" onclick="showScreen('scrDir')">‹</button>
+      <button class="hdr-back" onclick="showScreen(&#39;scrDir&#39;)">‹</button>
       <div class="hdr-title">Histórico<span class="hdr-sub">Todas as auditorias</span></div>
     </div>
     <div class="hist-body" id="histBody"></div>
   </div>
 
+  <!-- SCREEN: RELATÓRIO -->
   <div class="screen" id="scrRelatorio">
     <div class="hdr">
-      <button class="hdr-back" onclick="showScreen('scrDir')">‹</button>
+      <button class="hdr-back" onclick="showScreen(&#39;scrDir&#39;)">‹</button>
       <div class="hdr-title">Relatório de Pacientes<span class="hdr-sub" id="relSub">Controle Diário</span></div>
     </div>
     <div class="setup-body" id="relBody" style="padding-bottom:32px"></div>
   </div>
+
 </div>
 <div id="pr"></div>
 
 <script>
-var SENHA='pgmed2025';
-var state={cl:null,unit:null,auditor:null,date:null,answers:{},photos:{},obs:{}};
-var currentAuditId=null;
+// ===================== DATA =====================
+var SENHA = 'pgmed2025';
+var EMAIL_GESTOR = 'gestor@pgmed.com.br';
+var state = {cl:null, unit:null, auditor:null, cargo:null, date:null, answers:{}, photos:{}, obs:{}, pillarIdx:0};
+var currentAuditId = null;
 
-var CHECKLISTS={
-  score:{name:'Score Operacional',units:['Brasília','Campinas','São Paulo'],pilares:[
-    {name:'Atendimento',items:[
-      {id:'a1',label:'Recepção organizada e com atendente presente',tip:'Verifique se há atendente na recepção e se o espaço está organizado e limpo.'},
-      {id:'a2',label:'Tempo de espera adequado (até 15 min)',tip:'Pergunte ao responsável sobre o tempo médio de espera e verifique fila.'},
-      {id:'a3',label:'Comunicação clara com pacientes/alunos',tip:'Observe se informações sobre procedimentos estão visíveis e claras.'},
-      {id:'a4',label:'Protocolo de boas-vindas implementado',tip:'Confirme se há protocolo formal de recepção e boas-vindas.'},
-      {id:'a5',label:'Agendamento com confirmação prévia',tip:'Verifique se há processo de confirmação de consultas/procedimentos.'}
-    ]},
-    {name:'Clínica',items:[
-      {id:'c1',label:'Prontuários organizados e atualizados',tip:'Amostra aleatória de 3-5 prontuários para verificar completude.'},
-      {id:'c2',label:'Materiais clínicos disponíveis e dentro do prazo',tip:'Verifique validade de insumos e materiais críticos.'},
-      {id:'c3',label:'Equipamentos funcionando corretamente',tip:'Teste equipamentos principais: cadeiras, refletores, compressor.'},
-      {id:'c4',label:'Esterilização em conformidade',tip:'Verifique registros de autoclave e ciclos de esterilização.'},
-      {id:'c5',label:'Resíduos descartados corretamente',tip:'Confirme separação adequada: perfurocortantes, infectantes, comuns.'}
-    ]},
-    {name:'Educacional',items:[
-      {id:'e1',label:'Plano de aula/cronograma disponível',tip:'Solicite acesso ao plano da semana e verifique execução.'},
-      {id:'e2',label:'Professor presente e pontual',tip:'Confirme horário de chegada do docente nos registros.'},
-      {id:'e3',label:'Alunos com presença registrada',tip:'Verifique chamada do dia e percentual de presença.'},
-      {id:'e4',label:'Atividades práticas supervisionadas',tip:'Confirme se há supervisor presente nas práticas clínicas.'},
-      {id:'e5',label:'Material didático disponível e atualizado',tip:'Verifique se apostilas e materiais de apoio estão acessíveis.'}
-    ]},
-    {name:'Estrutura',items:[
-      {id:'es1',label:'Limpeza geral das instalações',tip:'Avalie pisos, paredes, tetos, banheiros e áreas comuns.'},
-      {id:'es2',label:'Iluminação adequada em todos os ambientes',tip:'Verifique lâmpadas queimadas e intensidade de luz nas salas clínicas.'},
-      {id:'es3',label:'Climatização funcionando',tip:'Confirme funcionamento de ar-condicionado nas salas de aula e clínica.'},
-      {id:'es4',label:'Banheiros limpos e com insumos',tip:'Verifique papel, sabão, papel toalha e limpeza em todos os banheiros.'},
-      {id:'es5',label:'Sinalização e acessibilidade adequadas',tip:'Confirme placas de saída, rampas e banheiro adaptado.'}
-    ]},
-    {name:'Infra (Tech)',items:[
-      {id:'it1',label:'Internet funcionando nas salas de aula',tip:'Teste velocidade e conectividade com o dispositivo da unidade.'},
-      {id:'it2',label:'Projetores e TVs operacionais',tip:'Ligue todos os equipamentos AV e verifique imagem e áudio.'},
-      {id:'it3',label:'Computadores e tablets em funcionamento',tip:'Verifique percentual de equipamentos operacionais.'},
-      {id:'it4',label:'Sistema de agendamento online ativo',tip:'Confirme acesso ao sistema e ausência de erros críticos.'},
-      {id:'it5',label:'Backup de dados realizado',tip:'Confirme data do último backup com o responsável de TI local.'}
-    ]},
-    {name:'G&G',items:[
-      {id:'gg1',label:'Indicadores do mês disponíveis',tip:'Solicite painel de indicadores atualizado do mês vigente.'},
-      {id:'gg2',label:'Metas definidas e comunicadas à equipe',tip:'Confirme se equipe conhece metas e resultados atuais.'},
-      {id:'gg3',label:'Reunião de equipe realizada no mês',tip:'Verifique ata ou registro da última reunião de equipe.'},
-      {id:'gg4',label:'Plano de ação para não conformidades vigente',tip:'Confirme existência de plano para correção de pendências anteriores.'}
-    ]},
-    {name:'Reg./Biossegurança',items:[
-      {id:'rb1',label:'Alvará sanitário vigente e afixado',tip:'Verifique data de validade e local de fixação do alvará.'},
-      {id:'rb2',label:'EPIs disponíveis e em uso',tip:'Confirme disponibilidade de luvas, máscaras, óculos e jaleco.'},
-      {id:'rb3',label:'Registro COREN/CFO atualizado',tip:'Verifique registros profissionais dos colaboradores clínicos.'},
-      {id:'rb4',label:'Controle de infecção cruzada',tip:'Observe uso de barreiras e protocolos de desinfecção.'}
-    ]},
-    {name:'Liderança',items:[
-      {id:'l1',label:'Coordenador presente e acessível',tip:'Confirme presença do coordenador/responsável pela unidade.'},
-      {id:'l2',label:'Equipe ciente das prioridades do período',tip:'Pergunte a 2-3 colaboradores sobre as prioridades atuais.'},
-      {id:'l3',label:'Feedbacks recentes documentados',tip:'Verifique registro de feedbacks individuais ou coletivos.'},
-      {id:'l4',label:'Conflitos ou ocorrências registrados e tratados',tip:'Consulte livro de ocorrências ou sistema de registro.'}
-    ]},
-    {name:'Exp. do Aluno',items:[
-      {id:'ea1',label:'Espaço de convivência disponível e agradável',tip:'Avalie copa, sala de descanso ou área de convivência.'},
-      {id:'ea2',label:'Comunicação interna clara e atualizada',tip:'Verifique murais, grupos de comunicação e quadros de avisos.'},
-      {id:'ea3',label:'Canal de ouvidoria conhecido pelos alunos',tip:'Confirme se alunos sabem como registrar sugestões e reclamações.'},
-      {id:'ea4',label:'Eventos ou atividades complementares ofertados',tip:'Confirme agenda de palestras, workshops ou atividades extras.'},
-      {id:'ea5',label:'Satisfação geral positiva (pesquisa ou percepção)',tip:'Consulte resultado de pesquisa recente ou registre percepção.'}
-    ]}
-  ]},
-  regulatorio:{name:'Regulatórios e Biossegurança',units:['Brasília','Campinas','São Paulo'],pilares:[
-    {name:'Regulatório/Biossegurança',items:[
-      {id:'r1',label:'Alvará sanitário vigente e fixado em local visível',tip:'Validade, assinatura da vigilância e local de afixação.'},
-      {id:'r2',label:'PGRSS (Plano de Gerenciamento de Resíduos) atualizado',tip:'Documento datado no ano corrente, assinado pelo responsável.'},
-      {id:'r3',label:'Registro CFO/CRO do responsável técnico afixado',tip:'Nome, número de registro e especialidade visíveis.'},
-      {id:'r4',label:'EPIs disponíveis para toda a equipe clínica',tip:'Luvas, máscaras N95/PFF2, óculos, jaleco, propé.'},
-      {id:'r5',label:'Protocolo de lavagem de mãos afixado',tip:'Poster padrão OMS ou MS visível nas pias da clínica.'},
-      {id:'r6',label:'Autoclave com registro de ciclos atualizado',tip:'Caderno ou sistema com data, tempo, temperatura e carga.'},
-      {id:'r7',label:'Indicadores biológicos utilizados mensalmente',tip:'Spore test mensal com resultado arquivado.'},
-      {id:'r8',label:'Descarte de perfurocortantes adequado',tip:'Caixa amarela ≤ 2/3 cheia, lacrada ou em uso correto.'},
-      {id:'r9',label:'Resíduos infectantes separados dos comuns',tip:'Saco branco para infectante, preto para comum, sem mistura.'},
-      {id:'r10',label:'Vacinação da equipe em dia (Hepatite B, tétano)',tip:'Solicitar comprovante ou declaração do responsável.'},
-      {id:'r11',label:'Protocolo de acidente com material biológico afixado',tip:'Fluxo de atendimento pós-exposição visível na clínica.'},
-      {id:'r12',label:'Produtos de limpeza e desinfecção identificados',tip:'Rótulos legíveis, concentração correta, dentro do prazo.'},
-      {id:'r13',label:'Controle de acesso à área clínica restrita',tip:'Somente profissionais autorizados circulam na área clínica.'}
-    ]}
-  ]},
-  pgodonto:{name:'Visita PG Odonto',units:['Brasília','Campinas','São Paulo','Rio de Janeiro','Belo Horizonte','Curitiba','Grande Vitória','Araras','Fortaleza'],pilares:[
-    {name:'Atendimento',items:[
-      {id:'po_a1',label:'Recepção organizada com atendente presente',tip:'Verifique presença e postura do atendente na recepção.'},
-      {id:'po_a2',label:'Tempo de espera dentro do padrão',tip:'Confirme com responsável o tempo médio de espera (padrão: até 15 min).'},
-      {id:'po_a3',label:'Comunicação clara com pacientes',tip:'Observe se há materiais explicativos e clareza nas orientações.'},
-      {id:'po_a4',label:'Protocolo de acolhimento implementado',tip:'Confirme existência de protocolo formal de boas-vindas.'},
-      {id:'po_a5',label:'Confirmação de agendamentos realizada',tip:'Verifique processo de confirmação prévia de consultas.'}
-    ]},
-    {name:'Clínica',items:[
-      {id:'po_c1',label:'Prontuários odontológicos organizados e completos',tip:'Amostra aleatória: radiografias, anamnese, plano de tratamento.'},
-      {id:'po_c2',label:'Materiais odontológicos dentro do prazo de validade',tip:'Anestésicos, resinas, cimentos e materiais de moldagem.'},
-      {id:'po_c3',label:'Equipamentos odontológicos em pleno funcionamento',tip:'Cadeiras, refletores, canetas de alta/baixa rotação, sugador.'},
-      {id:'po_c4',label:'Esterilização dos instrumentais em conformidade',tip:'Ciclos de autoclave, embalagens seladas, registro atualizado.'},
-      {id:'po_c5',label:'Compressor de ar em manutenção e funcionando',tip:'Verificar pressão, filtros e registro de manutenção preventiva.'}
-    ]},
-    {name:'Educacional',items:[
-      {id:'po_e1',label:'Cronograma de atividades práticas disponível',tip:'Solicitar plano de atividades clínicas práticas dos alunos.'},
-      {id:'po_e2',label:'Professor/Supervisor presente e pontual',tip:'Confirme horário de chegada e presença nas práticas.'},
-      {id:'po_e3',label:'Alunos com presença registrada no dia',tip:'Verificar chamada e confirmar frequência mínima.'},
-      {id:'po_e4',label:'Atividades práticas com supervisão direta',tip:'Confirme que há supervisor presente para cada procedimento clínico.'},
-      {id:'po_e5',label:'Material didático e casos clínicos disponíveis',tip:'Confirme acesso a casos, protocolos e materiais de apoio.'}
-    ]},
-    {name:'Estrutura',items:[
-      {id:'po_es1',label:'Consultórios limpos e organizados',tip:'Pisos, bancadas, cuspideiras e equipamentos sem sujidade.'},
-      {id:'po_es2',label:'Sala de espera limpa e confortável',tip:'Cadeiras adequadas, climatização, limpeza e organização.'},
-      {id:'po_es3',label:'Iluminação adequada nos consultórios',tip:'Refletores funcionando e iluminação geral suficiente.'},
-      {id:'po_es4',label:'Banheiros com insumos e limpos',tip:'Papel, sabão, papel toalha e higiene dos banheiros de pacientes.'},
-      {id:'po_es5',label:'Sinalização e fluxo de pacientes claro',tip:'Placas, indicações e circulação de pacientes sem cruzamentos.'}
-    ]},
-    {name:'Infra (Tech)',items:[
-      {id:'po_it1',label:'Internet funcionando nas instalações',tip:'Teste conectividade Wi-Fi para alunos e professores.'},
-      {id:'po_it2',label:'Equipamentos digitais (RX, escâner) operacionais',tip:'Radiografia digital ou RX convencional funcionando.'},
-      {id:'po_it3',label:'Sistema de prontuário eletrônico ativo',tip:'Confirme acesso e funcionamento do software odontológico.'},
-      {id:'po_it4',label:'Equipamentos de apoio (projetor, TV) funcionando',tip:'Equipamentos para aulas teóricas e demonstrações práticas.'}
-    ]},
-    {name:'G&G',items:[
-      {id:'po_gg1',label:'Indicadores odontológicos do mês disponíveis',tip:'Produção, procedimentos, absenteísmo e satisfação de pacientes.'},
-      {id:'po_gg2',label:'Metas de produção comunicadas à equipe',tip:'Confirme se equipe conhece metas e resultados atuais.'},
-      {id:'po_gg3',label:'Registro de reuniões de equipe',tip:'Ata ou registro da última reunião com pauta e decisões.'},
-      {id:'po_gg4',label:'Plano de ação para não conformidades vigente',tip:'Pendências anteriores com responsável e prazo definidos.'}
-    ]},
-    {name:'Regulatório/Biossegurança',items:[
-      {id:'po_rb1',label:'Alvará sanitário vigente e afixado',tip:'Validade, assinatura da vigilância sanitária local.'},
-      {id:'po_rb2',label:'EPIs disponíveis e em uso',tip:'Luvas, máscaras, óculos de proteção, jaleco e gorro.'},
-      {id:'po_rb3',label:'Registro CRO do responsável técnico afixado',tip:'Número de registro e especialidade visíveis no consultório.'},
-      {id:'po_rb4',label:'Protocolo de controle de infecção cruzada',tip:'Uso de barreiras, desinfecção de superfícies e troca de EPIs.'},
-      {id:'po_rb5',label:'Descarte de resíduos odontológicos conforme PGRSS',tip:'Separação correta: perfurocortantes, amalgama, infectantes.'}
-    ]},
-    {name:'Liderança',items:[
-      {id:'po_l1',label:'Coordenador presente e acessível na unidade',tip:'Confirme presença e disponibilidade do responsável.'},
-      {id:'po_l2',label:'Equipe ciente das prioridades e resultados',tip:'Pergunte a colaboradores sobre metas e prioridades do período.'},
-      {id:'po_l3',label:'Clima organizacional positivo (percepção)',tip:'Observe interações entre equipe e registre percepção geral.'}
-    ]}
-  ]},
-  vistoriaSP:{name:'Vistoria Diária SP',units:['São Paulo'],pilares:[
-    {name:'Salas de Aula',items:[
-      {id:'vd_sa1',label:'Sala limpa e organizada antes do início das aulas',tip:'Pisos, carteiras, quadros e superfícies sem sujidade.'},
-      {id:'vd_sa2',label:'Projetor ou TV da sala funcionando',tip:'Ligar equipamento e testar imagem e conectividade.'},
-      {id:'vd_sa3',label:'Ar-condicionado ou ventilação funcionando',tip:'Testar climatização e verificar filtros visíveis.'},
-      {id:'vd_sa4',label:'Iluminação adequada em todas as salas',tip:'Todas as lâmpadas funcionando, sem flicker ou queimadas.'},
-      {id:'vd_sa5',label:'Cadeiras e mesas em bom estado',tip:'Sem peças quebradas, amoladas ou com risco de acidente.'},
-      {id:'vd_sa6',label:'Quadro branco ou negro limpo e com marcador',tip:'Marcadores disponíveis e funcionando, apagadores presentes.'},
-      {id:'vd_sa7',label:'Tomadas e extensões em bom estado',tip:'Sem fios expostos, sobrecargas ou tomadas danificadas.'},
-      {id:'vd_sa8',label:'Janelas e persianas funcionando',tip:'Abertura, fechamento e acionamento correto das persianas.'},
-      {id:'vd_sa9',label:'Extintor de incêndio visível e dentro do prazo',tip:'Verificar etiqueta de validade e lacre do extintor mais próximo.'},
-      {id:'vd_sa10',label:'Saída de emergência desobstruída',tip:'Porta de saída livre de obstáculos e com sinalização.'},
-      {id:'vd_sa11',label:'Lixeiras presentes e com saco plástico',tip:'Pelo menos uma lixeira por sala com saco limpo.'},
-      {id:'vd_sa12',label:'Internet Wi-Fi funcionando na sala',tip:'Testar conectividade com dispositivo ou confirmar com aluno.'}
-    ]},
-    {name:'Consultórios',items:[
-      {id:'vd_co1',label:'Consultório limpo e pronto para atendimento',tip:'Superfícies desinfetadas, instrumental organizado, sem lixo acumulado.'},
-      {id:'vd_co2',label:'Cadeira odontológica em funcionamento',tip:'Movimentação, luz do refletor e escupo (cuspideira) testados.'},
-      {id:'vd_co3',label:'Refletor/foco de luz funcionando',tip:'Ligar e verificar intensidade e direcionamento do refletor.'},
-      {id:'vd_co4',label:'Caneta de alta rotação disponível e funcionando',tip:'Verificar funcionamento, turbina e pressão do ar.'},
-      {id:'vd_co5',label:'Caneta de baixa rotação disponível e funcionando',tip:'Confirmar funcionamento dos contra-ângulos e micromotor.'},
-      {id:'vd_co6',label:'Sugador e seringa de ar/água funcionando',tip:'Testar sucção e fluxo de ar e água da seringa tríplice.'},
-      {id:'vd_co7',label:'Materiais básicos estocados (luvas, máscara, algodão)',tip:'Confirmar estoque mínimo de insumos para o período.'},
-      {id:'vd_co8',label:'Bandeja e instrumental esterilizados disponíveis',tip:'Embalagens seladas, datas de validade da esterilização visíveis.'},
-      {id:'vd_co9',label:'Descarte de perfurocortante disponível e correto',tip:'Caixa amarela no consultório, ≤ 2/3 cheia.'},
-      {id:'vd_co10',label:'Barreira de proteção (plástico filme) nos equipamentos',tip:'Refletor, seringa e suporte do cuspideiro com barreira.'},
-      {id:'vd_co11',label:'Compressor de ar com pressão adequada',tip:'Confirmar pressão no manômetro (padrão da unidade).'},
-      {id:'vd_co12',label:'Registro da manutenção preventiva do consultório em dia',tip:'Caderno ou sistema com data da última manutenção.'}
-    ]},
-    {name:'Salas de Procedimentos',items:[
-      {id:'vd_sp1',label:'Sala de procedimentos limpa e organizada',tip:'Mesa cirúrgica, instrumental e superfícies higienizados.'},
-      {id:'vd_sp2',label:'Equipamentos específicos da sala funcionando',tip:'Confirmar funcionamento dos equipamentos críticos da sala.'},
-      {id:'vd_sp3',label:'Insumos e materiais com validade vigente',tip:'Verificar amostragem de validade de materiais críticos.'},
-      {id:'vd_sp4',label:'EPI completo disponível na sala',tip:'Luvas, máscaras, óculos, jaleco e proteção adequados ao procedimento.'},
-      {id:'vd_sp5',label:'Descarte de resíduos conforme classificação',tip:'Saco branco para infectante, amarelo para perfurocortante.'},
-      {id:'vd_sp6',label:'Protocolo de limpeza e desinfecção visível',tip:'POP de limpeza afixado ou disponível na sala.'},
-      {id:'vd_sp7',label:'Acesso restrito e sinalizado',tip:'Placa de acesso restrito e porta fechada durante procedimentos.'},
-      {id:'vd_sp8',label:'Pia para higienização das mãos na sala ou adjacente',tip:'Pia com sabão e papel toalha disponíveis.'},
-      {id:'vd_sp9',label:'Iluminação adequada para procedimentos',tip:'Luz suficiente e sem sombras na área de trabalho.'},
-      {id:'vd_sp10',label:'Carro de emergência ou kit acessível (se aplicável)',tip:'Confirmar localização e acesso ao kit de emergência mais próximo.'},
-      {id:'vd_sp11',label:'Temperatura de armazenamento de materiais monitorada',tip:'Geladeira/freezer com termômetro e registro de temperatura.'},
-      {id:'vd_sp12',label:'Instrumental identificado e organizado por procedimento',tip:'Bandejas organizadas por tipo de procedimento, sem mistura.'}
-    ]},
-    {name:'TVs Conveniência',items:[
-      {id:'vd_tv1',label:'TV da recepção ligada e com conteúdo adequado',tip:'Canal institucional, entretenimento ou informativo adequado ao público.'},
-      {id:'vd_tv2',label:'TV de sala de espera funcionando',tip:'Imagem, áudio (se aplicável) e conteúdo verificados.'},
-      {id:'vd_tv3',label:'Conteúdo das TVs atualizado e institucional',tip:'Sem conteúdo inadequado, tela preta ou canal inapropriado.'},
-      {id:'vd_tv4',label:'Controles remotos disponíveis e funcionando',tip:'Confirmar localização e funcionamento dos controles.'}
-    ]},
-    {name:'Recepção e Áreas Comuns',items:[
-      {id:'vd_rc1',label:'Recepção organizada e limpa',tip:'Balcão, piso, cadeiras e área geral em bom estado.'},
-      {id:'vd_rc2',label:'Corredor principal limpo e desobstruído',tip:'Sem caixas, objetos ou obstáculos nos corredores principais.'},
-      {id:'vd_rc3',label:'Banheiros limpos com insumos disponíveis',tip:'Papel, sabão, papel toalha e limpeza confirmados.'},
-      {id:'vd_rc4',label:'Copa/cozinha organizada e limpa',tip:'Pia, bancada, micro-ondas e geladeira em bom estado.'},
-      {id:'vd_rc5',label:'Área externa (entrada) limpa e organizada',tip:'Calçada, vidros da entrada e área de acesso sem sujidade.'},
-      {id:'vd_rc6',label:'Sinalização de emergência visível e correta',tip:'Placas de saída de emergência, extintor e mapa de evacuação.'},
-      {id:'vd_rc7',label:'Lixeiras nas áreas comuns com sacos limpos',tip:'Lixeiras no corredor, recepção e copa com saco plástico.'},
-      {id:'vd_rc8',label:'Bebedouro/filtro limpo e funcionando',tip:'Confirmar limpeza do bebedouro e validade do filtro.'},
-      {id:'vd_rc9',label:'Área de convivência de alunos organizada',tip:'Espaço de descanso ou copa de alunos limpo e disponível.'},
-      {id:'vd_rc10',label:'Comunicados e informes nos murais atualizados',tip:'Quadro de avisos com datas recentes e informações relevantes.'},
-      {id:'vd_rc11',label:'Acesso para PCD (rampa, corrimão, banheiro adaptado)',tip:'Confirmar disponibilidade e funcionamento dos recursos de acessibilidade.'},
-      {id:'vd_rc12',label:'Câmeras de segurança funcionando (se aplicável)',tip:'Confirmar com responsável se as câmeras estão operacionais.'},
-      {id:'vd_rc13',label:'Ambiente com temperatura agradável (AC geral)',tip:'Verificar funcionamento do sistema de climatização nas áreas comuns.'},
-      {id:'vd_rc14',label:'Objetos perdidos ou esquecidos tratados adequadamente',tip:'Verificar se há protocolo para objetos encontrados.'},
-      {id:'vd_rc15',label:'Uniformização da equipe conforme padrão',tip:'Confirmar uso correto de uniforme, crachá e postura.'},
-      {id:'vd_rc16',label:'Estacionamento organizado (se aplicável)',tip:'Vagas sinalizadas, acesso livre e organização geral.'},
-      {id:'vd_rc17',label:'Recepção com escala/horário de atendimento afixado',tip:'Horário de funcionamento visível para pacientes e alunos.'},
-      {id:'vd_rc18',label:'Telefone/ramal da recepção funcionando',tip:'Testar ligação e confirmar funcionamento do ramal.'},
-      {id:'vd_rc19',label:'Computador da recepção ligado e com sistema ativo',tip:'Confirmar acesso ao sistema de agendamento na recepção.'},
-      {id:'vd_rc20',label:'Área de espera com cadeiras suficientes',tip:'Número de cadeiras adequado ao fluxo esperado de pacientes/alunos.'},
-      {id:'vd_rc21',label:'Planta de evacuação e saídas de emergência visíveis',tip:'Mapa de evacuação afixado nos corredores principais.'},
-      {id:'vd_rc22',label:'Iluminação das áreas comuns adequada',tip:'Corredor, recepção e banheiros sem lâmpadas queimadas.'},
-      {id:'vd_rc23',label:'Presença de funcionário de limpeza em turno',tip:'Confirmar escala e presença do profissional de limpeza.'},
-      {id:'vd_rc24',label:'Registro de visitas/prestadores preenchido',tip:'Confirmar controle de acesso de visitantes e prestadores externos.'},
-      {id:'vd_rc25',label:'Organização dos arquivos físicos (se aplicável)',tip:'Pastas, prontuários e documentos físicos organizados e acessíveis.'},
-      {id:'vd_rc26',label:'Plano de contingência para falta de energia disponível',tip:'Confirmar existência de no-break, gerador ou protocolo de contingência.'},
-      {id:'vd_rc27',label:'Tapetes e pisos em bom estado (sem risco de queda)',tip:'Verificar tapetes soltos, pisos escorregadios ou irregulares.'},
-      {id:'vd_rc28',label:'Área de descarte externo de lixo organizada',tip:'Lixo externo organizado e dentro da frequência de coleta.'}
-    ]}
-  ]},
-  regulatorioSemanal:{name:'Regulatórios e Biossegurança',units:['Brasília','Campinas','São Paulo'],pilares:[
-    {name:'Verificação Semanal — Regulatório/Biossegurança',items:[
-      {id:'rs1',label:'Alvará sanitário vigente e fixado em local visível',tip:'Confirmar validade e visibilidade semanal.'},
-      {id:'rs2',label:'PGRSS disponível e atualizado',tip:'Documento acessível e dentro do prazo de revisão.'},
-      {id:'rs3',label:'Estoque de EPIs reposto para a semana',tip:'Luvas, máscaras, óculos e jalecos em quantidade suficiente.'},
-      {id:'rs4',label:'Ciclos de autoclave realizados e registrados na semana',tip:'Verificar caderno/sistema com datas dos ciclos da semana.'},
-      {id:'rs5',label:'Indicador biológico utilizado (se semana de uso)',tip:'Spore test mensal — confirmar se esta é a semana de aplicação.'},
-      {id:'rs6',label:'Caixas de perfurocortante verificadas (nível e estado)',tip:'Nenhuma caixa acima de 2/3 do volume; lacrar se necessário.'},
-      {id:'rs7',label:'Coleta de resíduos infectantes realizada na semana',tip:'Confirmar com empresa de coleta a frequência e registro.'},
-      {id:'rs8',label:'Produtos de limpeza e desinfecção abastecidos',tip:'Álcool, hipoclorito e detergentes em quantidade adequada.'},
-      {id:'rs9',label:'Registro de acidentes com material biológico verificado',tip:'Confirmar que não houve ocorrência; se houve, protocolo seguido.'},
-      {id:'rs10',label:'Limpeza terminal de salas realizada conforme escala',tip:'Verificar escala semanal de limpeza profunda dos ambientes clínicos.'},
-      {id:'rs11',label:'Temperatura da geladeira/freezer de materiais registrada',tip:'Confirmar monitoramento diário de temperatura da semana.'},
-      {id:'rs12',label:'Validade dos materiais críticos verificada',tip:'Amostragem de insumos críticos — anestésicos, resinas, fios de sutura.'}
-    ]}
-  ]}
+var CHECKLISTS = {
+  score:{
+    paginatedByPillar:true,
+    name:'Score Operacional',
+    units:['Brasília','Campinas','São Paulo'],
+    pilares:[
+      {name:'Atendimento',items:[
+        {id:'a1',label:'Recepção organizada e com atendente presente',tip:'Verifique se há atendente na recepção e se o espaço está organizado e limpo.'},
+        {id:'a2',label:'Tempo de espera adequado (até 15 min)',tip:'Pergunte ao responsável sobre o tempo médio de espera e verifique fila.'},
+        {id:'a3',label:'Comunicação clara com pacientes/alunos',tip:'Observe se informações sobre procedimentos estão visíveis e claras.'},
+        {id:'a4',label:'Protocolo de boas-vindas implementado',tip:'Confirme se há protocolo formal de recepção e boas-vindas.'},
+        {id:'a5',label:'Agendamento com confirmação prévia',tip:'Verifique se há processo de confirmação de consultas/procedimentos.'}
+      ]},
+      {name:'Clínica',items:[
+        {id:'c1',label:'Prontuários organizados e atualizados',tip:'Amostra aleatória de 3-5 prontuários para verificar completude.'},
+        {id:'c2',label:'Materiais clínicos disponíveis e dentro do prazo',tip:'Verifique validade de insumos e materiais críticos.'},
+        {id:'c3',label:'Equipamentos funcionando corretamente',tip:'Teste equipamentos principais: cadeiras, refletores, compressor.'},
+        {id:'c4',label:'Esterilização em conformidade',tip:'Verifique registros de autoclave e ciclos de esterilização.'},
+        {id:'c5',label:'Resíduos descartados corretamente',tip:'Confirme separação adequada: perfurocortantes, infectantes, comuns.'}
+      ]},
+      {name:'Educacional',items:[
+        {id:'e1',label:'Plano de aula/cronograma disponível',tip:'Solicite acesso ao plano da semana e verifique execução.'},
+        {id:'e2',label:'Professor presente e pontual',tip:'Confirme horário de chegada do docente nos registros.'},
+        {id:'e3',label:'Alunos com presença registrada',tip:'Verifique chamada do dia e percentual de presença.'},
+        {id:'e4',label:'Atividades práticas supervisionadas',tip:'Confirme se há supervisor presente nas práticas clínicas.'},
+        {id:'e5',label:'Material didático disponível e atualizado',tip:'Verifique se apostilas e materiais de apoio estão acessíveis.'}
+      ]},
+      {name:'Estrutura',items:[
+        {id:'es1',label:'Limpeza geral das instalações',tip:'Avalie pisos, paredes, tetos, banheiros e áreas comuns.'},
+        {id:'es2',label:'Iluminação adequada em todos os ambientes',tip:'Verifique lâmpadas queimadas e intensidade de luz nas salas clínicas.'},
+        {id:'es3',label:'Climatização funcionando',tip:'Confirme funcionamento de ar-condicionado nas salas de aula e clínica.'},
+        {id:'es4',label:'Banheiros limpos e com insumos',tip:'Verifique papel, sabão, papel toalha e limpeza em todos os banheiros.'},
+        {id:'es5',label:'Sinalização e acessibilidade adequadas',tip:'Confirme placas de saída, rampas e banheiro adaptado.'}
+      ]},
+      {name:'Infra (Tech)',items:[
+        {id:'it1',label:'Internet funcionando nas salas de aula',tip:'Teste velocidade e conectividade com o dispositivo da unidade.'},
+        {id:'it2',label:'Projetores e TVs operacionais',tip:'Ligue todos os equipamentos AV e verifique imagem e áudio.'},
+        {id:'it3',label:'Computadores e tablets em funcionamento',tip:'Verifique percentual de equipamentos operacionais.'},
+        {id:'it4',label:'Sistema de agendamento online ativo',tip:'Confirme acesso ao sistema e ausência de erros críticos.'},
+        {id:'it5',label:'Backup de dados realizado',tip:'Confirme data do último backup com o responsável de TI local.'}
+      ]},
+      {name:'G&G',items:[
+        {id:'gg1',label:'Indicadores do mês disponíveis',tip:'Solicite painel de indicadores atualizado do mês vigente.'},
+        {id:'gg2',label:'Metas definidas e comunicadas à equipe',tip:'Confirme se equipe conhece metas e resultados atuais.'},
+        {id:'gg3',label:'Reunião de equipe realizada no mês',tip:'Verifique ata ou registro da última reunião de equipe.'},
+        {id:'gg4',label:'Plano de ação para não conformidades vigente',tip:'Confirme existência de plano para correção de pendências anteriores.'}
+      ]},
+      {name:'Reg./Biossegurança',items:[
+        {id:'rb1',label:'Alvará sanitário vigente e afixado',tip:'Verifique data de validade e local de fixação do alvará.'},
+        {id:'rb2',label:'EPIs disponíveis e em uso',tip:'Confirme disponibilidade de luvas, máscaras, óculos e jaleco.'},
+        {id:'rb3',label:'Registro COREN/CFO atualizado',tip:'Verifique registros profissionais dos colaboradores clínicos.'},
+        {id:'rb4',label:'Controle de infecção cruzada',tip:'Observe uso de barreiras e protocolos de desinfecção.'}
+      ]},
+      {name:'Liderança',items:[
+        {id:'l1',label:'Coordenador presente e acessível',tip:'Confirme presença do coordenador/responsável pela unidade.'},
+        {id:'l2',label:'Equipe ciente das prioridades do período',tip:'Pergunte a 2-3 colaboradores sobre as prioridades atuais.'},
+        {id:'l3',label:'Feedbacks recentes documentados',tip:'Verifique registro de feedbacks individuais ou coletivos.'},
+        {id:'l4',label:'Conflitos ou ocorrências registrados e tratados',tip:'Consulte livro de ocorrências ou sistema de registro.'}
+      ]},
+      {name:'Exp. do Aluno',items:[
+        {id:'ea1',label:'Espaço de convivência disponível e agradável',tip:'Avalie copa, sala de descanso ou área de convivência.'},
+        {id:'ea2',label:'Comunicação interna clara e atualizada',tip:'Verifique murais, grupos de comunicação e quadros de avisos.'},
+        {id:'ea3',label:'Canal de ouvidoria conhecido pelos alunos',tip:'Confirme se alunos sabem como registrar sugestões e reclamações.'},
+        {id:'ea4',label:'Eventos ou atividades complementares ofertados',tip:'Confirme agenda de palestras, workshops ou atividades extras.'},
+        {id:'ea5',label:'Satisfação geral positiva (pesquisa ou percepção)',tip:'Consulte resultado de pesquisa recente ou registre percepção.'}
+      ]}
+    ]
+  },
+  regulatorio:{
+    paginatedByPillar:true,
+    name:'Regulatórios e Biossegurança',
+    units:['Brasília','Campinas','São Paulo'],
+    pilares:[
+      {name:'Regulatório/Biossegurança',items:[
+        {id:'r1',label:'Alvará sanitário vigente e fixado em local visível',tip:'Validade, assinatura da vigilância e local de afixação.'},
+        {id:'r2',label:'PGRSS (Plano de Gerenciamento de Resíduos) atualizado',tip:'Documento datado no ano corrente, assinado pelo responsável.'},
+        {id:'r3',label:'Registro CFO/CRO do responsável técnico afixado',tip:'Nome, número de registro e especialidade visíveis.'},
+        {id:'r4',label:'EPIs disponíveis para toda a equipe clínica',tip:'Luvas, máscaras N95/PFF2, óculos, jaleco, propé.'},
+        {id:'r5',label:'Protocolo de lavagem de mãos afixado',tip:'Poster padrão OMS ou MS visível nas pias da clínica.'},
+        {id:'r6',label:'Autoclave com registro de ciclos atualizado',tip:'Caderno ou sistema com data, tempo, temperatura e carga.'},
+        {id:'r7',label:'Indicadores biológicos utilizados mensalmente',tip:'Spore test mensal com resultado arquivado.'},
+        {id:'r8',label:'Descarte de perfurocortantes adequado',tip:'Caixa amarela ≤ 2/3 cheia, lacrada ou em uso correto.'},
+        {id:'r9',label:'Resíduos infectantes separados dos comuns',tip:'Saco branco para infectante, preto para comum, sem mistura.'},
+        {id:'r10',label:'Vacinação da equipe em dia (Hepatite B, tétano)',tip:'Solicitar comprovante ou declaração do responsável.'},
+        {id:'r11',label:'Protocolo de acidente com material biológico afixado',tip:'Fluxo de atendimento pós-exposição visível na clínica.'},
+        {id:'r12',label:'Produtos de limpeza e desinfecção identificados',tip:'Rótulos legíveis, concentração correta, dentro do prazo.'},
+        {id:'r13',label:'Controle de acesso à área clínica restrita',tip:'Somente profissionais autorizados circulam na área clínica.'}
+      ]}
+    ]
+  },
+  pgodonto:{
+    paginatedByPillar:true,
+    name:'Visita PG Odonto',
+    units:['Brasília','Campinas','São Paulo','Rio de Janeiro','Belo Horizonte','Curitiba','Grande Vitória','Araras','Fortaleza'],
+    pilares:[
+      {name:'Atendimento',items:[
+        {id:'po_a1',label:'Recepção organizada com atendente presente',tip:'Verifique presença e postura do atendente na recepção.'},
+        {id:'po_a2',label:'Tempo de espera dentro do padrão',tip:'Confirme com responsável o tempo médio de espera (padrão: até 15 min).'},
+        {id:'po_a3',label:'Comunicação clara com pacientes',tip:'Observe se há materiais explicativos e clareza nas orientações.'},
+        {id:'po_a4',label:'Protocolo de acolhimento implementado',tip:'Confirme existência de protocolo formal de boas-vindas.'},
+        {id:'po_a5',label:'Confirmação de agendamentos realizada',tip:'Verifique processo de confirmação prévia de consultas.'}
+      ]},
+      {name:'Clínica',items:[
+        {id:'po_c1',label:'Prontuários odontológicos organizados e completos',tip:'Amostra aleatória: radiografias, anamnese, plano de tratamento.'},
+        {id:'po_c2',label:'Materiais odontológicos dentro do prazo de validade',tip:'Anestésicos, resinas, cimentos e materiais de moldagem.'},
+        {id:'po_c3',label:'Equipamentos odontológicos em pleno funcionamento',tip:'Cadeiras, refletores, canetas de alta/baixa rotação, sugador.'},
+        {id:'po_c4',label:'Esterilização dos instrumentais em conformidade',tip:'Ciclos de autoclave, embalagens seladas, registro atualizado.'},
+        {id:'po_c5',label:'Compressor de ar em manutenção e funcionando',tip:'Verificar pressão, filtros e registro de manutenção preventiva.'}
+      ]},
+      {name:'Educacional',items:[
+        {id:'po_e1',label:'Cronograma de atividades práticas disponível',tip:'Solicitar plano de atividades clínicas práticas dos alunos.'},
+        {id:'po_e2',label:'Professor/Supervisor presente e pontual',tip:'Confirme horário de chegada e presença nas práticas.'},
+        {id:'po_e3',label:'Alunos com presença registrada no dia',tip:'Verificar chamada e confirmar frequência mínima.'},
+        {id:'po_e4',label:'Atividades práticas com supervisão direta',tip:'Confirme que há supervisor presente para cada procedimento clínico.'},
+        {id:'po_e5',label:'Material didático e casos clínicos disponíveis',tip:'Confirme acesso a casos, protocolos e materiais de apoio.'}
+      ]},
+      {name:'Estrutura',items:[
+        {id:'po_es1',label:'Consultórios limpos e organizados',tip:'Pisos, bancadas, cuspideiras e equipamentos sem sujidade.'},
+        {id:'po_es2',label:'Sala de espera limpa e confortável',tip:'Cadeiras adequadas, climatização, limpeza e organização.'},
+        {id:'po_es3',label:'Iluminação adequada nos consultórios',tip:'Refletores funcionando e iluminação geral suficiente.'},
+        {id:'po_es4',label:'Banheiros com insumos e limpos',tip:'Papel, sabão, papel toalha e higiene dos banheiros de pacientes.'},
+        {id:'po_es5',label:'Sinalização e fluxo de pacientes claro',tip:'Placas, indicações e circulação de pacientes sem cruzamentos.'}
+      ]},
+      {name:'Infra (Tech)',items:[
+        {id:'po_it1',label:'Internet funcionando nas instalações',tip:'Teste conectividade Wi-Fi para alunos e professores.'},
+        {id:'po_it2',label:'Equipamentos digitais (RX, escâner) operacionais',tip:'Radiografia digital ou RX convencional funcionando.'},
+        {id:'po_it3',label:'Sistema de prontuário eletrônico ativo',tip:'Confirme acesso e funcionamento do software odontológico.'},
+        {id:'po_it4',label:'Equipamentos de apoio (projetor, TV) funcionando',tip:'Equipamentos para aulas teóricas e demonstrações práticas.'}
+      ]},
+      {name:'G&G',items:[
+        {id:'po_gg1',label:'Indicadores odontológicos do mês disponíveis',tip:'Produção, procedimentos, absenteísmo e satisfação de pacientes.'},
+        {id:'po_gg2',label:'Metas de produção comunicadas à equipe',tip:'Confirme se equipe conhece metas e resultados atuais.'},
+        {id:'po_gg3',label:'Registro de reuniões de equipe',tip:'Ata ou registro da última reunião com pauta e decisões.'},
+        {id:'po_gg4',label:'Plano de ação para não conformidades vigente',tip:'Pendências anteriores com responsável e prazo definidos.'}
+      ]},
+      {name:'Regulatório/Biossegurança',items:[
+        {id:'po_rb1',label:'Alvará sanitário vigente e afixado',tip:'Validade, assinatura da vigilância sanitária local.'},
+        {id:'po_rb2',label:'EPIs disponíveis e em uso',tip:'Luvas, máscaras, óculos de proteção, jaleco e gorro.'},
+        {id:'po_rb3',label:'Registro CRO do responsável técnico afixado',tip:'Número de registro e especialidade visíveis no consultório.'},
+        {id:'po_rb4',label:'Protocolo de controle de infecção cruzada',tip:'Uso de barreiras, desinfecção de superfícies e troca de EPIs.'},
+        {id:'po_rb5',label:'Descarte de resíduos odontológicos conforme PGRSS',tip:'Separação correta: perfurocortantes, amalgama, infectantes.'}
+      ]},
+      {name:'Liderança',items:[
+        {id:'po_l1',label:'Coordenador presente e acessível na unidade',tip:'Confirme presença e disponibilidade do responsável.'},
+        {id:'po_l2',label:'Equipe ciente das prioridades e resultados',tip:'Pergunte a colaboradores sobre metas e prioridades do período.'},
+        {id:'po_l3',label:'Clima organizacional positivo (percepção)',tip:'Observe interações entre equipe e registre percepção geral.'}
+      ]}
+    ]
+  },
+  vistoriaSP:{
+    paginatedByPillar:true,
+    name:'Vistoria Diária SP',
+    units:['São Paulo'],
+    pilares:[
+      {name:'Salas de Aula',items:[
+        {id:'vd_sa1',label:'Sala limpa e organizada antes do início das aulas',tip:'Pisos, carteiras, quadros e superfícies sem sujidade.'},
+        {id:'vd_sa2',label:'Projetor ou TV da sala funcionando',tip:'Ligar equipamento e testar imagem e conectividade.'},
+        {id:'vd_sa3',label:'Ar-condicionado ou ventilação funcionando',tip:'Testar climatização e verificar filtros visíveis.'},
+        {id:'vd_sa4',label:'Iluminação adequada em todas as salas',tip:'Todas as lâmpadas funcionando, sem flicker ou queimadas.'},
+        {id:'vd_sa5',label:'Cadeiras e mesas em bom estado',tip:'Sem peças quebradas, amoladas ou com risco de acidente.'},
+        {id:'vd_sa6',label:'Quadro branco ou negro limpo e com marcador',tip:'Marcadores disponíveis e funcionando, apagadores presentes.'},
+        {id:'vd_sa7',label:'Tomadas e extensões em bom estado',tip:'Sem fios expostos, sobrecargas ou tomadas danificadas.'},
+        {id:'vd_sa8',label:'Janelas e persianas funcionando',tip:'Abertura, fechamento e acionamento correto das persianas.'},
+        {id:'vd_sa9',label:'Extintor de incêndio visível e dentro do prazo',tip:'Verificar etiqueta de validade e lacre do extintor mais próximo.'},
+        {id:'vd_sa10',label:'Saída de emergência desobstruída',tip:'Porta de saída livre de obstáculos e com sinalização.'},
+        {id:'vd_sa11',label:'Lixeiras presentes e com saco plástico',tip:'Pelo menos uma lixeira por sala com saco limpo.'},
+        {id:'vd_sa12',label:'Internet Wi-Fi funcionando na sala',tip:'Testar conectividade com dispositivo ou confirmar com aluno.'}
+      ]},
+      {name:'Consultórios',items:[
+        {id:'vd_co1',label:'Consultório limpo e pronto para atendimento',tip:'Superfícies desinfetadas, instrumental organizado, sem lixo acumulado.'},
+        {id:'vd_co2',label:'Cadeira odontológica em funcionamento',tip:'Movimentação, luz do refletor e escupo (cuspideira) testados.'},
+        {id:'vd_co3',label:'Refletor/foco de luz funcionando',tip:'Ligar e verificar intensidade e direcionamento do refletor.'},
+        {id:'vd_co4',label:'Caneta de alta rotação disponível e funcionando',tip:'Verificar funcionamento, turbina e pressão do ar.'},
+        {id:'vd_co5',label:'Caneta de baixa rotação disponível e funcionando',tip:'Confirmar funcionamento dos contra-ângulos e micromotor.'},
+        {id:'vd_co6',label:'Sugador e seringa de ar/água funcionando',tip:'Testar sucção e fluxo de ar e água da seringa tríplice.'},
+        {id:'vd_co7',label:'Materiais básicos estocados (luvas, máscara, algodão)',tip:'Confirmar estoque mínimo de insumos para o período.'},
+        {id:'vd_co8',label:'Bandeja e instrumental esterilizados disponíveis',tip:'Embalagens seladas, datas de validade da esterilização visíveis.'},
+        {id:'vd_co9',label:'Descarte de perfurocortante disponível e correto',tip:'Caixa amarela no consultório, ≤ 2/3 cheia.'},
+        {id:'vd_co10',label:'Barreira de proteção (plástico filme) nos equipamentos',tip:'Refletor, seringa e suporte do cuspideiro com barreira.'},
+        {id:'vd_co11',label:'Compressor de ar com pressão adequada',tip:'Confirmar pressão no manômetro (padrão da unidade).'},
+        {id:'vd_co12',label:'Registro da manutenção preventiva do consultório em dia',tip:'Caderno ou sistema com data da última manutenção.'}
+      ]},
+      {name:'Salas de Procedimentos',items:[
+        {id:'vd_sp1',label:'Sala de procedimentos limpa e organizada',tip:'Mesa cirúrgica, instrumental e superfícies higienizados.'},
+        {id:'vd_sp2',label:'Equipamentos específicos da sala funcionando',tip:'Confirmar funcionamento dos equipamentos críticos da sala.'},
+        {id:'vd_sp3',label:'Insumos e materiais com validade vigente',tip:'Verificar amostragem de validade de materiais críticos.'},
+        {id:'vd_sp4',label:'EPI completo disponível na sala',tip:'Luvas, máscaras, óculos, jaleco e proteção adequados ao procedimento.'},
+        {id:'vd_sp5',label:'Descarte de resíduos conforme classificação',tip:'Saco branco para infectante, amarelo para perfurocortante.'},
+        {id:'vd_sp6',label:'Protocolo de limpeza e desinfecção visível',tip:'POP de limpeza afixado ou disponível na sala.'},
+        {id:'vd_sp7',label:'Acesso restrito e sinalizado',tip:'Placa de acesso restrito e porta fechada durante procedimentos.'},
+        {id:'vd_sp8',label:'Pia para higienização das mãos na sala ou adjacente',tip:'Pia com sabão e papel toalha disponíveis.'},
+        {id:'vd_sp9',label:'Iluminação adequada para procedimentos',tip:'Luz suficiente e sem sombras na área de trabalho.'},
+        {id:'vd_sp10',label:'Carro de emergência ou kit acessível (se aplicável)',tip:'Confirmar localização e acesso ao kit de emergência mais próximo.'},
+        {id:'vd_sp11',label:'Temperatura de armazenamento de materiais monitorada',tip:'Geladeira/freezer com termômetro e registro de temperatura.'},
+        {id:'vd_sp12',label:'Instrumental identificado e organizado por procedimento',tip:'Bandejas organizadas por tipo de procedimento, sem mistura.'}
+      ]},
+      {name:'TVs Conveniência',items:[
+        {id:'vd_tv1',label:'TV da recepção ligada e com conteúdo adequado',tip:'Canal institucional, entretenimento ou informativo adequado ao público.'},
+        {id:'vd_tv2',label:'TV de sala de espera funcionando',tip:'Imagem, áudio (se aplicável) e conteúdo verificados.'},
+        {id:'vd_tv3',label:'Conteúdo das TVs atualizado e institucional',tip:'Sem conteúdo inadequado, tela preta ou canal inapropriado.'},
+        {id:'vd_tv4',label:'Controles remotos disponíveis e funcionando',tip:'Confirmar localização e funcionamento dos controles.'}
+      ]},
+      {name:'Recepção e Áreas Comuns',items:[
+        {id:'vd_rc1',label:'Recepção organizada e limpa',tip:'Balcão, piso, cadeiras e área geral em bom estado.'},
+        {id:'vd_rc2',label:'Corredor principal limpo e desobstruído',tip:'Sem caixas, objetos ou obstáculos nos corredores principais.'},
+        {id:'vd_rc3',label:'Banheiros limpos com insumos disponíveis',tip:'Papel, sabão, papel toalha e limpeza confirmados.'},
+        {id:'vd_rc4',label:'Copa/cozinha organizada e limpa',tip:'Pia, bancada, micro-ondas e geladeira em bom estado.'},
+        {id:'vd_rc5',label:'Área externa (entrada) limpa e organizada',tip:'Calçada, vidros da entrada e área de acesso sem sujidade.'},
+        {id:'vd_rc6',label:'Sinalização de emergência visível e correta',tip:'Placas de saída de emergência, extintor e mapa de evacuação.'},
+        {id:'vd_rc7',label:'Lixeiras nas áreas comuns com sacos limpos',tip:'Lixeiras no corredor, recepção e copa com saco plástico.'},
+        {id:'vd_rc8',label:'Bebedouro/filtro limpo e funcionando',tip:'Confirmar limpeza do bebedouro e validade do filtro.'},
+        {id:'vd_rc9',label:'Área de convivência de alunos organizada',tip:'Espaço de descanso ou copa de alunos limpo e disponível.'},
+        {id:'vd_rc10',label:'Comunicados e informes nos murais atualizados',tip:'Quadro de avisos com datas recentes e informações relevantes.'},
+        {id:'vd_rc11',label:'Acesso para PCD (rampa, corrimão, banheiro adaptado)',tip:'Confirmar disponibilidade e funcionamento dos recursos de acessibilidade.'},
+        {id:'vd_rc12',label:'Câmeras de segurança funcionando (se aplicável)',tip:'Confirmar com responsável se as câmeras estão operacionais.'},
+        {id:'vd_rc13',label:'Ambiente com temperatura agradável (AC geral)',tip:'Verificar funcionamento do sistema de climatização nas áreas comuns.'},
+        {id:'vd_rc14',label:'Objetos perdidos ou esquecidos tratados adequadamente',tip:'Verificar se há protocolo para objetos encontrados.'},
+        {id:'vd_rc15',label:'Uniformização da equipe conforme padrão',tip:'Confirmar uso correto de uniforme, crachá e postura.'},
+        {id:'vd_rc16',label:'Estacionamento organizado (se aplicável)',tip:'Vagas sinalizadas, acesso livre e organização geral.'},
+        {id:'vd_rc17',label:'Recepção com escala/horário de atendimento afixado',tip:'Horário de funcionamento visível para pacientes e alunos.'},
+        {id:'vd_rc18',label:'Telefone/ramal da recepção funcionando',tip:'Testar ligação e confirmar funcionamento do ramal.'},
+        {id:'vd_rc19',label:'Computador da recepção ligado e com sistema ativo',tip:'Confirmar acesso ao sistema de agendamento na recepção.'},
+        {id:'vd_rc20',label:'Área de espera com cadeiras suficientes',tip:'Número de cadeiras adequado ao fluxo esperado de pacientes/alunos.'},
+        {id:'vd_rc21',label:'Planta de evacuação e saídas de emergência visíveis',tip:'Mapa de evacuação afixado nos corredores principais.'},
+        {id:'vd_rc22',label:'Iluminação das áreas comuns adequada',tip:'Corredor, recepção e banheiros sem lâmpadas queimadas.'},
+        {id:'vd_rc23',label:'Presença de funcionário de limpeza em turno',tip:'Confirmar escala e presença do profissional de limpeza.'},
+        {id:'vd_rc24',label:'Registro de visitas/prestadores preenchido',tip:'Confirmar controle de acesso de visitantes e prestadores externos.'},
+        {id:'vd_rc25',label:'Organização dos arquivos físicos (se aplicável)',tip:'Pastas, prontuários e documentos físicos organizados e acessíveis.'},
+        {id:'vd_rc26',label:'Plano de contingência para falta de energia disponível',tip:'Confirmar existência de no-break, gerador ou protocolo de contingência.'},
+        {id:'vd_rc27',label:'Tapetes e pisos em bom estado (sem risco de queda)',tip:'Verificar tapetes soltos, pisos escorregadios ou irregulares.'},
+        {id:'vd_rc28',label:'Área de descarte externo de lixo organizada',tip:'Lixo externo organizado e dentro da frequência de coleta.'}
+      ]}
+    ]
+  },
+  regulatorioSemanal:{
+    paginatedByPillar:true,
+    name:'Regulatórios e Biossegurança',
+    units:['Brasília','Campinas','São Paulo'],
+    pilares:[
+      {name:'Verificação Semanal — Regulatório/Biossegurança',items:[
+        {id:'rs1',label:'Alvará sanitário vigente e fixado em local visível',tip:'Confirmar validade e visibilidade semanal.'},
+        {id:'rs2',label:'PGRSS disponível e atualizado',tip:'Documento acessível e dentro do prazo de revisão.'},
+        {id:'rs3',label:'Estoque de EPIs reposto para a semana',tip:'Luvas, máscaras, óculos e jalecos em quantidade suficiente.'},
+        {id:'rs4',label:'Ciclos de autoclave realizados e registrados na semana',tip:'Verificar caderno/sistema com datas dos ciclos da semana.'},
+        {id:'rs5',label:'Indicador biológico utilizado (se semana de uso)',tip:'Spore test mensal — confirmar se esta é a semana de aplicação.'},
+        {id:'rs6',label:'Caixas de perfurocortante verificadas (nível e estado)',tip:'Nenhuma caixa acima de 2/3 do volume; lacrar se necessário.'},
+        {id:'rs7',label:'Coleta de resíduos infectantes realizada na semana',tip:'Confirmar com empresa de coleta a frequência e registro.'},
+        {id:'rs8',label:'Produtos de limpeza e desinfecção abastecidos',tip:'Álcool, hipoclorito e detergentes em quantidade adequada.'},
+        {id:'rs9',label:'Registro de acidentes com material biológico verificado',tip:'Confirmar que não houve ocorrência; se houve, protocolo seguido.'},
+        {id:'rs10',label:'Limpeza terminal de salas realizada conforme escala',tip:'Verificar escala semanal de limpeza profunda dos ambientes clínicos.'},
+        {id:'rs11',label:'Temperatura da geladeira/freezer de materiais registrada',tip:'Confirmar monitoramento diário de temperatura da semana.'},
+        {id:'rs12',label:'Validade dos materiais críticos verificada',tip:'Amostragem de insumos críticos — anestésicos, resinas, fios de sutura.'}
+      ]}
+    ]
+  },
+  quinzenalCPS:{
+    name:'Checklist Regulatório Quinzenal',
+    paginatedByPillar:true,
+    units:['Campinas'],
+    pilares:[
+      {name:'Documentação e Licenças',items:[
+        {id:'qc1',label:'PGR — verificar validade e disponibilidade física do documento',tip:'Alerta Regulatório. Verificar validade e localização física do PGR.'},
+        {id:'qc2',label:'LTCAT — verificar validade',tip:'Alerta Regulatório. Laudo Técnico das Condições Ambientais do Trabalho.'},
+        {id:'qc3',label:'LTA p/ atividade de exames complementares — obter aprovação da Vigilância Sanitária',tip:'SIVISA Nº 25.001785/26. Pendente de aprovação.'},
+        {id:'qc4',label:'Licença Sanitária p/ exames complementares (CNAE 8630-5/02) — solicitar licença inicial',tip:'SIVISA Nº 25.001785/26. Pendente de solicitação.'},
+        {id:'qc5',label:'Extintores — verificar conformidade documental (laudo, validade e notas de recarga)',tip:'Alerta Regulatório. Situação anterior: Não conforme.'},
+        {id:'qc6',label:'PGRSS — verificar validade',tip:'Alerta Regulatório. Prazo: 21/08/2026.'},
+        {id:'qc7',label:'Brigada de Incêndio — verificar certificados dos brigadistas e validade do treinamento',tip:'Alerta Regulatório. Prazo: 01/08/2026.'},
+        {id:'qc8',label:'PCMSO — verificar validade',tip:'Alerta Regulatório. Prazo: 05/08/2026.'},
+        {id:'qc9',label:'Contrato com empresa processadora de produtos para saúde (expurgo) — verificar existência e vigência',tip:'SIVISA Nº 25.001785/26. Pendente.'},
+        {id:'qc10',label:'PMOC — verificar registros de manutenção preventiva dos ar-condicionados',tip:'Alerta Regulatório. Prazo: 31/08/2026.'},
+        {id:'qc11',label:"Certificado de limpeza dos reservatórios d'água — verificar validade",tip:'Alerta Regulatório. Prazo: 01/08/2026.'},
+        {id:'qc12',label:'Troca dos filtros dos bebedouros (1º andar) — verificar data e execução',tip:'Alerta Regulatório. Prazo: 01/07/2026.'},
+        {id:'qc13',label:'Troca dos filtros dos bebedouros (Térreo) — verificar data e execução',tip:'Alerta Regulatório. Prazo: 20/07/2026.'},
+        {id:'qc14',label:'CNES — verificar regularidade do cadastro da unidade',tip:'Alerta Regulatório. Prazo: 25/08/2026.'},
+        {id:'qc15',label:'Controle de pragas — verificar certificados e intervalo de aplicações',tip:'Alerta Regulatório. Prazo: 18/08/2026.'}
+      ]},
+      {name:'Medicamentos e Termolábeis',items:[
+        {id:'qc16',label:'Geladeira da sala de triagem: verificar controle e registro de temperatura (planilha diária)',tip:'SIVISA Nº 25.001785/26. Registrar temperatura diariamente.'},
+        {id:'qc17',label:'Geladeira da sala de triagem: verificar ausência de medicamentos de multidose sem identificação',tip:'SIVISA Nº 25.001785/26. Todos os medicamentos devem estar identificados.'},
+        {id:'qc18',label:'Almoxarifado/saleta: confirmar separação total de medicamentos e alimentos (ex: amido de milho)',tip:'SIVISA Nº 25.001785/26. Medicamentos e alimentos não podem ser armazenados juntos.'},
+        {id:'qc19',label:'Almoxarifado: verificar controle de temperatura e umidade (planilha ou sensor instalado)',tip:'SIVISA Nº 25.001785/26. Exigência de monitoramento de temperatura e umidade.'},
+        {id:'qc20',label:'Almoxarifado: verificar organização, ausência de materiais em desuso e paredes sem infiltração',tip:'SIVISA Nº 25.001785/26. Área deve estar organizada e sem infiltrações.'},
+        {id:'qc21',label:'Conferir ausência de produtos para saúde sem registro ANVISA (ex: Derma Roller System interditado)',tip:'SIVISA Nº 25.001785/26. Produtos sem registro ANVISA devem ser removidos.'}
+      ]},
+      {name:'Infraestrutura e Instalações',items:[
+        {id:'qc22',label:'Consultórios K2, K4, K9: verificar andamento da instalação de pias fixas para higienização das mãos',tip:'SIVISA Nº 25.001785/26. Exigência de pias fixas nos consultórios.'},
+        {id:'qc23',label:'Consultórios K7, K8: verificar substituição das pias móveis por instalação fixa adequada',tip:'SIVISA Nº 25.001785/26. Pias móveis devem ser substituídas por fixas.'},
+        {id:'qc24',label:'Sanitário masculino e PCD: verificar instalação/funcionamento de exaustão ou ventilação natural',tip:'SIVISA Nº 25.001785/26. Exaustão ou ventilação natural obrigatória.'},
+        {id:'qc25',label:'Área dos fundos (DML): verificar segregação de ambientes (DML, resíduos, vestiário, gases medicinais)',tip:'SIVISA Nº 25.001785/26. Ambientes devem estar devidamente segregados.'},
+        {id:'qc26',label:'Área dos fundos: verificar ausência de materiais em desuso e organização geral',tip:'SIVISA Nº 25.001785/26. Área deve estar limpa e sem materiais desnecessários.'},
+        {id:'qc27',label:'Sala de expurgo: verificar instalação e uso da bancada e pia de inox para pré-limpeza de materiais',tip:'SIVISA Nº 25.001785/26. Bancada e pia de inox são exigências regulatórias.'}
+      ]},
+      {name:'Biossegurança e Resíduos',items:[
+        {id:'qc28',label:'Caixa coletora de perfurocortantes: verificar altura do suporte (deve permitir visualização da abertura)',tip:'SIVISA Nº 25.001785/26. Suporte deve estar na altura correta.'},
+        {id:'qc29',label:'Descarte de resíduos: verificar segregação correta (infectante, comum, reciclável, perfurocortante)',tip:'SIVISA Nº 25.001785/26 / PGRSS. Segregação é obrigatória por lei.'},
+        {id:'qc30',label:'Abrigo temporário de resíduos: verificar organização, acesso restrito e identificação',tip:'SIVISA Nº 25.001785/26. Abrigo deve ter acesso controlado e identificação.'},
+        {id:'qc31',label:'EPIs: verificar disponibilidade e uso adequado pelos colaboradores (Ficha de Controle assinada)',tip:'Alerta Regulatório. Ficha de controle de EPI deve estar assinada.'}
+      ]},
+      {name:'Equipamentos Médicos',items:[
+        {id:'qc32',label:'Equipamentos de oftalmologia (lâmpada de fenda, coluna oftalmológica): verificar registros de manutenção preventiva',tip:'SIVISA Nº 25.001785/26. Registros de manutenção devem estar atualizados.'},
+        {id:'qc33',label:'Aparelho de bioimpedância: verificar calibração e manutenção em dia',tip:'SIVISA Nº 25.001785/26. Calibração e manutenção devem estar registradas.'},
+        {id:'qc34',label:'Equipamentos de laser (locados): verificar se contratos de manutenção estão vigentes',tip:'SIVISA Nº 25.001785/26. Contratos de manutenção devem estar vigentes.'},
+        {id:'qc35',label:'Extintores (físico): verificar sinalização, acesso desobstruído, pressão e validade da carga',tip:'Alerta Regulatório. Prazo: 01/06/2026. Verificar pressão e validade.'}
+      ]},
+      {name:'Segurança do Paciente',items:[
+        {id:'qc36',label:'Carro/kit de emergência: verificar existência de insumos, medicamentos e equipamentos para manejo de emergências',tip:'SIVISA Nº 25.001785/26. Kit completo é obrigatório.'},
+        {id:'qc37',label:'Torpedo de oxigênio: verificar presença em suporte, nível de carga e validade do cilindro',tip:'SIVISA Nº 25.001785/26. Confirmar nível de carga e suporte adequado.'},
+        {id:'qc38',label:'Termos de Consentimento Esclarecido (TCE): verificar se todos os procedimentos têm TCE assinado e arquivado',tip:'SIVISA Nº 25.001785/26. TCE obrigatório para todos os procedimentos.'},
+        {id:'qc39',label:'Amostras/biópsias cirúrgicas: verificar preservação em frasco adequado, identificação e encaminhamento p/ anatomia patológica',tip:'SIVISA Nº 25.001785/26. Identificação e encaminhamento corretos são obrigatórios.'},
+        {id:'qc40',label:'Rede de gases medicinais: verificar sinalização, acessos e condições de armazenamento',tip:'SIVISA Nº 25.001785/26. Verificar sinalização e condições de armazenamento.'}
+      ]},
+      {name:'Higiene e Limpeza',items:[
+        {id:'qc41',label:'Salão de procedimentos cirúrgicos (1º andar): verificar limpeza, desinfecção e organização das macas e mesa auxiliar',tip:'SIVISA Nº 25.001785/26. Desinfecção de superfícies é obrigatória.'},
+        {id:'qc42',label:'Sala de triagem: verificar organização, limpeza e ausência de materiais em desuso',tip:'SIVISA Nº 25.001785/26. Sala deve estar limpa e organizada.'},
+        {id:'qc43',label:'Consultórios (geral): verificar limpeza, organização e ausência de materiais inadequados',tip:'SIVISA Nº 25.001785/26. Todos os consultórios devem estar em ordem.'},
+        {id:'qc44',label:'Sanitários (masculino, feminino, PCD): verificar limpeza, disponibilidade de papel, sabonete e toalha descartável',tip:'SIVISA Nº 25.001785/26. Insumos básicos devem estar disponíveis.'}
+      ]},
+      {name:'Processos Clínicos',items:[
+        {id:'qc45',label:'Verificar se estão sendo realizados procedimentos de exames complementares com a unidade ainda sem licença sanitária para CNAE 8630-5/02',tip:'CRÍTICO — SIVISA Nº 25.001785/26. Procedimentos sem licença geram risco de interdição.'},
+        {id:'qc46',label:'Laboratório de tecidos (Soluções em Biotecnologia 3D): verificar regularização junto à Vigilância Sanitária',tip:'SIVISA Nº 25.001785/26. Regularização pendente.'},
+        {id:'qc47',label:'Verificar se todos os produtos para saúde utilizados possuem registro ANVISA/MS vigente',tip:'SIVISA Nº 25.001785/26. Produtos sem registro devem ser retirados de uso.'}
+      ]}
+    ]
+  }
+
 };
 
-function sGet(k){try{if(window.storage){var r=window.storage.get(k);if(r&&r.value)return JSON.parse(r.value);}}catch(e){}try{var v=localStorage.getItem(k);if(v)return JSON.parse(v);}catch(e){}return window._mem&&window._mem[k]?window._mem[k]:null;}
-function sSet(k,v){var s=JSON.stringify(v);try{if(window.storage)window.storage.set(k,s);}catch(e){}try{localStorage.setItem(k,s);}catch(e){}if(!window._mem)window._mem={};window._mem[k]=v;}
-function sKeys(){var keys=[];try{if(window.storage){var r=window.storage.list('audit_');if(r&&r.keys)keys=r.keys;}}catch(e){}if(!keys.length){try{for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k&&k.startsWith('audit_'))keys.push(k);}}catch(e){}}return keys;}
+// ===================== STORAGE =====================
+function sGet(k){
+  try{
+    if(window.storage){var r=window.storage.get(k);if(r&&r.value)return JSON.parse(r.value);}
+  }catch(e){}
+  try{var v=localStorage.getItem(k);if(v)return JSON.parse(v);}catch(e){}
+  return window._mem&&window._mem[k]?window._mem[k]:null;
+}
+function sSet(k,v){
+  var s=JSON.stringify(v);
+  try{if(window.storage)window.storage.set(k,s);}catch(e){}
+  try{localStorage.setItem(k,s);}catch(e){}
+  if(!window._mem)window._mem={};
+  window._mem[k]=v;
+}
+function sKeys(){
+  var keys=[];
+  try{if(window.storage){var r=window.storage.list('audit_');if(r&&r.keys)keys=r.keys;}}catch(e){}
+  if(!keys.length){try{for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k&&k.startsWith('audit_'))keys.push(k);}}catch(e){}}
+  return keys;
+}
 function uid(){return 'a'+Date.now().toString(36)+Math.random().toString(36).substr(2,4);}
-function scrollTop(){try{window.scrollTo(0,0);}catch(e){}try{document.documentElement.scrollTop=0;}catch(e){}try{document.body.scrollTop=0;}catch(e){}}
-function toggleFolder(id,hdr){var body=document.getElementById(id);var chev=document.getElementById('chev_'+id);var isOpen=body.classList.contains('open');body.classList.toggle('open',!isOpen);if(chev){chev.classList.toggle('open',!isOpen);}}
-function checkPw(){var v=document.getElementById('pwInput').value.trim();if(v===SENHA){document.getElementById('lock').style.display='none';document.getElementById('app').style.display='block';showScreen('scrDir');}else{document.getElementById('pwErr').textContent='Senha incorreta. Tente novamente.';document.getElementById('pwInput').value='';}}
+
+// ===================== SCROLL =====================
+function scrollTop(){
+  try{window.scrollTo(0,0);}catch(e){}
+  try{document.documentElement.scrollTop=0;}catch(e){}
+  try{document.body.scrollTop=0;}catch(e){}
+}
+
+// ===================== FOLDERS =====================
+function toggleFolder(id, hdr){
+  var body=document.getElementById(id);
+  var chev=document.getElementById('chev_'+id);
+  var isOpen=body.classList.contains('open');
+  body.classList.toggle('open',!isOpen);
+  if(chev){chev.classList.toggle('open',!isOpen);}
+}
+
+
+function checkPw(){
+  var v=document.getElementById('pwInput').value.trim();
+  if(v===SENHA){
+    document.getElementById('lock').style.display='none';
+    document.getElementById('app').style.display='block';
+    showScreen('scrDir');
+  } else {
+    document.getElementById('pwErr').textContent='Senha incorreta. Tente novamente.';
+    document.getElementById('pwInput').value='';
+  }
+}
 document.getElementById('pwInput').addEventListener('keydown',function(e){if(e.key==='Enter')checkPw();});
-function showScreen(id){document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});document.getElementById(id).classList.add('active');scrollTop();}
-function openChecklist(clId){state.cl=clId;var cl=CHECKLISTS[clId];document.getElementById('setupTitle').innerHTML=cl.name+'<span class="hdr-sub">Configuração</span>';var sel=document.getElementById('selUnit');sel.innerHTML='<option value="">Selecione a unidade...</option>';cl.units.forEach(function(u){sel.innerHTML+='<option value="'+u+'">'+u+'</option>';});var today=new Date();document.getElementById('inpDate').value=today.toISOString().split('T')[0];document.getElementById('inpAuditor').value='';document.getElementById('histSection').style.display='none';showScreen('scrSetup');}
-function backToDir(){state={cl:null,unit:null,auditor:null,date:null,answers:{},photos:{},obs:{}};currentAuditId=null;showScreen('scrDir');}
-function startAudit(){var unit=document.getElementById('selUnit').value;var auditor=document.getElementById('inpAuditor').value.trim();if(!unit){alert('Selecione a unidade.');return;}if(!auditor){alert('Informe o nome do auditor.');return;}state.unit=unit;state.auditor=auditor;state.date=document.getElementById('inpDate').value;state.answers={};state.photos={};state.obs={};currentAuditId=uid();renderAudit();showScreen('scrAudit');}
+
+// ===================== SCREENS =====================
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
+  document.getElementById(id).classList.add('active');
+  scrollTop();
+}
+
+// ===================== DIRECTORY =====================
+function openChecklist(clId){
+  state.cl=clId;
+  var cl=CHECKLISTS[clId];
+  document.getElementById('setupTitle').textContent=cl.name;
+  document.getElementById('setupTitle').innerHTML=cl.name+'<span class="hdr-sub">Configuração</span>';
+  var sel=document.getElementById('selUnit');
+  sel.innerHTML='<option value="">Selecione a unidade...</option>';
+  cl.units.forEach(function(u){sel.innerHTML+='<option value="'+u+'">'+u+'</option>';});
+  var today=new Date();
+  document.getElementById('inpDate').value=today.toISOString().split('T')[0];
+  document.getElementById('inpAuditor').value='';
+  if(document.getElementById('inpCargo'))document.getElementById('inpCargo').value='';
+  document.getElementById('histSection').style.display='none';
+  showScreen('scrSetup');
+}
+
+function backToDir(){
+  state={cl:null,unit:null,auditor:null,cargo:null,date:null,answers:{},photos:{},obs:{},pillarIdx:0};
+  currentAuditId=null;
+  // Restore audit sticky to default for non-paginated checklists
+  var sticky=document.querySelector('#scrAudit .audit-sticky');
+  if(sticky){sticky.innerHTML='<div class="progress-bar"><div class="progress-fill" id="progFill" style="width:0%"></div></div><div class="progress-text" id="progText">0 de 0 itens respondidos</div><button class="btn-primary" onclick="finishAudit()">Finalizar e Ver Resultado</button>';}
+  showScreen('scrDir');
+}
+
+// ===================== SETUP =====================
+function startAudit(){
+  var unit=document.getElementById('selUnit').value;
+  var auditor=document.getElementById('inpAuditor').value.trim();
+  var cargo=document.getElementById('inpCargo')?document.getElementById('inpCargo').value.trim():'';
+  if(!unit){alert('Selecione a unidade.');return;}
+  if(!auditor){alert('Informe o nome.');return;}
+  if(!cargo){alert('Informe o cargo.');return;}
+  state.unit=unit;
+  state.auditor=auditor;
+  state.cargo=cargo;
+  state.date=document.getElementById('inpDate').value;
+  state.answers={};state.photos={};state.obs={};state.pillarIdx=0;
+  currentAuditId=uid();
+  renderAudit();
+  showScreen('scrAudit');
+}
+
 function backToSetup(){showScreen('scrSetup');}
-var currentPilarIdx=0;
-function isPaged(){return state.cl==='vistoriaSP';}
+
+// ===================== AUDIT =====================
 function renderAudit(){
   var cl=CHECKLISTS[state.cl];
-  currentPilarIdx=0;
   document.getElementById('auditTitle').innerHTML=cl.name+'<span class="hdr-sub">'+state.unit+' · '+fmtDate(state.date)+'</span>';
-  if(isPaged()){
-    document.getElementById('pillarNav').style.display='block';
-    renderPilarPage(0);
-  } else {
-    document.getElementById('pillarNav').style.display='none';
-    var body=document.getElementById('auditBody');
-    body.innerHTML='';
-    cl.pilares.forEach(function(p){var sec=document.createElement('div');sec.className='pillar-section';sec.innerHTML='<div class="pillar-title">'+p.name+'</div>';p.items.forEach(function(item){sec.appendChild(buildItemCard(item));});body.appendChild(sec);});
-    document.getElementById('btnPrevPilar').style.display='none';
-    document.getElementById('btnNextPilar').style.display='none';
-    document.getElementById('btnFinish').style.display='block';
-    updateProgress();
+  if(cl.paginatedByPillar){
+    state.pillarIdx=0;
+    var sticky=document.querySelector('#scrAudit .audit-sticky');
+    sticky.innerHTML=
+      '<div class="progress-bar"><div class="progress-fill" id="progFill" style="width:0%"></div></div>'+
+      '<div class="progress-text" id="progText">0 de 0 itens respondidos</div>'+
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px" id="pillarNav"></div>';
+    renderPillarPage(0);
+    return;
   }
-}
-function renderPilarPage(idx){
-  var cl=CHECKLISTS[state.cl];
-  var total=cl.pilares.length;
-  currentPilarIdx=idx;
-  var p=cl.pilares[idx];
-  document.getElementById('pillarLabel').textContent=p.name;
-  document.getElementById('pillarCounter').textContent=(idx+1)+' de '+total;
-  document.getElementById('pillarFill').style.width=Math.round((idx+1)/total*100)+'%';
   var body=document.getElementById('auditBody');
   body.innerHTML='';
-  var sec=document.createElement('div');
-  sec.className='pillar-section';
-  sec.innerHTML='<div class="pillar-title">'+p.name+'</div>';
-  p.items.forEach(function(item){sec.appendChild(buildItemCard(item));});
-  body.appendChild(sec);
-  p.items.forEach(function(item){
-    if(state.answers[item.id]){
-      var card=document.getElementById('card_'+item.id);
-      if(!card)return;
-      var cls={'Superou':'sel-superou','Conforme':'sel-conforme','Não conforme':'sel-nao','N.A.':'sel-na'};
-      var btns=card.querySelectorAll('.resp-btn');
-      var map={'Superou':0,'Conforme':1,'Não conforme':2,'N.A.':3};
-      var bi=map[state.answers[item.id]];
-      if(btns[bi])btns[bi].className='resp-btn '+cls[state.answers[item.id]];
-    }
-    if(state.obs[item.id]){
-      var ta=document.querySelector('#card_'+item.id+' .obs-input');
-      if(ta)ta.value=state.obs[item.id];
-    }
+  cl.pilares.forEach(function(p){
+    var sec=document.createElement('div');
+    sec.className='pillar-section';
+    sec.innerHTML='<div class="pillar-title">'+p.name+'</div>';
+    p.items.forEach(function(item){
+      sec.appendChild(buildItemCard(item));
+    });
+    body.appendChild(sec);
   });
-  document.getElementById('btnPrevPilar').style.display=idx>0?'block':'none';
-  document.getElementById('btnNextPilar').style.display=idx<total-1?'block':'none';
-  document.getElementById('btnFinish').style.display=idx===total-1?'block':'none';
-  scrollTop();
   updateProgress();
 }
-function nextPilar(){var cl=CHECKLISTS[state.cl];if(currentPilarIdx<cl.pilares.length-1)renderPilarPage(currentPilarIdx+1);}
-function prevPilar(){if(currentPilarIdx>0)renderPilarPage(currentPilarIdx-1);}
-function buildItemCard(item){var d=document.createElement('div');d.className='item-card';d.id='card_'+item.id;var tip=item.tip?'<div class="item-tip">'+item.tip+'</div>':'';d.innerHTML='<div class="item-label">'+item.label+'</div>'+tip+'<div class="resp-btns"><button class="resp-btn" onclick="setResp(\''+item.id+'\',\'Superou\',this)">⭐ Superou</button><button class="resp-btn" onclick="setResp(\''+item.id+'\',\'Conforme\',this)">✅ Conforme</button><button class="resp-btn" onclick="setResp(\''+item.id+'\',\'Não conforme\',this)">❌ Não conforme</button><button class="resp-btn" onclick="setResp(\''+item.id+'\',\'N.A.\',this)">— N.A.</button></div><textarea class="obs-input" placeholder="Observação (opcional)..." onchange="setObs(\''+item.id+'\',this.value)"></textarea><label class="photo-btn"><input type="file" accept="image/*" capture="environment" style="display:none" onchange="addPhoto(\''+item.id+'\',this)">📷 Adicionar foto</label><div id="photos_'+item.id+'"></div>';return d;}
-function setResp(id,val,btn){state.answers[id]=val;var card=document.getElementById('card_'+id);card.querySelectorAll('.resp-btn').forEach(function(b){b.className='resp-btn';});var cls={'Superou':'sel-superou','Conforme':'sel-conforme','Não conforme':'sel-nao','N.A.':'sel-na'};btn.className='resp-btn '+cls[val];updateProgress();}
+
+function renderPillarPage(idx){
+  var cl=CHECKLISTS[state.cl];
+  var p=cl.pilares[idx];
+  state.pillarIdx=idx;
+  var body=document.getElementById('auditBody');
+  body.innerHTML='';
+  var indicator=document.createElement('div');
+  indicator.style.cssText='background:#1A2459;color:#fff;padding:10px 16px;margin:-16px -16px 16px;font-size:13px;font-weight:700;display:flex;justify-content:space-between;align-items:center;border-radius:0';
+  indicator.innerHTML='<span>'+p.name+'</span><span style="opacity:.65;font-size:11px">'+( idx+1)+' de '+cl.pilares.length+'</span>';
+  body.appendChild(indicator);
+  p.items.forEach(function(item){body.appendChild(buildItemCard(item));});
+  updatePillarNav();
+  updateProgress();
+}
+
+function updatePillarNav(){
+  var cl=CHECKLISTS[state.cl];
+  var isFirst=state.pillarIdx===0;
+  var isLast=state.pillarIdx===cl.pilares.length-1;
+  var navEl=document.getElementById('pillarNav');
+  if(!navEl)return;
+  navEl.innerHTML=
+    '<button class="btn-secondary" onclick="goToPillar(-1)" style="margin-top:0;min-height:44px;font-size:14px;'+(isFirst?'opacity:.35;pointer-events:none':'')+'">‹ Anterior</button>'+
+    (isLast
+      ?'<button class="btn-primary" onclick="finishAudit()" style="margin-top:0;min-height:44px;font-size:14px">Finalizar ✓</button>'
+      :'<button class="btn-primary" onclick="goToPillar(1)" style="margin-top:0;min-height:44px;font-size:14px">Próximo ›</button>'
+    );
+}
+
+function goToPillar(dir){
+  var cl=CHECKLISTS[state.cl];
+  var newIdx=state.pillarIdx+dir;
+  if(newIdx<0||newIdx>=cl.pilares.length)return;
+  renderPillarPage(newIdx);
+  scrollTop();
+}
+
+function buildItemCard(item){
+  var d=document.createElement('div');
+  d.className='item-card';
+  d.id='card_'+item.id;
+  var tip=item.tip?'<div class="item-tip">'+item.tip+'</div>':'';
+  d.innerHTML='<div class="item-label">'+item.label+'</div>'+tip+
+    '<div class="resp-btns">'+
+    '<button class="resp-btn" onclick="setResp(\''+item.id+'\',\'Superou\',this)">⭐ Superou</button>'+
+    '<button class="resp-btn" onclick="setResp(\''+item.id+'\',\'Conforme\',this)">✅ Conforme</button>'+
+    '<button class="resp-btn" onclick="setResp(\''+item.id+'\',\'Não conforme\',this)">❌ Não conforme</button>'+
+    '<button class="resp-btn" onclick="setResp(\''+item.id+'\',\'N.A.\',this)">— N.A.</button>'+
+    '</div>'+
+    '<textarea class="obs-input" placeholder="Observação (opcional)..." onchange="setObs(\''+item.id+'\',this.value)"></textarea>'+
+    '<label class="photo-btn"><input type="file" accept="image/*" capture="environment" style="display:none" onchange="addPhoto(\''+item.id+'\',this)">📷 Adicionar foto</label>'+
+    '<div id="photos_'+item.id+'"></div>';
+  return d;
+}
+
+function setResp(id,val,btn){
+  state.answers[id]=val;
+  var card=document.getElementById('card_'+id);
+  card.querySelectorAll('.resp-btn').forEach(function(b){
+    b.className='resp-btn';
+  });
+  var cls={'Superou':'sel-superou','Conforme':'sel-conforme','Não conforme':'sel-nao','N.A.':'sel-na'};
+  btn.className='resp-btn '+cls[val];
+  updateProgress();
+}
+
 function setObs(id,val){state.obs[id]=val;}
-function addPhoto(id,input){if(!input.files||!input.files[0])return;var f=input.files[0];var rd=new FileReader();rd.onload=function(e){var img=new Image();img.onload=function(){var c=document.createElement('canvas');var max=600;var w=img.width,h=img.height;if(w>max){h=h*(max/w);w=max;}c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);var data=c.toDataURL('image/jpeg',.65);if(!state.photos[id])state.photos[id]=[];state.photos[id].push(data);var el=document.getElementById('photos_'+id);var im=document.createElement('img');im.src=data;im.className='photo-thumb';el.appendChild(im);};img.src=e.target.result;};rd.readAsDataURL(f);}
-function updateProgress(){var cl=CHECKLISTS[state.cl];var total=0,done=0;cl.pilares.forEach(function(p){p.items.forEach(function(i){total++;if(state.answers[i.id])done++;});});var pct=total?Math.round(done/total*100):0;document.getElementById('progFill').style.width=pct+'%';var txt=done+' de '+total+' itens respondidos ('+pct+'%)';if(isPaged()&&cl.pilares[currentPilarIdx]){var pp=cl.pilares[currentPilarIdx];var pd=0;pp.items.forEach(function(i){if(state.answers[i.id])pd++;});txt=pd+' de '+pp.items.length+' neste pilar · '+done+'/'+total+' total';}document.getElementById('progText').textContent=txt;}
-function getAllItems(){var items=[];CHECKLISTS[state.cl].pilares.forEach(function(p){p.items.forEach(function(i){items.push(i);});});return items;}
-function confirmBack(){if(Object.keys(state.answers).length>0){if(!confirm('Tem certeza? As respostas não salvas serão perdidas.'))return;}backToDir();}
-function finishAudit(){var items=getAllItems();var unanswered=items.filter(function(i){return !state.answers[i.id];});if(unanswered.length>0){if(!confirm(unanswered.length+' item(ns) sem resposta. Deseja finalizar mesmo assim?'))return;}saveAudit();renderSummary();showScreen('scrSummary');}
-function calcScore(){var cl=CHECKLISTS[state.cl];var total=0,pts=0;cl.pilares.forEach(function(p){p.items.forEach(function(i){var r=state.answers[i.id];if(!r||r==='N.A.')return;total++;if(r==='Superou')pts+=1;else if(r==='Conforme')pts+=0.8;});});return total?Math.round(pts/total*100):0;}
-function calcPillarScore(pilar){var total=0,pts=0;pilar.items.forEach(function(i){var r=state.answers[i.id];if(!r||r==='N.A.')return;total++;if(r==='Superou')pts+=1;else if(r==='Conforme')pts+=0.8;});return total?Math.round(pts/total*100):0;}
-function scoreBadge(s){if(s>=90)return{label:'Excelente',cls:'badge-excelente'};if(s>=75)return{label:'Bom',cls:'badge-bom'};if(s>=60)return{label:'Regular',cls:'badge-regular'};return{label:'Crítico',cls:'badge-critico'};}
-function pillarColor(s){if(s>=90)return '#27ae60';if(s>=75)return '#2980b9';if(s>=60)return '#f39c12';return '#e74c3c';}
 
+function addPhoto(id,input){
+  if(!input.files||!input.files[0])return;
+  var f=input.files[0];
+  var rd=new FileReader();
+  rd.onload=function(e){
+    var img=new Image();
+    img.onload=function(){
+      var c=document.createElement('canvas');
+      var max=600;
+      var w=img.width,h=img.height;
+      if(w>max){h=h*(max/w);w=max;}
+      c.width=w;c.height=h;
+      c.getContext('2d').drawImage(img,0,0,w,h);
+      var data=c.toDataURL('image/jpeg',.65);
+      if(!state.photos[id])state.photos[id]=[];
+      state.photos[id].push(data);
+      var el=document.getElementById('photos_'+id);
+      var im=document.createElement('img');
+      im.src=data;im.className='photo-thumb';
+      el.appendChild(im);
+    };
+    img.src=e.target.result;
+  };
+  rd.readAsDataURL(f);
+}
+
+function updateProgress(){
+  var cl=CHECKLISTS[state.cl];
+  var total=0,done=0;
+  cl.pilares.forEach(function(p){p.items.forEach(function(i){total++;if(state.answers[i.id])done++;});});
+  var pct=total?Math.round(done/total*100):0;
+  document.getElementById('progFill').style.width=pct+'%';
+  document.getElementById('progText').textContent=done+' de '+total+' itens respondidos ('+pct+'%)';
+}
+
+function getAllItems(){
+  var items=[];
+  CHECKLISTS[state.cl].pilares.forEach(function(p){p.items.forEach(function(i){items.push(i);});});
+  return items;
+}
+
+function confirmBack(){
+  if(Object.keys(state.answers).length>0){
+    if(!confirm('Tem certeza? As respostas não salvas serão perdidas.'))return;
+  }
+  backToDir();
+}
+
+function finishAudit(){
+  var cl=CHECKLISTS[state.cl];
+  // If paginated and not on last pillar, go to next
+  if(cl&&cl.paginatedByPillar&&state.pillarIdx<cl.pilares.length-1){
+    goToPillar(1);return;
+  }
+  var items=getAllItems();
+  var unanswered=items.filter(function(i){return !state.answers[i.id];});
+  if(unanswered.length>0){
+    if(!confirm(unanswered.length+' item(ns) sem resposta. Deseja finalizar mesmo assim?'))return;
+  }
+  saveAudit();
+  renderSummary();
+  showScreen('scrSummary');
+}
+
+// ===================== SCORING =====================
+function calcScore(){
+  var cl=CHECKLISTS[state.cl];
+  var total=0,pts=0;
+  cl.pilares.forEach(function(p){
+    p.items.forEach(function(i){
+      var r=state.answers[i.id];
+      if(!r||r==='N.A.')return;
+      total++;
+      if(r==='Superou')pts+=1;
+      else if(r==='Conforme')pts+=0.8;
+      else if(r==='Não conforme')pts+=0;
+    });
+  });
+  return total?Math.round(pts/total*100):0;
+}
+
+function calcPillarScore(pilar){
+  var total=0,pts=0;
+  pilar.items.forEach(function(i){
+    var r=state.answers[i.id];
+    if(!r||r==='N.A.')return;
+    total++;
+    if(r==='Superou')pts+=1;
+    else if(r==='Conforme')pts+=0.8;
+  });
+  return total?Math.round(pts/total*100):0;
+}
+
+function scoreBadge(s){
+  if(s>=90)return{label:'Excelente',cls:'badge-excelente'};
+  if(s>=75)return{label:'Bom',cls:'badge-bom'};
+  if(s>=60)return{label:'Regular',cls:'badge-regular'};
+  return{label:'Crítico',cls:'badge-critico'};
+}
+
+function pillarColor(s){
+  if(s>=90)return '#27ae60';
+  if(s>=75)return '#2980b9';
+  if(s>=60)return '#f39c12';
+  return '#e74c3c';
+}
+
+// ===================== SUMMARY =====================
 function renderSummary(){
-  var cl=CHECKLISTS[state.cl];var sc=calcScore();var badge=scoreBadge(sc);
+  var cl=CHECKLISTS[state.cl];
+  var sc=calcScore();
+  var badge=scoreBadge(sc);
   document.getElementById('summaryTitle').innerHTML=cl.name+'<span class="hdr-sub">Resultado</span>';
-  var ncs=[];
-  cl.pilares.forEach(function(p){p.items.forEach(function(i){if(state.answers[i.id]==='Não conforme')ncs.push({pilar:p.name,item:i,obs:state.obs[i.id]||''});});});
-  var pillarRows='';
-  cl.pilares.forEach(function(p){var ps=calcPillarScore(p);var col=pillarColor(ps);pillarRows+='<div class="pillar-row"><div class="pillar-row-name">'+p.name+'</div><div class="pillar-bar-wrap"><div class="pillar-bar" style="width:'+ps+'%;background:'+col+'"></div></div><div class="pillar-pct" style="color:'+col+'">'+ps+'%</div></div>';});
-  var ncHtml='';
-  if(ncs.length){ncs.forEach(function(n){ncHtml+='<div class="nc-item"><div class="nc-pilar">'+n.pilar+'</div><div class="nc-label">'+n.item.label+'</div>'+(n.obs?'<div class="nc-obs">'+n.obs+'</div>':'')+' </div>';});}
-  else{ncHtml='<div style="padding:12px 0;text-align:center;color:var(--green);font-weight:600">✅ Nenhuma não conformidade!</div>';}
-  var actionHtml=ncs.length?'<div class="info-card"><h3>Plano de Ação</h3><textarea class="action-input" id="actionPlan" placeholder="Descreva as ações corretivas para as não conformidades identificadas...">'+((sGet('audit_'+currentAuditId)||{}).actionPlan||'')+'</textarea></div>':'';
+  document.getElementById('summarySub').textContent='';
 
-  // Campo de e-mail exclusivo para Vistoria SP
-  var emailFieldHtml='';
-  if(state.cl==='vistoriaSP'){
-    emailFieldHtml='<div class="email-field-card">'+
-      '<label>📧 Destinatários do e-mail</label>'+
-      '<div id="emailList"><div class="email-row"><input type="email" placeholder="exemplo@mandic.com.br"><button class="btn-del-email" onclick="delEmail(this)" title="Remover">×</button></div></div>'+
-      '<button class="btn-add-email" onclick="addEmailField()">+ Adicionar outro e-mail</button>'+
-      '<div class="email-hint">Adicione quantos destinatários precisar antes de clicar em "Enviar por E-mail"</div>'+
-      '</div>';
+  var ncs=[];
+  cl.pilares.forEach(function(p){
+    p.items.forEach(function(i){
+      if(state.answers[i.id]==='Não conforme')ncs.push({pilar:p.name,item:i,obs:state.obs[i.id]||''});
+    });
+  });
+
+  var pillarRows='';
+  cl.pilares.forEach(function(p){
+    var ps=calcPillarScore(p);
+    var col=pillarColor(ps);
+    pillarRows+='<div class="pillar-row"><div class="pillar-row-name">'+p.name+'</div>'+
+      '<div class="pillar-bar-wrap"><div class="pillar-bar" style="width:'+ps+'%;background:'+col+'"></div></div>'+
+      '<div class="pillar-pct" style="color:'+col+'">'+ps+'%</div></div>';
+  });
+
+  var ncHtml='';
+  if(ncs.length){
+    ncs.forEach(function(n){
+      ncHtml+='<div class="nc-item"><div class="nc-pilar">'+n.pilar+'</div><div class="nc-label">'+n.item.label+'</div>'+
+        (n.obs?'<div class="nc-obs">'+n.obs+'</div>':'')+
+        '</div>';
+    });
+  } else {
+    ncHtml='<div style="padding:12px 0;text-align:center;color:var(--green);font-weight:600">✅ Nenhuma não conformidade!</div>';
   }
 
+  var actionHtml=ncs.length?'<div class="info-card"><h3>Plano de Ação</h3><textarea class="action-input" id="actionPlan" placeholder="Descreva as ações corretivas para as não conformidades identificadas...">'+((sGet('audit_'+currentAuditId)||{}).actionPlan||'')+'</textarea></div>':'';
+
   document.getElementById('summaryBody').innerHTML=
-    '<div class="score-hero"><div class="score-num">'+sc+'<span style="font-size:28px">%</span></div>'+
+    '<div class="score-hero">'+
+    '<div class="score-num">'+sc+'<span style="font-size:28px">%</span></div>'+
     '<div class="score-label">Score Geral da Auditoria</div>'+
-    '<span class="score-badge '+badge.cls+'">'+badge.label+'</span></div>'+
+    '<span class="score-badge '+badge.cls+'">'+badge.label+'</span>'+
+    '</div>'+
     '<div class="info-card"><h3>Informações</h3>'+
     '<div class="info-row"><span>Checklist</span><strong>'+cl.name+'</strong></div>'+
     '<div class="info-row"><span>Unidade</span><strong>'+state.unit+'</strong></div>'+
-    '<div class="info-row"><span>Auditor</span><strong>'+state.auditor+'</strong></div>'+
+    '<div class="info-row"><span>Nome</span><strong>'+state.auditor+'</strong></div>'+
+    '<div class="info-row"><span>Cargo</span><strong>'+(state.cargo||'—')+'</strong></div>'+
     '<div class="info-row"><span>Data</span><strong>'+fmtDate(state.date)+'</strong></div>'+
     '<div class="info-row"><span>Não conformidades</span><strong style="color:var(--red)">'+ncs.length+'</strong></div>'+
     '</div>'+
     '<div class="info-card"><h3>Resultado por Pilar</h3>'+pillarRows+'</div>'+
     '<div class="info-card"><h3>Não Conformidades</h3>'+ncHtml+'</div>'+
     actionHtml+
-    emailFieldHtml+
-    '<button class="btn-pdf" style="margin-top:12px" onclick="printPDF()">🖨️ Gerar PDF / Imprimir</button>'+
+    '<button class="btn-pdf" onclick="printPDF()">🖨️ Gerar PDF / Imprimir</button>'+
     '<button class="btn-email" onclick="sendEmail()">📧 Enviar por E-mail</button>'+
     '<button class="btn-secondary" style="margin-top:8px" onclick="backToDir()">Voltar ao Início</button>';
 }
 
-function saveAudit(){var sc=calcScore();var data={id:currentAuditId,cl:state.cl,clName:CHECKLISTS[state.cl].name,unit:state.unit,auditor:state.auditor,date:state.date,score:sc,answers:state.answers,obs:state.obs,photos:state.photos,savedAt:new Date().toISOString()};sSet('audit_'+currentAuditId,data);}
-function showHist(){var body=document.getElementById('histBody');var keys=sKeys();var audits=[];keys.forEach(function(k){var a=sGet(k);if(a)audits.push(a);});audits.sort(function(a,b){return b.savedAt>a.savedAt?1:-1;});if(!audits.length){body.innerHTML='<div class="empty-state"><div class="icon">📭</div><p>Nenhuma auditoria salva ainda.</p></div>';}else{body.innerHTML='';audits.forEach(function(a){var badge=scoreBadge(a.score);var d=document.createElement('div');d.className='hist-item';d.innerHTML='<div class="hist-info"><div class="hist-name">'+a.clName+'</div><div class="hist-meta">'+a.unit+' · '+fmtDate(a.date)+' · '+a.auditor+'</div></div><div class="hist-score" style="color:'+pillarColor(a.score)+'">'+a.score+'%</div><button class="hist-del" onclick="delAudit(\''+a.id+'\',event)">🗑</button>';d.onclick=function(){loadAudit(a);};body.appendChild(d);});}showScreen('scrHist');}
-function delAudit(id,e){e.stopPropagation();if(!confirm('Excluir esta auditoria?'))return;try{if(window.storage)window.storage.delete('audit_'+id);}catch(e){}try{localStorage.removeItem('audit_'+id);}catch(e){}if(window._mem)delete window._mem['audit_'+id];showHist();}
-function loadAudit(a){state.cl=a.cl;state.unit=a.unit;state.auditor=a.auditor;state.date=a.date;state.answers=a.answers||{};state.obs=a.obs||{};state.photos=a.photos||{};currentAuditId=a.id;renderSummary();showScreen('scrSummary');}
+// ===================== SAVE =====================
+function saveAudit(){
+  var sc=calcScore();
+  var data={
+    id:currentAuditId,
+    cl:state.cl,
+    clName:CHECKLISTS[state.cl].name,
+    unit:state.unit,
+    auditor:state.auditor,
+    cargo:state.cargo,
+    date:state.date,
+    score:sc,
+    answers:state.answers,
+    obs:state.obs,
+    photos:state.photos,
+    savedAt:new Date().toISOString()
+  };
+  sSet('audit_'+currentAuditId,data);
+}
 
+// ===================== HISTORY =====================
+function showHist(){
+  var body=document.getElementById('histBody');
+  var keys=sKeys();
+  var audits=[];
+  keys.forEach(function(k){var a=sGet(k);if(a)audits.push(a);});
+  audits.sort(function(a,b){return b.savedAt>a.savedAt?1:-1;});
+  if(!audits.length){
+    body.innerHTML='<div class="empty-state"><div class="icon">📭</div><p>Nenhuma auditoria salva ainda.</p></div>';
+  } else {
+    body.innerHTML='';
+    audits.forEach(function(a){
+      var badge=scoreBadge(a.score);
+      var d=document.createElement('div');
+      d.className='hist-item';
+      d.innerHTML='<div class="hist-info">'+
+        '<div class="hist-name">'+a.clName+'</div>'+
+        '<div class="hist-meta">'+a.unit+' · '+fmtDate(a.date)+' · '+a.auditor+'</div>'+
+        '</div>'+
+        '<div class="hist-score" style="color:'+pillarColor(a.score)+'">'+a.score+'%</div>'+
+        '<button class="hist-del" onclick="delAudit(\''+a.id+'\',event)">🗑</button>';
+      d.onclick=function(){loadAudit(a);};
+      body.appendChild(d);
+    });
+  }
+  showScreen('scrHist');
+}
+
+function delAudit(id,e){
+  e.stopPropagation();
+  if(!confirm('Excluir esta auditoria?'))return;
+  try{if(window.storage)window.storage.delete('audit_'+id);}catch(e){}
+  try{localStorage.removeItem('audit_'+id);}catch(e){}
+  if(window._mem)delete window._mem['audit_'+id];
+  showHist();
+}
+
+function loadAudit(a){
+  state.cl=a.cl;
+  state.unit=a.unit;
+  state.auditor=a.auditor;
+  state.cargo=a.cargo||'';
+  state.date=a.date;
+  state.answers=a.answers||{};
+  state.obs=a.obs||{};
+  state.photos=a.photos||{};
+  currentAuditId=a.id;
+  renderSummary();
+  showScreen('scrSummary');
+}
+
+// ===================== PDF =====================
 function printPDF(){
   var ap=document.getElementById('actionPlan');
-  if(ap){var saved=sGet('audit_'+currentAuditId)||{};saved.actionPlan=ap.value;sSet('audit_'+currentAuditId,saved);}
-  var cl=CHECKLISTS[state.cl];var sc=calcScore();var badge=scoreBadge(sc);
+  if(ap){
+    var saved=sGet('audit_'+currentAuditId)||{};
+    saved.actionPlan=ap.value;
+    sSet('audit_'+currentAuditId,saved);
+  }
+  var cl=CHECKLISTS[state.cl];
+  var sc=calcScore();
+  var badge=scoreBadge(sc);
   var ncs=[];
-  cl.pilares.forEach(function(p){p.items.forEach(function(i){if(state.answers[i.id]==='Não conforme')ncs.push({pilar:p.name,item:i,obs:state.obs[i.id]||''});});});
+  cl.pilares.forEach(function(p){
+    p.items.forEach(function(i){
+      if(state.answers[i.id]==='Não conforme')ncs.push({pilar:p.name,item:i,obs:state.obs[i.id]||''});
+    });
+  });
+
   var rows='';
-  cl.pilares.forEach(function(p){var ps=calcPillarScore(p);rows+='<div class="pr-section-title">'+p.name+' — '+ps+'%</div>';p.items.forEach(function(i){var r=state.answers[i.id]||'—';var cls=r==='Superou'?'superou':r==='Conforme'?'conforme':r==='Não conforme'?'nao':'na';rows+='<div class="pr-item"><div class="pr-item-resp '+cls+'">'+r+'</div><div><div class="pr-item-label">'+i.label+'</div>'+(state.obs[i.id]?'<div class="pr-item-obs">'+state.obs[i.id]+'</div>':'')+'</div></div>';});});
-  var ap2=document.getElementById('actionPlan');var apText=ap2?ap2.value:'';
+  cl.pilares.forEach(function(p){
+    var ps=calcPillarScore(p);
+    rows+='<div class="pr-section-title">'+p.name+' — '+ps+'%</div>';
+    p.items.forEach(function(i){
+      var r=state.answers[i.id]||'—';
+      var cls=r==='Superou'?'superou':r==='Conforme'?'conforme':r==='Não conforme'?'nao':'na';
+      rows+='<div class="pr-item"><div class="pr-item-resp '+cls+'">'+r+'</div>'+
+        '<div><div class="pr-item-label">'+i.label+'</div>'+
+        (state.obs[i.id]?'<div class="pr-item-obs">'+state.obs[i.id]+'</div>':'')+
+        '</div></div>';
+    });
+  });
+
+  var ap2=document.getElementById('actionPlan');
+  var apText=ap2?ap2.value:'';
   var apHtml=apText?'<div class="pr-action"><strong>Plano de Ação:</strong><br>'+apText.replace(/\n/g,'<br>')+'</div>':'';
+
   var ncHtml='';
-  if(ncs.length){ncHtml='<div class="pr-section"><div class="pr-section-title">Não Conformidades ('+ncs.length+')</div>';ncs.forEach(function(n){ncHtml+='<div class="pr-item"><div class="pr-item-resp nao">NC</div><div><div class="pr-item-label"><strong>'+n.pilar+':</strong> '+n.item.label+'</div>'+(n.obs?'<div class="pr-item-obs">'+n.obs+'</div>':'')+'</div></div>';});ncHtml+='</div>';}
+  if(ncs.length){
+    ncHtml='<div class="pr-section"><div class="pr-section-title">Não Conformidades ('+ncs.length+')</div>';
+    ncs.forEach(function(n){ncHtml+='<div class="pr-item"><div class="pr-item-resp nao">NC</div><div><div class="pr-item-label"><strong>'+n.pilar+':</strong> '+n.item.label+'</div>'+(n.obs?'<div class="pr-item-obs">'+n.obs+'</div>':'')+'</div></div>';});
+    ncHtml+='</div>';
+  }
+
   document.getElementById('pr').innerHTML=
-    '<div class="pr-header"><div class="pr-title">São Leopoldo Mandic — Central de Checklists</div><div class="pr-sub">'+cl.name+'</div></div>'+
-    '<div class="pr-score-box"><div class="pr-score-num">'+sc+'%</div><div style="font-size:14px;font-weight:bold;color:#'+(sc>=90?'27ae60':sc>=75?'2980b9':sc>=60?'e67e22':'c0392b')+'">'+badge.label+'</div></div>'+
-    '<table class="pr-info-table"><tr><td>Unidade</td><td>'+state.unit+'</td></tr><tr><td>Auditor</td><td>'+state.auditor+'</td></tr><tr><td>Data</td><td>'+fmtDate(state.date)+'</td></tr><tr><td>Gerado em</td><td>'+new Date().toLocaleString('pt-BR')+'</td></tr></table>'+
-    ncHtml+'<div class="pr-section">'+rows+'</div>'+apHtml+
+    '<div class="pr-header"><div class="pr-title">São Leopoldo Mandic — Central de Checklists</div>'+
+    '<div class="pr-sub">'+cl.name+'</div></div>'+
+    '<div class="pr-score-box"><div class="pr-score-num">'+sc+'%</div>'+
+    '<div style="font-size:14px;font-weight:bold;color:#'+
+    (sc>=90?'27ae60':sc>=75?'2980b9':sc>=60?'e67e22':'c0392b')+'">'+badge.label+'</div></div>'+
+    '<table class="pr-info-table">'+
+    '<tr><td>Unidade</td><td>'+state.unit+'</td></tr>'+
+    '<tr><td>Nome</td><td>'+state.auditor+'</td></tr>'+
+    '<tr><td>Cargo</td><td>'+(state.cargo||'—')+'</td></tr>'+
+    '<tr><td>Data</td><td>'+fmtDate(state.date)+'</td></tr>'+
+    '<tr><td>Gerado em</td><td>'+new Date().toLocaleString('pt-BR')+'</td></tr>'+
+    '</table>'+
+    ncHtml+
+    '<div class="pr-section">'+rows+'</div>'+
+    apHtml+
     '<div class="pr-footer">Gerado pela Central de Checklists Operacionais — São Leopoldo Mandic</div>';
   window.print();
 }
 
-function addEmailField(){
-  var list=document.getElementById('emailList');
-  if(!list)return;
-  var row=document.createElement('div');
-  row.className='email-row';
-  row.innerHTML='<input type="email" placeholder="exemplo@mandic.com.br"><button class="btn-del-email" onclick="delEmail(this)" title="Remover">×</button>';
-  list.appendChild(row);
-  row.querySelector('input').focus();
-}
-function delEmail(btn){
-  var list=document.getElementById('emailList');
-  var rows=list.querySelectorAll('.email-row');
-  if(rows.length<=1){btn.closest('.email-row').querySelector('input').value='';return;}
-  btn.closest('.email-row').remove();
-}
+// ===================== EMAIL =====================
 function sendEmail(){
-  var cl=CHECKLISTS[state.cl];var sc=calcScore();var badge=scoreBadge(sc);
+  var cl=CHECKLISTS[state.cl];
+  var sc=calcScore();
+  var badge=scoreBadge(sc);
   var ncs=[];
-  cl.pilares.forEach(function(p){p.items.forEach(function(i){if(state.answers[i.id]==='Não conforme')ncs.push(p.name+': '+i.label);});});
-  var ap=document.getElementById('actionPlan');var apText=ap?ap.value:'';
-
-  var emailDest='gestor@pgmed.com.br';
-  if(state.cl==='vistoriaSP'){
-    var inputs=document.querySelectorAll('#emailList input[type=email]');
-    var emails=[];
-    inputs.forEach(function(inp){if(inp.value.trim())emails.push(inp.value.trim());});
-    if(!emails.length){
-      alert('Por favor, informe ao menos um e-mail antes de enviar.');
-      var first=document.querySelector('#emailList input[type=email]');
-      if(first)first.focus();
-      return;
-    }
-    emailDest=emails.join(',');
-  }
-
+  cl.pilares.forEach(function(p){
+    p.items.forEach(function(i){
+      if(state.answers[i.id]==='Não conforme')ncs.push(p.name+': '+i.label);
+    });
+  });
+  var ap=document.getElementById('actionPlan');
+  var apText=ap?ap.value:'';
   var subj=encodeURIComponent('[Checklist] '+cl.name+' — '+state.unit+' — '+fmtDate(state.date)+' — '+sc+'% ('+badge.label+')');
-  var body='Auditoria: '+cl.name+'\nUnidade: '+state.unit+'\nAuditor: '+state.auditor+'\nData: '+fmtDate(state.date)+'\nScore: '+sc+'% ('+badge.label+')';
+  var body='Auditoria: '+cl.name+'\nUnidade: '+state.unit+'\nNome: '+state.auditor+'\nCargo: '+(state.cargo||'—')+'\nData: '+fmtDate(state.date)+'\nScore: '+sc+'% ('+badge.label+')';
   if(ncs.length){body+='\n\nNÃO CONFORMIDADES ('+ncs.length+'):\n'+ncs.map(function(n){return '• '+n;}).join('\n');}
   if(apText){body+='\n\nPLANO DE AÇÃO:\n'+apText;}
   body+='\n\n---\nEnviado pela Central de Checklists Operacionais — São Leopoldo Mandic';
-  window.location.href='mailto:'+emailDest+'?subject='+subj+'&body='+encodeURIComponent(body);
+  window.location.href='mailto:'+EMAIL_GESTOR+'?subject='+subj+'&body='+encodeURIComponent(body);
 }
 
-var relState={};
-function openRelatorio(){var today=new Date();var todayStr=today.toISOString().split('T')[0];relState={unit:'',responsavel:'',turma:'',turmaNum:'',obs:'',data:todayStr,total:0,pagantes:0,retorno:0,gratuitos:0,faltas:0,cancelamentos:0,encaixados:0,alunos:[]};renderRelatorio();showScreen('scrRelatorio');}
-function renderRelatorio(){var body=document.getElementById('relBody');body.innerHTML='<div class="rel-section"><h3>📋 Identificação</h3><div class="rel-grid"><div class="rel-field full"><label>Unidade</label><select id="relUnit" onchange="relState.unit=this.value"><option value="">Selecione...</option><option value="SP">São Paulo (SP)</option><option value="CPS">Campinas (CPS)</option><option value="BSB">Brasília (BSB)</option></select></div><div class="rel-field full"><label>Especialidade</label><select id="relEspec" onchange="relState.turma=this.value"><option value="">Selecione...</option><option>Dermato cirúrgica</option><option>Dermato One</option><option>Dermatologia</option><option>Endocrinologia</option><option>Gineco estética</option><option>Neuropediatria</option><option>Nutrologia</option><option>Oftalmologia</option><option>Pediatria</option><option>Psiquiatria</option><option>Tricologia</option></select></div><div class="rel-field full"><label>Turma</label><select id="relTurma" onchange="relState.turmaNum=this.value"><option value="">Selecione...</option>'+(function(){var o='';for(var i=1;i<=50;i++)o+='<option>T'+i+'</option>';return o;}())+'</select></div><div class="rel-field full"><label>Responsável pela recepção</label><input type="text" id="relResp" placeholder="Nome do responsável" oninput="relState.responsavel=this.value"></div><div class="rel-field full"><label>Data</label><input type="date" id="relData" value="'+relState.data+'" onchange="relState.data=this.value"></div></div></div><div class="rel-section"><h3>📅 Agendamentos</h3><div class="rel-grid">'+numField('relTotal','Total de pacientes agendados','total')+numField('relPagantes','Pacientes pagantes','pagantes')+numField('relRetorno','Consultas de retorno','retorno')+numField('relGratuitos','Procedimentos gratuitos (qtd)','gratuitos')+'</div></div><div class="rel-section"><h3>❌ Ausências e Encaixes</h3><div class="rel-grid">'+numField('relFaltas','Faltas','faltas')+numField('relCancel','Cancelamentos &lt;48h','cancelamentos')+numField('relEncaix','Encaixados pela falta','encaixados')+'</div></div><div class="rel-section"><h3>🎓 Alunos — Procedimentos Gratuitos (nomes)</h3><p style="font-size:12px;color:var(--gray);margin-bottom:10px">Adicione o nome de cada aluno que realizou procedimento gratuito no dia.</p><div class="aluno-list" id="alunoList"></div><button class="btn-add-aluno" onclick="addAluno()">+ Adicionar aluno</button></div><div class="rel-section" id="relIndicadores"><h3>📊 Indicadores (calculado automaticamente)</h3><div id="indBody"></div></div><div class="rel-section"><h3>📝 Observações</h3><textarea id="relObs" class="action-input" placeholder="Registre aqui observações relevantes do dia..." oninput="relState.obs=this.value" style="min-height:100px"></textarea></div><button class="btn-pdf" onclick="gerarRelPDF()">🖨️ Gerar PDF</button><button class="btn-email" onclick="enviarRelEmail()" style="margin-top:8px">📧 Enviar por E-mail</button><button class="btn-secondary" style="margin-top:8px" onclick="showScreen(\'scrDir\')">Voltar ao Início</button>';renderAlunoList();calcIndicadores();}
-function numField(id,label,key){return '<div class="rel-field"><label>'+label+'</label><input type="number" min="0" id="'+id+'" value="'+(relState[key]||0)+'" oninput="relState[\''+key+'\']=parseInt(this.value)||0;calcIndicadores()"></div>';}
-function renderAlunoList(){var list=document.getElementById('alunoList');if(!list)return;list.innerHTML='';relState.alunos.forEach(function(nome,idx){var row=document.createElement('div');row.className='aluno-row';row.innerHTML='<input type="text" placeholder="Nome do aluno" value="'+escHtml(nome)+'" oninput="relState.alunos['+idx+']=this.value"><button onclick="removeAluno('+idx+')">×</button>';list.appendChild(row);});}
-function addAluno(){relState.alunos.push('');renderAlunoList();var inputs=document.querySelectorAll('.aluno-row input');if(inputs.length)inputs[inputs.length-1].focus();}
-function removeAluno(idx){relState.alunos.splice(idx,1);renderAlunoList();}
-function calcIndicadores(){var t=relState.total||0,pag=relState.pagantes||0,ret=relState.retorno||0,grat=relState.gratuitos||0,falt=relState.faltas||0,canc=relState.cancelamentos||0,enc=relState.encaixados||0;var comp=Math.max(0,pag+ret+grat+enc-falt);var compPct=t>0?Math.round(comp/t*100):0;var pColor=compPct>=80?'ind-green':compPct>=60?'ind-blue':'ind-red';relState._comp=comp;relState._compPct=compPct;var body=document.getElementById('indBody');if(!body)return;body.innerHTML=indRow('Total de pacientes agendados',t,'ind-gray')+indRow('Pacientes gratuitos',grat,'ind-gray')+indRow('Pacientes pagantes',pag,'ind-gray')+indRow('Consultas de retorno',ret,'ind-gray')+indRow('Faltas',falt,falt===0?'ind-green':'ind-red')+indRow('Cancelamentos',canc,canc===0?'ind-green':'ind-red')+indRow('Encaixes',enc,'ind-blue')+'<div style="border-top:2px solid #1A2459;margin:10px 0"></div><div class="rel-indicador" style="background:#eef0f8;border-radius:8px;padding:10px;margin-top:2px"><span style="font-weight:700;color:#1A2459">Pacientes que compareceram</span><span class="rel-ind-val '+pColor+'" style="font-size:18px">'+comp+' <span style="font-size:12px;font-weight:400">/ '+t+' ('+compPct+'%)</span></span></div>';}
-function indRow(label,val,cls){return '<div class="rel-indicador"><span>'+label+'</span><span class="rel-ind-val '+cls+'">'+val+'</span></div>';}
-function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-function gerarRelPDF(){syncRelForm();var u=relState.unit||'—',resp=relState.responsavel||'—',data=fmtDate(relState.data);var t=relState.total,comp=relState._comp||0,compPct=relState._compPct||0;var alunos=relState.alunos.filter(function(a){return a.trim();});var pColor=compPct>=80?'#27ae60':compPct>=60?'#1565c0':'#e74c3c';var alunoRows=alunos.length?alunos.map(function(a,i){return '<tr><td>'+(i+1)+'</td><td>'+escHtml(a)+'</td><td>Procedimento gratuito</td></tr>';}).join(''):'<tr><td colspan="3" style="color:#888;text-align:center">Nenhum aluno registrado</td></tr>';document.getElementById('pr').innerHTML='<div class="pr-rel-header"><div class="pr-rel-title">São Leopoldo Mandic — Relatório de Pacientes</div><div class="pr-rel-sub">Recepção · '+u+' · '+data+'</div><span class="pr-rel-badge" style="background:'+pColor+';color:#fff">Compareceram: '+comp+' / '+t+' ('+compPct+'%)</span></div><table class="pr-rel-table"><tr><td><strong>Unidade</strong></td><td>'+u+'</td><td><strong>Responsável</strong></td><td>'+escHtml(resp)+'</td></tr><tr><td><strong>Especialidade</strong></td><td>'+(escHtml(relState.turma)||'—')+'</td><td><strong>Turma</strong></td><td>'+(escHtml(relState.turmaNum)||'—')+'</td></tr><tr><td><strong>Data</strong></td><td>'+data+'</td><td><strong>Gerado em</strong></td><td>'+new Date().toLocaleString('pt-BR')+'</td></tr></table><div class="pr-rel-grid">'+relBox(t,'Total agendados')+relBox(relState.gratuitos||0,'Gratuitos')+relBox(relState.pagantes||0,'Pagantes')+relBox(relState.retorno||0,'Retornos')+relBox(relState.faltas||0,'Faltas')+relBox(relState.cancelamentos||0,'Cancelamentos')+relBox(relState.encaixados||0,'Encaixes')+'</div><div style="margin:14px 0;background:#eef0f8;border-radius:8px;padding:10px;border:2px solid #1A2459"><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#1A2459;margin-bottom:4px">Pacientes que compareceram</div><div style="font-size:28px;font-weight:800;color:'+pColor+'">'+comp+' <span style="font-size:14px;color:#555">/ '+t+' agendados ('+compPct+'%)</span></div><div style="font-size:11px;color:#555;margin-top:4px">Fórmula: pagantes ('+(relState.pagantes||0)+') + retornos ('+(relState.retorno||0)+') + gratuitos ('+(relState.gratuitos||0)+') + encaixes ('+(relState.encaixados||0)+') − faltas ('+(relState.faltas||0)+')</div></div><strong style="font-size:12px">ALUNOS — PROCEDIMENTOS GRATUITOS ('+alunos.length+')</strong><table class="pr-rel-table" style="margin-top:6px"><tr><th>#</th><th>Nome do Aluno</th><th>Observação</th></tr>'+alunoRows+'</table>'+(relState.obs?'<div class="pr-action" style="margin-top:14px"><strong>Observações:</strong><br>'+escHtml(relState.obs).replace(/\n/g,'<br>')+'</div>':'')+'<div class="pr-rel-footer">Relatório gerado pela Central de Checklists Operacionais — São Leopoldo Mandic</div>';window.print();}
-function relBox(num,label){return '<div class="pr-rel-box"><div class="pr-rel-box-num">'+(num||0)+'</div><div class="pr-rel-box-label">'+label+'</div></div>';}
-function enviarRelEmail(){syncRelForm();var u=relState.unit||'—',data=fmtDate(relState.data);var alunos=relState.alunos.filter(function(a){return a.trim();});var subj=encodeURIComponent('[Relatório] Controle de Pacientes — '+u+' — '+data);var body='Relatório Diário de Pacientes\nUnidade: '+u+'\nEspecialidade: '+(relState.turma||'—')+'\nTurma: '+(relState.turmaNum||'—')+'\nResponsável: '+(relState.responsavel||'—')+'\nData: '+data+'\n\nAGENDAMENTOS\nTotal agendados: '+(relState.total||0)+'\nPagantes: '+(relState.pagantes||0)+'\nRetornos: '+(relState.retorno||0)+'\nGratuitos: '+(relState.gratuitos||0)+'\n\nAUSÊNCIAS\nFaltas: '+(relState.faltas||0)+'\nCancelamentos <48h: '+(relState.cancelamentos||0)+'\n\nENCAIXES\nEncaixados no dia: '+(relState.encaixados||0)+'\n\nINDICADORES\nPacientes que compareceram: '+(relState._comp||0)+' / '+(relState.total||0)+' ('+(relState._compPct||0)+'%)\n\nALUNOS — PROCEDIMENTOS GRATUITOS ('+alunos.length+')\n'+(alunos.length?alunos.map(function(a,i){return (i+1)+'. '+a;}).join('\n'):'Nenhum aluno registrado.')+(relState.obs?'\n\nOBSERVAÇÕES:\n'+relState.obs:'')+'\n\n---\nEnviado pela Central de Checklists — São Leopoldo Mandic';window.location.href='mailto:gestor@pgmed.com.br?subject='+subj+'&body='+encodeURIComponent(body);}
-function syncRelForm(){var u=document.getElementById('relUnit'),r=document.getElementById('relResp'),e=document.getElementById('relEspec'),tn=document.getElementById('relTurma'),d=document.getElementById('relData');if(u)relState.unit=u.value;if(r)relState.responsavel=r.value;if(e)relState.turma=e.value;if(tn)relState.turmaNum=tn.value;if(d)relState.data=d.value;var ob=document.getElementById('relObs');if(ob)relState.obs=ob.value;document.querySelectorAll('.aluno-row input').forEach(function(inp,i){if(relState.alunos[i]!==undefined)relState.alunos[i]=inp.value;});calcIndicadores();}
-function fmtDate(d){if(!d)return '';var p=d.split('-');return p[2]+'/'+p[1]+'/'+p[0];}
+
+// ===================== RELATÓRIO =====================
+var relState = {};
+
+function openRelatorio(){
+  var today = new Date();
+  var todayStr = today.toISOString().split('T')[0];
+  relState = {
+    unit:'', responsavel:'', turma:'', turmaNum:'', obs:'', data: todayStr,
+    total:0, pagantes:0, retorno:0, gratuitos:0,
+    faltas:0, cancelamentos:0, encaixados:0,
+    alunos:[]
+  };
+  renderRelatorio();
+  showScreen('scrRelatorio');
+}
+
+function renderRelatorio(){
+  var body = document.getElementById('relBody');
+  body.innerHTML =
+    // INFO
+    '<div class="rel-section"><h3>📋 Identificação</h3>'+
+    '<div class="rel-grid">'+
+    '<div class="rel-field full"><label>Unidade</label>'+
+    '<select id="relUnit" onchange="relState.unit=this.value">'+
+    '<option value="">Selecione...</option>'+
+    '<option value="SP">São Paulo (SP)</option>'+
+    '<option value="CPS">Campinas (CPS)</option>'+
+    '<option value="BSB">Brasília (BSB)</option>'+
+    '</select></div>'+
+    '<div class="rel-field full"><label>Especialidade</label>'+
+    '<select id="relEspec" onchange="relState.turma=this.value">'+
+    '<option value="">Selecione...</option>'+
+    '<option>Dermato cirúrgica</option>'+
+    '<option>Dermato One</option>'+
+    '<option>Dermatologia</option>'+
+    '<option>Endocrinologia</option>'+
+    '<option>Gineco estética</option>'+
+    '<option>Neuropediatria</option>'+
+    '<option>Nutrologia</option>'+
+    '<option>Oftalmologia</option>'+
+    '<option>Pediatria</option>'+
+    '<option>Psiquiatria</option>'+
+    '<option>Tricologia</option>'+
+    '</select></div>'+
+    '<div class="rel-field full"><label>Turma</label>'+
+    '<select id="relTurma" onchange="relState.turmaNum=this.value">'+
+    '<option value="">Selecione...</option>'+
+    (function(){var o='';for(var i=1;i<=50;i++)o+='<option>T'+i+'</option>';return o;}())+
+    '</select></div>'+
+    '<div class="rel-field full"><label>Responsável pela recepção</label>'+
+    '<input type="text" id="relResp" placeholder="Nome do responsável" oninput="relState.responsavel=this.value"></div>'+
+    '<div class="rel-field full"><label>Data</label>'+
+    '<input type="date" id="relData" value="'+relState.data+'" onchange="relState.data=this.value"></div>'+
+    '</div></div>'+
+
+    // AGENDAMENTOS
+    '<div class="rel-section"><h3>📅 Agendamentos</h3>'+
+    '<div class="rel-grid">'+
+    numField('relTotal','Total de pacientes agendados','total')+
+    numField('relPagantes','Pacientes pagantes','pagantes')+
+    numField('relRetorno','Consultas de retorno','retorno')+
+    numField('relGratuitos','Procedimentos gratuitos (qtd)','gratuitos')+
+    '</div></div>'+
+
+    // AUSÊNCIAS E ENCAIXES
+    '<div class="rel-section"><h3>❌ Ausências e Encaixes</h3>'+
+    '<div class="rel-grid">'+
+    numField('relFaltas','Faltas','faltas')+
+    numField('relCancel','Cancelamentos &lt;48h','cancelamentos')+
+    numField('relEncaix','Encaixados pela falta','encaixados')+
+    '</div></div>'+
+
+    // ALUNOS GRATUITOS
+    '<div class="rel-section"><h3>🎓 Alunos — Procedimentos Gratuitos (nomes)</h3>'+
+    '<p style="font-size:12px;color:var(--gray);margin-bottom:10px">Adicione o nome de cada aluno que realizou procedimento gratuito no dia.</p>'+
+    '<div class="aluno-list" id="alunoList"></div>'+
+    '<button class="btn-add-aluno" onclick="addAluno()">+ Adicionar aluno</button>'+
+    '</div>'+
+
+    // INDICADORES
+    '<div class="rel-section" id="relIndicadores"><h3>📊 Indicadores (calculado automaticamente)</h3>'+
+    '<div id="indBody"></div></div>'+
+
+    // OBSERVAÇÕES
+    '<div class="rel-section"><h3>📝 Observações</h3>'+
+    '<textarea id="relObs" class="action-input" placeholder="Registre aqui observações relevantes do dia — ocorrências, intercorrências, informações adicionais..." oninput="relState.obs=this.value" style="min-height:100px"></textarea>'+
+    '</div>'+
+
+    // AÇÕES
+    '<button class="btn-pdf" onclick="gerarRelPDF()">🖨️ Gerar PDF</button>'+
+    '<button class="btn-email" onclick="enviarRelEmail()" style="margin-top:8px">📧 Enviar por E-mail</button>'+
+    '<button class="btn-secondary" style="margin-top:8px" onclick="showScreen(\'scrDir\')">Voltar ao Início</button>';
+
+  renderAlunoList();
+  calcIndicadores();
+}
+
+function numField(id, label, key){
+  return '<div class="rel-field"><label>'+label+'</label>'+
+    '<input type="number" min="0" id="'+id+'" value="'+(relState[key]||0)+'" '+
+    'oninput="relState[\''+key+'\']=parseInt(this.value)||0;calcIndicadores()"></div>';
+}
+
+function renderAlunoList(){
+  var list = document.getElementById('alunoList');
+  if(!list) return;
+  list.innerHTML = '';
+  relState.alunos.forEach(function(nome, idx){
+    var row = document.createElement('div');
+    row.className = 'aluno-row';
+    row.innerHTML = '<input type="text" placeholder="Nome do aluno" value="'+escHtml(nome)+'" '+
+      'oninput="relState.alunos['+idx+']=this.value">'+
+      '<button onclick="removeAluno('+idx+')">×</button>';
+    list.appendChild(row);
+  });
+}
+
+function addAluno(){
+  relState.alunos.push('');
+  renderAlunoList();
+  var inputs = document.querySelectorAll('.aluno-row input');
+  if(inputs.length) inputs[inputs.length-1].focus();
+}
+
+function removeAluno(idx){
+  relState.alunos.splice(idx,1);
+  renderAlunoList();
+}
+
+function calcIndicadores(){
+  var t    = relState.total        || 0;
+  var pag  = relState.pagantes     || 0;
+  var ret  = relState.retorno      || 0;
+  var grat = relState.gratuitos    || 0;
+  var falt = relState.faltas       || 0;
+  var canc = relState.cancelamentos|| 0;
+  var enc  = relState.encaixados   || 0;
+
+  // Compareceram = pagantes + retornos + gratuitos + encaixes − faltas
+  var comp = Math.max(0, pag + ret + grat + enc - falt);
+  var compPct = t > 0 ? Math.round(comp / t * 100) : 0;
+  var pColor = compPct>=80?'ind-green':compPct>=60?'ind-blue':'ind-red';
+
+  relState._comp    = comp;
+  relState._compPct = compPct;
+
+  var body = document.getElementById('indBody');
+  if(!body) return;
+
+  body.innerHTML =
+    indRow('Total de pacientes agendados', t,    'ind-gray')+
+    indRow('Pacientes gratuitos',          grat, 'ind-gray')+
+    indRow('Pacientes pagantes',           pag,  'ind-gray')+
+    indRow('Consultas de retorno',         ret,  'ind-gray')+
+    indRow('Faltas',                       falt, falt===0?'ind-green':'ind-red')+
+    indRow('Cancelamentos',                canc, canc===0?'ind-green':'ind-red')+
+    indRow('Encaixes',                     enc,  'ind-blue')+
+    '<div style="border-top:2px solid #1A2459;margin:10px 0"></div>'+
+    '<div class="rel-indicador" style="background:#eef0f8;border-radius:8px;padding:10px;margin-top:2px">'+
+    '<span style="font-weight:700;color:#1A2459">Pacientes que compareceram</span>'+
+    '<span class="rel-ind-val '+pColor+'" style="font-size:18px">'+comp+' <span style="font-size:12px;font-weight:400">/ '+t+' ('+compPct+'%)</span></span>'+
+    '</div>';
+}
+
+function indRow(label, val, cls){
+  return '<div class="rel-indicador"><span>'+label+'</span><span class="rel-ind-val '+cls+'">'+val+'</span></div>';
+}
+
+function escHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+function gerarRelPDF(){
+  // sync form values before printing
+  syncRelForm();
+  var u = relState.unit || '—';
+  var resp = relState.responsavel || '—';
+  var data = fmtDate(relState.data);
+  var t = relState.total;
+  var comp = relState._comp || 0;
+  var compPct = relState._compPct || 0;
+  var alunos = relState.alunos.filter(function(a){return a.trim();});
+  var pColor = compPct>=80?'#27ae60':compPct>=60?'#1565c0':'#e74c3c';
+
+  var alunoRows = alunos.length
+    ? alunos.map(function(a,i){return '<tr><td>'+(i+1)+'</td><td>'+escHtml(a)+'</td><td>Procedimento gratuito</td></tr>';}).join('')
+    : '<tr><td colspan="3" style="color:#888;text-align:center">Nenhum aluno registrado</td></tr>';
+
+  document.getElementById('pr').innerHTML =
+    '<div class="pr-rel-header">'+
+    '<div class="pr-rel-title">São Leopoldo Mandic — Relatório de Pacientes</div>'+
+    '<div class="pr-rel-sub">Recepção · '+u+' · '+data+'</div>'+
+    '<span class="pr-rel-badge" style="background:'+pColor+';color:#fff">Compareceram: '+comp+' / '+t+' ('+compPct+'%)</span>'+
+    '</div>'+
+
+    '<table class="pr-rel-table"><tr><td><strong>Unidade</strong></td><td>'+u+'</td>'+
+    '<td><strong>Responsável</strong></td><td>'+escHtml(resp)+'</td></tr>'+
+    '<tr><td><strong>Especialidade</strong></td><td>'+(escHtml(relState.turma)||'—')+'</td>'+
+    '<td><strong>Turma</strong></td><td>'+(escHtml(relState.turmaNum)||'—')+'</td></tr>'+
+    '<tr><td><strong>Data</strong></td><td>'+data+'</td>'+
+    '<td><strong>Gerado em</strong></td><td>'+new Date().toLocaleString('pt-BR')+'</td></tr></table>'+
+
+    '<div class="pr-rel-grid">'+
+    relBox(t,'Total agendados')+
+    relBox(relState.gratuitos||0,'Gratuitos')+
+    relBox(relState.pagantes||0,'Pagantes')+
+    relBox(relState.retorno||0,'Retornos')+
+    relBox(relState.faltas||0,'Faltas')+
+    relBox(relState.cancelamentos||0,'Cancelamentos')+
+    relBox(relState.encaixados||0,'Encaixes')+
+    '</div>'+
+
+    '<div style="margin:14px 0;background:#eef0f8;border-radius:8px;padding:10px;border:2px solid #1A2459">'+
+    '<div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#1A2459;margin-bottom:4px">Pacientes que compareceram</div>'+
+    '<div style="font-size:28px;font-weight:800;color:'+pColor+'">'+comp+' <span style="font-size:14px;color:#555">/ '+t+' agendados ('+compPct+'%)</span></div>'+
+    '<div style="font-size:11px;color:#555;margin-top:4px">Fórmula: pagantes ('+( relState.pagantes||0)+') + retornos ('+(relState.retorno||0)+') + gratuitos ('+(relState.gratuitos||0)+') + encaixes ('+(relState.encaixados||0)+') − faltas ('+(relState.faltas||0)+')</div>'+
+    '</div>'+
+
+    '<strong style="font-size:12px">ALUNOS — PROCEDIMENTOS GRATUITOS ('+alunos.length+')</strong>'+
+    '<table class="pr-rel-table" style="margin-top:6px">'+
+    '<tr><th>#</th><th>Nome do Aluno</th><th>Observação</th></tr>'+
+    alunoRows+'</table>'+
+
+    (relState.obs?'<div class="pr-action" style="margin-top:14px"><strong>Observações:</strong><br>'+escHtml(relState.obs).replace(/\n/g,'<br>')+'</div>':'')+
+    '<div class="pr-rel-footer">Relatório gerado pela Central de Checklists Operacionais — São Leopoldo Mandic</div>';
+
+  window.print();
+}
+
+function relBox(num, label){
+  return '<div class="pr-rel-box"><div class="pr-rel-box-num">'+(num||0)+'</div><div class="pr-rel-box-label">'+label+'</div></div>';
+}
+
+function enviarRelEmail(){
+  syncRelForm();
+  var u = relState.unit || '—';
+  var data = fmtDate(relState.data);
+  var alunos = relState.alunos.filter(function(a){return a.trim();});
+  var subj = encodeURIComponent('[Relatório] Controle de Pacientes — '+u+' — '+data);
+  var body =
+    'Relatório Diário de Pacientes\n'+
+    'Unidade: '+u+'\n'+
+    'Especialidade: '+(relState.turma||'—')+'\n'+
+    'Turma: '+(relState.turmaNum||'—')+'\n'+
+    'Responsável: '+(relState.responsavel||'—')+'\n'+
+    'Data: '+data+'\n\n'+
+    'AGENDAMENTOS\n'+
+    'Total agendados: '+(relState.total||0)+'\n'+
+    'Pagantes: '+(relState.pagantes||0)+'\n'+
+    'Retornos: '+(relState.retorno||0)+'\n'+
+    'Gratuitos: '+(relState.gratuitos||0)+'\n\n'+
+    'AUSÊNCIAS\n'+
+    'Faltas: '+(relState.faltas||0)+'\n'+
+    'Cancelamentos <48h: '+(relState.cancelamentos||0)+'\n\n'+
+    'ENCAIXES\n'+
+    'Encaixados no dia: '+(relState.encaixados||0)+'\n\n'+
+    'INDICADORES\n'+
+    'Total agendados: '+(relState.total||0)+'\n'+
+    'Gratuitos: '+(relState.gratuitos||0)+'\n'+
+    'Pagantes: '+(relState.pagantes||0)+'\n'+
+    'Retornos: '+(relState.retorno||0)+'\n'+
+    'Faltas: '+(relState.faltas||0)+'\n'+
+    'Cancelamentos: '+(relState.cancelamentos||0)+'\n'+
+    'Encaixes: '+(relState.encaixados||0)+'\n'+
+    'Pacientes que compareceram: '+(relState._comp||0)+' / '+(relState.total||0)+' ('+( relState._compPct||0)+'%)\n\n'+
+    'ALUNOS — PROCEDIMENTOS GRATUITOS ('+alunos.length+')\n'+
+    (alunos.length ? alunos.map(function(a,i){return (i+1)+'. '+a;}).join('\n') : 'Nenhum aluno registrado.')+
+    (relState.obs?'\n\nOBSERVAÇÕES:\n'+relState.obs:'')+
+    '\n\n---\nEnviado pela Central de Checklists — São Leopoldo Mandic';
+  window.location.href = 'mailto:'+EMAIL_GESTOR+'?subject='+subj+'&body='+encodeURIComponent(body);
+}
+
+function syncRelForm(){
+  var u = document.getElementById('relUnit');
+  var r = document.getElementById('relResp');
+  var e = document.getElementById('relEspec');
+  var tn = document.getElementById('relTurma');
+  var d = document.getElementById('relData');
+  if(u) relState.unit = u.value;
+  if(r) relState.responsavel = r.value;
+  if(e) relState.turma = e.value;
+  if(tn) relState.turmaNum = tn.value;
+  if(d) relState.data = d.value;
+  var ob = document.getElementById('relObs');
+  if(ob) relState.obs = ob.value;
+  // sync aluno inputs
+  document.querySelectorAll('.aluno-row input').forEach(function(inp, i){
+    if(relState.alunos[i] !== undefined) relState.alunos[i] = inp.value;
+  });
+  calcIndicadores();
+}
+
+
+function fmtDate(d){
+  if(!d)return '';
+  var p=d.split('-');
+  return p[2]+'/'+p[1]+'/'+p[0];
+}
 </script>
-</body>
-</html>
+
+
+</body></html>
