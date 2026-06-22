@@ -187,7 +187,7 @@ html,body{min-height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;font-
 }
 
 @media print{
-  #appRoot,#lock{display:none!important}
+  #app,#lock{display:none!important}
   #pr{display:block!important;font-family:Arial,sans-serif;font-size:12px;color:#000;padding:20px}
   .pr-header{text-align:center;border-bottom:2px solid #1A2459;padding-bottom:12px;margin-bottom:16px}
   .pr-title{font-size:18px;font-weight:bold;color:#1A2459}
@@ -320,7 +320,7 @@ html,body{min-height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;font-
         <div class="folder-header semanal" onclick="toggleFolder(&#39;fSemanal&#39;,this)">
           <span class="folder-icon">📁</span>
           <span class="folder-name">Checklist Semanais</span>
-          <span class="folder-count">2 checklists</span>
+          <span class="folder-count">1 checklist</span>
           <span class="folder-chevron open" id="chev_fSemanal">›</span>
         </div>
         <div class="folder-body open" id="fSemanal">
@@ -329,14 +329,6 @@ html,body{min-height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;font-
             <div class="cl-info">
               <div class="cl-name">Regulatórios e Biossegurança</div>
               <div class="cl-meta">Verificação semanal · BSB, CPS, SP</div>
-            </div>
-            <div class="cl-arrow">›</div>
-          </div>
-          <div class="cl-card" onclick="openChecklist(&#39;quinzenalCPS&#39;)">
-            <div class="cl-icon purple">🏥</div>
-            <div class="cl-info">
-              <div class="cl-name">Checklist Regulatório Quinzenal</div>
-              <div class="cl-meta">47 itens · 8 pilares · Campinas (Quintal SLM)</div>
             </div>
             <div class="cl-arrow">›</div>
           </div>
@@ -358,12 +350,8 @@ html,body{min-height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;font-
         <select class="form-select" id="selUnit"></select>
       </div>
       <div class="form-group">
-        <label class="form-label">Nome</label>
-        <input class="form-input" type="text" id="inpAuditor" placeholder="Nome completo">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Cargo</label>
-        <input class="form-input" type="text" id="inpCargo" placeholder="Cargo / função">
+        <label class="form-label">Auditor</label>
+        <input class="form-input" type="text" id="inpAuditor" placeholder="Nome do auditor">
       </div>
       <div class="form-group">
         <label class="form-label">Data</label>
@@ -424,13 +412,12 @@ html,body{min-height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;font-
 <script>
 // ===================== DATA =====================
 var SENHA = 'pgmed2025';
-var EMAIL_GESTOR = 'gestor@pgmed.com.br';
-var state = {cl:null, unit:null, auditor:null, cargo:null, date:null, answers:{}, photos:{}, obs:{}, pillarIdx:0};
+var EMAIL_GESTOR = 'tainan.moura@slmandic.edu.br';
+var state = {cl:null, unit:null, auditor:null, date:null, answers:{}, photos:{}, obs:{}};
 var currentAuditId = null;
 
 var CHECKLISTS = {
   score:{
-    paginatedByPillar:true,
     name:'Score Operacional',
     units:['Brasília','Campinas','São Paulo'],
     pilares:[
@@ -497,7 +484,6 @@ var CHECKLISTS = {
     ]
   },
   regulatorio:{
-    paginatedByPillar:true,
     name:'Regulatórios e Biossegurança',
     units:['Brasília','Campinas','São Paulo'],
     pilares:[
@@ -519,7 +505,6 @@ var CHECKLISTS = {
     ]
   },
   pgodonto:{
-    paginatedByPillar:true,
     name:'Visita PG Odonto',
     units:['Brasília','Campinas','São Paulo','Rio de Janeiro','Belo Horizonte','Curitiba','Grande Vitória','Araras','Fortaleza'],
     pilares:[
@@ -578,7 +563,6 @@ var CHECKLISTS = {
     ]
   },
   vistoriaSP:{
-    paginatedByPillar:true,
     name:'Vistoria Diária SP',
     units:['São Paulo'],
     pilares:[
@@ -663,7 +647,6 @@ var CHECKLISTS = {
     ]
   },
   regulatorioSemanal:{
-    paginatedByPillar:true,
     name:'Regulatórios e Biossegurança',
     units:['Brasília','Campinas','São Paulo'],
     pilares:[
@@ -682,78 +665,7 @@ var CHECKLISTS = {
         {id:'rs12',label:'Validade dos materiais críticos verificada',tip:'Amostragem de insumos críticos — anestésicos, resinas, fios de sutura.'}
       ]}
     ]
-  },
-  quinzenalCPS:{
-    name:'Checklist Regulatório Quinzenal',
-    paginatedByPillar:true,
-    units:['Campinas'],
-    pilares:[
-      {name:'Documentação e Licenças',items:[
-        {id:'qc1',label:'PGR — verificar validade e disponibilidade física do documento',tip:'Alerta Regulatório. Verificar validade e localização física do PGR.'},
-        {id:'qc2',label:'LTCAT — verificar validade',tip:'Alerta Regulatório. Laudo Técnico das Condições Ambientais do Trabalho.'},
-        {id:'qc3',label:'LTA p/ atividade de exames complementares — obter aprovação da Vigilância Sanitária',tip:'SIVISA Nº 25.001785/26. Pendente de aprovação.'},
-        {id:'qc4',label:'Licença Sanitária p/ exames complementares (CNAE 8630-5/02) — solicitar licença inicial',tip:'SIVISA Nº 25.001785/26. Pendente de solicitação.'},
-        {id:'qc5',label:'Extintores — verificar conformidade documental (laudo, validade e notas de recarga)',tip:'Alerta Regulatório. Situação anterior: Não conforme.'},
-        {id:'qc6',label:'PGRSS — verificar validade',tip:'Alerta Regulatório. Prazo: 21/08/2026.'},
-        {id:'qc7',label:'Brigada de Incêndio — verificar certificados dos brigadistas e validade do treinamento',tip:'Alerta Regulatório. Prazo: 01/08/2026.'},
-        {id:'qc8',label:'PCMSO — verificar validade',tip:'Alerta Regulatório. Prazo: 05/08/2026.'},
-        {id:'qc9',label:'Contrato com empresa processadora de produtos para saúde (expurgo) — verificar existência e vigência',tip:'SIVISA Nº 25.001785/26. Pendente.'},
-        {id:'qc10',label:'PMOC — verificar registros de manutenção preventiva dos ar-condicionados',tip:'Alerta Regulatório. Prazo: 31/08/2026.'},
-        {id:'qc11',label:"Certificado de limpeza dos reservatórios d'água — verificar validade",tip:'Alerta Regulatório. Prazo: 01/08/2026.'},
-        {id:'qc12',label:'Troca dos filtros dos bebedouros (1º andar) — verificar data e execução',tip:'Alerta Regulatório. Prazo: 01/07/2026.'},
-        {id:'qc13',label:'Troca dos filtros dos bebedouros (Térreo) — verificar data e execução',tip:'Alerta Regulatório. Prazo: 20/07/2026.'},
-        {id:'qc14',label:'CNES — verificar regularidade do cadastro da unidade',tip:'Alerta Regulatório. Prazo: 25/08/2026.'},
-        {id:'qc15',label:'Controle de pragas — verificar certificados e intervalo de aplicações',tip:'Alerta Regulatório. Prazo: 18/08/2026.'}
-      ]},
-      {name:'Medicamentos e Termolábeis',items:[
-        {id:'qc16',label:'Geladeira da sala de triagem: verificar controle e registro de temperatura (planilha diária)',tip:'SIVISA Nº 25.001785/26. Registrar temperatura diariamente.'},
-        {id:'qc17',label:'Geladeira da sala de triagem: verificar ausência de medicamentos de multidose sem identificação',tip:'SIVISA Nº 25.001785/26. Todos os medicamentos devem estar identificados.'},
-        {id:'qc18',label:'Almoxarifado/saleta: confirmar separação total de medicamentos e alimentos (ex: amido de milho)',tip:'SIVISA Nº 25.001785/26. Medicamentos e alimentos não podem ser armazenados juntos.'},
-        {id:'qc19',label:'Almoxarifado: verificar controle de temperatura e umidade (planilha ou sensor instalado)',tip:'SIVISA Nº 25.001785/26. Exigência de monitoramento de temperatura e umidade.'},
-        {id:'qc20',label:'Almoxarifado: verificar organização, ausência de materiais em desuso e paredes sem infiltração',tip:'SIVISA Nº 25.001785/26. Área deve estar organizada e sem infiltrações.'},
-        {id:'qc21',label:'Conferir ausência de produtos para saúde sem registro ANVISA (ex: Derma Roller System interditado)',tip:'SIVISA Nº 25.001785/26. Produtos sem registro ANVISA devem ser removidos.'}
-      ]},
-      {name:'Infraestrutura e Instalações',items:[
-        {id:'qc22',label:'Consultórios K2, K4, K9: verificar andamento da instalação de pias fixas para higienização das mãos',tip:'SIVISA Nº 25.001785/26. Exigência de pias fixas nos consultórios.'},
-        {id:'qc23',label:'Consultórios K7, K8: verificar substituição das pias móveis por instalação fixa adequada',tip:'SIVISA Nº 25.001785/26. Pias móveis devem ser substituídas por fixas.'},
-        {id:'qc24',label:'Sanitário masculino e PCD: verificar instalação/funcionamento de exaustão ou ventilação natural',tip:'SIVISA Nº 25.001785/26. Exaustão ou ventilação natural obrigatória.'},
-        {id:'qc25',label:'Área dos fundos (DML): verificar segregação de ambientes (DML, resíduos, vestiário, gases medicinais)',tip:'SIVISA Nº 25.001785/26. Ambientes devem estar devidamente segregados.'},
-        {id:'qc26',label:'Área dos fundos: verificar ausência de materiais em desuso e organização geral',tip:'SIVISA Nº 25.001785/26. Área deve estar limpa e sem materiais desnecessários.'},
-        {id:'qc27',label:'Sala de expurgo: verificar instalação e uso da bancada e pia de inox para pré-limpeza de materiais',tip:'SIVISA Nº 25.001785/26. Bancada e pia de inox são exigências regulatórias.'}
-      ]},
-      {name:'Biossegurança e Resíduos',items:[
-        {id:'qc28',label:'Caixa coletora de perfurocortantes: verificar altura do suporte (deve permitir visualização da abertura)',tip:'SIVISA Nº 25.001785/26. Suporte deve estar na altura correta.'},
-        {id:'qc29',label:'Descarte de resíduos: verificar segregação correta (infectante, comum, reciclável, perfurocortante)',tip:'SIVISA Nº 25.001785/26 / PGRSS. Segregação é obrigatória por lei.'},
-        {id:'qc30',label:'Abrigo temporário de resíduos: verificar organização, acesso restrito e identificação',tip:'SIVISA Nº 25.001785/26. Abrigo deve ter acesso controlado e identificação.'},
-        {id:'qc31',label:'EPIs: verificar disponibilidade e uso adequado pelos colaboradores (Ficha de Controle assinada)',tip:'Alerta Regulatório. Ficha de controle de EPI deve estar assinada.'}
-      ]},
-      {name:'Equipamentos Médicos',items:[
-        {id:'qc32',label:'Equipamentos de oftalmologia (lâmpada de fenda, coluna oftalmológica): verificar registros de manutenção preventiva',tip:'SIVISA Nº 25.001785/26. Registros de manutenção devem estar atualizados.'},
-        {id:'qc33',label:'Aparelho de bioimpedância: verificar calibração e manutenção em dia',tip:'SIVISA Nº 25.001785/26. Calibração e manutenção devem estar registradas.'},
-        {id:'qc34',label:'Equipamentos de laser (locados): verificar se contratos de manutenção estão vigentes',tip:'SIVISA Nº 25.001785/26. Contratos de manutenção devem estar vigentes.'},
-        {id:'qc35',label:'Extintores (físico): verificar sinalização, acesso desobstruído, pressão e validade da carga',tip:'Alerta Regulatório. Prazo: 01/06/2026. Verificar pressão e validade.'}
-      ]},
-      {name:'Segurança do Paciente',items:[
-        {id:'qc36',label:'Carro/kit de emergência: verificar existência de insumos, medicamentos e equipamentos para manejo de emergências',tip:'SIVISA Nº 25.001785/26. Kit completo é obrigatório.'},
-        {id:'qc37',label:'Torpedo de oxigênio: verificar presença em suporte, nível de carga e validade do cilindro',tip:'SIVISA Nº 25.001785/26. Confirmar nível de carga e suporte adequado.'},
-        {id:'qc38',label:'Termos de Consentimento Esclarecido (TCE): verificar se todos os procedimentos têm TCE assinado e arquivado',tip:'SIVISA Nº 25.001785/26. TCE obrigatório para todos os procedimentos.'},
-        {id:'qc39',label:'Amostras/biópsias cirúrgicas: verificar preservação em frasco adequado, identificação e encaminhamento p/ anatomia patológica',tip:'SIVISA Nº 25.001785/26. Identificação e encaminhamento corretos são obrigatórios.'},
-        {id:'qc40',label:'Rede de gases medicinais: verificar sinalização, acessos e condições de armazenamento',tip:'SIVISA Nº 25.001785/26. Verificar sinalização e condições de armazenamento.'}
-      ]},
-      {name:'Higiene e Limpeza',items:[
-        {id:'qc41',label:'Salão de procedimentos cirúrgicos (1º andar): verificar limpeza, desinfecção e organização das macas e mesa auxiliar',tip:'SIVISA Nº 25.001785/26. Desinfecção de superfícies é obrigatória.'},
-        {id:'qc42',label:'Sala de triagem: verificar organização, limpeza e ausência de materiais em desuso',tip:'SIVISA Nº 25.001785/26. Sala deve estar limpa e organizada.'},
-        {id:'qc43',label:'Consultórios (geral): verificar limpeza, organização e ausência de materiais inadequados',tip:'SIVISA Nº 25.001785/26. Todos os consultórios devem estar em ordem.'},
-        {id:'qc44',label:'Sanitários (masculino, feminino, PCD): verificar limpeza, disponibilidade de papel, sabonete e toalha descartável',tip:'SIVISA Nº 25.001785/26. Insumos básicos devem estar disponíveis.'}
-      ]},
-      {name:'Processos Clínicos',items:[
-        {id:'qc45',label:'Verificar se estão sendo realizados procedimentos de exames complementares com a unidade ainda sem licença sanitária para CNAE 8630-5/02',tip:'CRÍTICO — SIVISA Nº 25.001785/26. Procedimentos sem licença geram risco de interdição.'},
-        {id:'qc46',label:'Laboratório de tecidos (Soluções em Biotecnologia 3D): verificar regularização junto à Vigilância Sanitária',tip:'SIVISA Nº 25.001785/26. Regularização pendente.'},
-        {id:'qc47',label:'Verificar se todos os produtos para saúde utilizados possuem registro ANVISA/MS vigente',tip:'SIVISA Nº 25.001785/26. Produtos sem registro devem ser retirados de uso.'}
-      ]}
-    ]
   }
-
 };
 
 // ===================== STORAGE =====================
@@ -828,17 +740,13 @@ function openChecklist(clId){
   var today=new Date();
   document.getElementById('inpDate').value=today.toISOString().split('T')[0];
   document.getElementById('inpAuditor').value='';
-  if(document.getElementById('inpCargo'))document.getElementById('inpCargo').value='';
   document.getElementById('histSection').style.display='none';
   showScreen('scrSetup');
 }
 
 function backToDir(){
-  state={cl:null,unit:null,auditor:null,cargo:null,date:null,answers:{},photos:{},obs:{},pillarIdx:0};
+  state={cl:null,unit:null,auditor:null,date:null,answers:{},photos:{},obs:{}};
   currentAuditId=null;
-  // Restore audit sticky to default for non-paginated checklists
-  var sticky=document.querySelector('#scrAudit .audit-sticky');
-  if(sticky){sticky.innerHTML='<div class="progress-bar"><div class="progress-fill" id="progFill" style="width:0%"></div></div><div class="progress-text" id="progText">0 de 0 itens respondidos</div><button class="btn-primary" onclick="finishAudit()">Finalizar e Ver Resultado</button>';}
   showScreen('scrDir');
 }
 
@@ -846,15 +754,12 @@ function backToDir(){
 function startAudit(){
   var unit=document.getElementById('selUnit').value;
   var auditor=document.getElementById('inpAuditor').value.trim();
-  var cargo=document.getElementById('inpCargo')?document.getElementById('inpCargo').value.trim():'';
   if(!unit){alert('Selecione a unidade.');return;}
-  if(!auditor){alert('Informe o nome.');return;}
-  if(!cargo){alert('Informe o cargo.');return;}
+  if(!auditor){alert('Informe o nome do auditor.');return;}
   state.unit=unit;
   state.auditor=auditor;
-  state.cargo=cargo;
   state.date=document.getElementById('inpDate').value;
-  state.answers={};state.photos={};state.obs={};state.pillarIdx=0;
+  state.answers={};state.photos={};state.obs={};
   currentAuditId=uid();
   renderAudit();
   showScreen('scrAudit');
@@ -866,16 +771,6 @@ function backToSetup(){showScreen('scrSetup');}
 function renderAudit(){
   var cl=CHECKLISTS[state.cl];
   document.getElementById('auditTitle').innerHTML=cl.name+'<span class="hdr-sub">'+state.unit+' · '+fmtDate(state.date)+'</span>';
-  if(cl.paginatedByPillar){
-    state.pillarIdx=0;
-    var sticky=document.querySelector('#scrAudit .audit-sticky');
-    sticky.innerHTML=
-      '<div class="progress-bar"><div class="progress-fill" id="progFill" style="width:0%"></div></div>'+
-      '<div class="progress-text" id="progText">0 de 0 itens respondidos</div>'+
-      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px" id="pillarNav"></div>';
-    renderPillarPage(0);
-    return;
-  }
   var body=document.getElementById('auditBody');
   body.innerHTML='';
   cl.pilares.forEach(function(p){
@@ -888,43 +783,6 @@ function renderAudit(){
     body.appendChild(sec);
   });
   updateProgress();
-}
-
-function renderPillarPage(idx){
-  var cl=CHECKLISTS[state.cl];
-  var p=cl.pilares[idx];
-  state.pillarIdx=idx;
-  var body=document.getElementById('auditBody');
-  body.innerHTML='';
-  var indicator=document.createElement('div');
-  indicator.style.cssText='background:#1A2459;color:#fff;padding:10px 16px;margin:-16px -16px 16px;font-size:13px;font-weight:700;display:flex;justify-content:space-between;align-items:center;border-radius:0';
-  indicator.innerHTML='<span>'+p.name+'</span><span style="opacity:.65;font-size:11px">'+( idx+1)+' de '+cl.pilares.length+'</span>';
-  body.appendChild(indicator);
-  p.items.forEach(function(item){body.appendChild(buildItemCard(item));});
-  updatePillarNav();
-  updateProgress();
-}
-
-function updatePillarNav(){
-  var cl=CHECKLISTS[state.cl];
-  var isFirst=state.pillarIdx===0;
-  var isLast=state.pillarIdx===cl.pilares.length-1;
-  var navEl=document.getElementById('pillarNav');
-  if(!navEl)return;
-  navEl.innerHTML=
-    '<button class="btn-secondary" onclick="goToPillar(-1)" style="margin-top:0;min-height:44px;font-size:14px;'+(isFirst?'opacity:.35;pointer-events:none':'')+'">‹ Anterior</button>'+
-    (isLast
-      ?'<button class="btn-primary" onclick="finishAudit()" style="margin-top:0;min-height:44px;font-size:14px">Finalizar ✓</button>'
-      :'<button class="btn-primary" onclick="goToPillar(1)" style="margin-top:0;min-height:44px;font-size:14px">Próximo ›</button>'
-    );
-}
-
-function goToPillar(dir){
-  var cl=CHECKLISTS[state.cl];
-  var newIdx=state.pillarIdx+dir;
-  if(newIdx<0||newIdx>=cl.pilares.length)return;
-  renderPillarPage(newIdx);
-  scrollTop();
 }
 
 function buildItemCard(item){
@@ -999,27 +857,41 @@ function getAllItems(){
   return items;
 }
 
+function showAppModal(msg, onConfirm, onCancel){
+  var ov=document.createElement('div');
+  ov.id='appModalOv';
+  ov.style.cssText='position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.55);z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px';
+  ov.innerHTML=
+    '<div style="background:#fff;border-radius:14px;padding:24px 20px;max-width:320px;width:100%;text-align:center;box-shadow:0 4px 32px rgba(0,0,0,.25)">'+
+    '<div style="font-size:15px;color:#1A2459;line-height:1.5;margin-bottom:22px">'+msg+'</div>'+
+    '<button id="appModalOk" style="width:100%;padding:14px;background:#1A2459;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:10px">Sim, continuar</button>'+
+    '<button id="appModalCancel" style="width:100%;padding:12px;background:#fff;color:#1A2459;border:2px solid #1A2459;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer">Cancelar</button>'+
+    '</div>';
+  document.body.appendChild(ov);
+  document.getElementById('appModalOk').onclick=function(){ov.remove();if(onConfirm)onConfirm();};
+  document.getElementById('appModalCancel').onclick=function(){ov.remove();if(onCancel)onCancel();};
+}
+
 function confirmBack(){
   if(Object.keys(state.answers).length>0){
-    if(!confirm('Tem certeza? As respostas não salvas serão perdidas.'))return;
+    showAppModal('Tem certeza? As respostas não salvas serão perdidas.',function(){backToDir();});
+  } else {
+    backToDir();
   }
-  backToDir();
 }
 
 function finishAudit(){
-  var cl=CHECKLISTS[state.cl];
-  // If paginated and not on last pillar, go to next
-  if(cl&&cl.paginatedByPillar&&state.pillarIdx<cl.pilares.length-1){
-    goToPillar(1);return;
-  }
   var items=getAllItems();
   var unanswered=items.filter(function(i){return !state.answers[i.id];});
   if(unanswered.length>0){
-    if(!confirm(unanswered.length+' item(ns) sem resposta. Deseja finalizar mesmo assim?'))return;
+    showAppModal(unanswered.length+' item(ns) sem resposta.\nDeseja finalizar mesmo assim?',function(){
+      saveAudit();renderSummary();showScreen('scrSummary');
+    });
+  } else {
+    saveAudit();
+    renderSummary();
+    showScreen('scrSummary');
   }
-  saveAudit();
-  renderSummary();
-  showScreen('scrSummary');
 }
 
 // ===================== SCORING =====================
@@ -1111,14 +983,15 @@ function renderSummary(){
     '<div class="info-card"><h3>Informações</h3>'+
     '<div class="info-row"><span>Checklist</span><strong>'+cl.name+'</strong></div>'+
     '<div class="info-row"><span>Unidade</span><strong>'+state.unit+'</strong></div>'+
-    '<div class="info-row"><span>Nome</span><strong>'+state.auditor+'</strong></div>'+
-    '<div class="info-row"><span>Cargo</span><strong>'+(state.cargo||'—')+'</strong></div>'+
+    '<div class="info-row"><span>Auditor</span><strong>'+state.auditor+'</strong></div>'+
     '<div class="info-row"><span>Data</span><strong>'+fmtDate(state.date)+'</strong></div>'+
     '<div class="info-row"><span>Não conformidades</span><strong style="color:var(--red)">'+ncs.length+'</strong></div>'+
     '</div>'+
     '<div class="info-card"><h3>Resultado por Pilar</h3>'+pillarRows+'</div>'+
     '<div class="info-card"><h3>Não Conformidades</h3>'+ncHtml+'</div>'+
     actionHtml+
+    '<div class="info-card" style="margin-top:8px"><h3>📧 E-mail do destinatário</h3>'+
+    '<input class="form-input" type="email" id="emailDest" value="'+EMAIL_GESTOR+'" placeholder="email@destinatario.com" style="margin-top:4px"></div>'+
     '<button class="btn-pdf" onclick="printPDF()">🖨️ Gerar PDF / Imprimir</button>'+
     '<button class="btn-email" onclick="sendEmail()">📧 Enviar por E-mail</button>'+
     '<button class="btn-secondary" style="margin-top:8px" onclick="backToDir()">Voltar ao Início</button>';
@@ -1133,7 +1006,6 @@ function saveAudit(){
     clName:CHECKLISTS[state.cl].name,
     unit:state.unit,
     auditor:state.auditor,
-    cargo:state.cargo,
     date:state.date,
     score:sc,
     answers:state.answers,
@@ -1185,7 +1057,6 @@ function loadAudit(a){
   state.cl=a.cl;
   state.unit=a.unit;
   state.auditor=a.auditor;
-  state.cargo=a.cargo||'';
   state.date=a.date;
   state.answers=a.answers||{};
   state.obs=a.obs||{};
@@ -1246,8 +1117,7 @@ function printPDF(){
     (sc>=90?'27ae60':sc>=75?'2980b9':sc>=60?'e67e22':'c0392b')+'">'+badge.label+'</div></div>'+
     '<table class="pr-info-table">'+
     '<tr><td>Unidade</td><td>'+state.unit+'</td></tr>'+
-    '<tr><td>Nome</td><td>'+state.auditor+'</td></tr>'+
-    '<tr><td>Cargo</td><td>'+(state.cargo||'—')+'</td></tr>'+
+    '<tr><td>Auditor</td><td>'+state.auditor+'</td></tr>'+
     '<tr><td>Data</td><td>'+fmtDate(state.date)+'</td></tr>'+
     '<tr><td>Gerado em</td><td>'+new Date().toLocaleString('pt-BR')+'</td></tr>'+
     '</table>'+
@@ -1260,6 +1130,9 @@ function printPDF(){
 
 // ===================== EMAIL =====================
 function sendEmail(){
+  var destEl=document.getElementById('emailDest');
+  var dest=(destEl&&destEl.value.trim())?destEl.value.trim():EMAIL_GESTOR;
+  if(!dest){alert('Informe o e-mail do destinatário.');return;}
   var cl=CHECKLISTS[state.cl];
   var sc=calcScore();
   var badge=scoreBadge(sc);
@@ -1272,11 +1145,11 @@ function sendEmail(){
   var ap=document.getElementById('actionPlan');
   var apText=ap?ap.value:'';
   var subj=encodeURIComponent('[Checklist] '+cl.name+' — '+state.unit+' — '+fmtDate(state.date)+' — '+sc+'% ('+badge.label+')');
-  var body='Auditoria: '+cl.name+'\nUnidade: '+state.unit+'\nNome: '+state.auditor+'\nCargo: '+(state.cargo||'—')+'\nData: '+fmtDate(state.date)+'\nScore: '+sc+'% ('+badge.label+')';
+  var body='Auditoria: '+cl.name+'\nUnidade: '+state.unit+'\nAuditor: '+state.auditor+'\nData: '+fmtDate(state.date)+'\nScore: '+sc+'% ('+badge.label+')';
   if(ncs.length){body+='\n\nNÃO CONFORMIDADES ('+ncs.length+'):\n'+ncs.map(function(n){return '• '+n;}).join('\n');}
   if(apText){body+='\n\nPLANO DE AÇÃO:\n'+apText;}
   body+='\n\n---\nEnviado pela Central de Checklists Operacionais — São Leopoldo Mandic';
-  window.location.href='mailto:'+EMAIL_GESTOR+'?subject='+subj+'&body='+encodeURIComponent(body);
+  window.location.href='mailto:'+dest+'?subject='+subj+'&body='+encodeURIComponent(body);
 }
 
 
@@ -1533,50 +1406,4 @@ function enviarRelEmail(){
     'Faltas: '+(relState.faltas||0)+'\n'+
     'Cancelamentos <48h: '+(relState.cancelamentos||0)+'\n\n'+
     'ENCAIXES\n'+
-    'Encaixados no dia: '+(relState.encaixados||0)+'\n\n'+
-    'INDICADORES\n'+
-    'Total agendados: '+(relState.total||0)+'\n'+
-    'Gratuitos: '+(relState.gratuitos||0)+'\n'+
-    'Pagantes: '+(relState.pagantes||0)+'\n'+
-    'Retornos: '+(relState.retorno||0)+'\n'+
-    'Faltas: '+(relState.faltas||0)+'\n'+
-    'Cancelamentos: '+(relState.cancelamentos||0)+'\n'+
-    'Encaixes: '+(relState.encaixados||0)+'\n'+
-    'Pacientes que compareceram: '+(relState._comp||0)+' / '+(relState.total||0)+' ('+( relState._compPct||0)+'%)\n\n'+
-    'ALUNOS — PROCEDIMENTOS GRATUITOS ('+alunos.length+')\n'+
-    (alunos.length ? alunos.map(function(a,i){return (i+1)+'. '+a;}).join('\n') : 'Nenhum aluno registrado.')+
-    (relState.obs?'\n\nOBSERVAÇÕES:\n'+relState.obs:'')+
-    '\n\n---\nEnviado pela Central de Checklists — São Leopoldo Mandic';
-  window.location.href = 'mailto:'+EMAIL_GESTOR+'?subject='+subj+'&body='+encodeURIComponent(body);
-}
-
-function syncRelForm(){
-  var u = document.getElementById('relUnit');
-  var r = document.getElementById('relResp');
-  var e = document.getElementById('relEspec');
-  var tn = document.getElementById('relTurma');
-  var d = document.getElementById('relData');
-  if(u) relState.unit = u.value;
-  if(r) relState.responsavel = r.value;
-  if(e) relState.turma = e.value;
-  if(tn) relState.turmaNum = tn.value;
-  if(d) relState.data = d.value;
-  var ob = document.getElementById('relObs');
-  if(ob) relState.obs = ob.value;
-  // sync aluno inputs
-  document.querySelectorAll('.aluno-row input').forEach(function(inp, i){
-    if(relState.alunos[i] !== undefined) relState.alunos[i] = inp.value;
-  });
-  calcIndicadores();
-}
-
-
-function fmtDate(d){
-  if(!d)return '';
-  var p=d.split('-');
-  return p[2]+'/'+p[1]+'/'+p[0];
-}
-</script>
-
-
-</body></html>
+    'Enca
