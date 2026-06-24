@@ -215,7 +215,7 @@ html,body{min-height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;font-
 <body>
 
 <!-- LOCK -->
-<div id="lock" style="display: none;">
+<div id="lock" style="display: flex;">
   <div class="logo-wrap">
     <svg viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
       <rect width="200" height="60" fill="none"></rect>
@@ -233,7 +233,7 @@ html,body{min-height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;font-
 </div>
 
 <!-- APP -->
-<div id="app" style="display: block;">
+<div id="app" style="display: none;">
 
   <!-- SCREEN: DIRECTORY -->
   <div class="screen active" id="scrDir">
@@ -1406,4 +1406,50 @@ function enviarRelEmail(){
     'Faltas: '+(relState.faltas||0)+'\n'+
     'Cancelamentos <48h: '+(relState.cancelamentos||0)+'\n\n'+
     'ENCAIXES\n'+
-    'Enca
+    'Encaixados no dia: '+(relState.encaixados||0)+'\n\n'+
+    'INDICADORES\n'+
+    'Total agendados: '+(relState.total||0)+'\n'+
+    'Gratuitos: '+(relState.gratuitos||0)+'\n'+
+    'Pagantes: '+(relState.pagantes||0)+'\n'+
+    'Retornos: '+(relState.retorno||0)+'\n'+
+    'Faltas: '+(relState.faltas||0)+'\n'+
+    'Cancelamentos: '+(relState.cancelamentos||0)+'\n'+
+    'Encaixes: '+(relState.encaixados||0)+'\n'+
+    'Pacientes que compareceram: '+(relState._comp||0)+' / '+(relState.total||0)+' ('+( relState._compPct||0)+'%)\n\n'+
+    'ALUNOS — PROCEDIMENTOS GRATUITOS ('+alunos.length+')\n'+
+    (alunos.length ? alunos.map(function(a,i){return (i+1)+'. '+a;}).join('\n') : 'Nenhum aluno registrado.')+
+    (relState.obs?'\n\nOBSERVAÇÕES:\n'+relState.obs:'')+
+    '\n\n---\nEnviado pela Central de Checklists — São Leopoldo Mandic';
+  window.location.href = 'mailto:'+EMAIL_GESTOR+'?subject='+subj+'&body='+encodeURIComponent(body);
+}
+
+function syncRelForm(){
+  var u = document.getElementById('relUnit');
+  var r = document.getElementById('relResp');
+  var e = document.getElementById('relEspec');
+  var tn = document.getElementById('relTurma');
+  var d = document.getElementById('relData');
+  if(u) relState.unit = u.value;
+  if(r) relState.responsavel = r.value;
+  if(e) relState.turma = e.value;
+  if(tn) relState.turmaNum = tn.value;
+  if(d) relState.data = d.value;
+  var ob = document.getElementById('relObs');
+  if(ob) relState.obs = ob.value;
+  // sync aluno inputs
+  document.querySelectorAll('.aluno-row input').forEach(function(inp, i){
+    if(relState.alunos[i] !== undefined) relState.alunos[i] = inp.value;
+  });
+  calcIndicadores();
+}
+
+
+function fmtDate(d){
+  if(!d)return '';
+  var p=d.split('-');
+  return p[2]+'/'+p[1]+'/'+p[0];
+}
+</script>
+
+
+</body></html>
