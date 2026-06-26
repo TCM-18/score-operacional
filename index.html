@@ -81,7 +81,7 @@ html,body{min-height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;font-
 .btn-danger{width:100%;padding:14px;background:var(--white);border:2px solid var(--red);border-radius:var(--radius);color:var(--red);font-size:15px;font-weight:600;cursor:pointer;margin-top:8px;transition:.2s;min-height:54px}
 
 /* AUDIT */
-.audit-body{padding:16px;flex:1;padding-bottom:100px}
+.audit-body{padding:16px;flex:1;padding-bottom:170px}
 .pillar-section{margin-bottom:24px}
 .pillar-title{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#1A2459;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid #F5C518}
 .item-card{background:var(--white);border-radius:var(--radius);padding:14px;margin-bottom:10px;box-shadow:0 1px 6px rgba(0,0,0,.07)}
@@ -375,7 +375,12 @@ html,body{min-height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;font-
     <div class="audit-sticky">
       <div class="progress-bar"><div class="progress-fill" id="progFill" style="width:0%"></div></div>
       <div class="progress-text" id="progText">0 de 0 itens respondidos</div>
-      <button class="btn-primary" onclick="finishAudit()">Finalizar e Ver Resultado</button>
+      <div id="pillarNav" style="font-size:12px;font-weight:700;color:#1A2459;text-align:center;margin:4px 0 8px;line-height:1.3"></div>
+      <div style="display:flex;gap:8px">
+        <button id="btnPrev" onclick="prevPillar()" style="flex:1;width:auto;display:none;padding:12px 8px;background:#fff;border:2px solid #1A2459;border-radius:var(--radius);color:#1A2459;font-size:14px;font-weight:600;cursor:pointer;min-height:46px">‹ Anterior</button>
+        <button id="btnNext" onclick="nextPillar()" style="flex:1;width:auto;padding:12px 8px;background:#1A2459;border:none;border-radius:var(--radius);color:#fff;font-size:14px;font-weight:700;cursor:pointer;min-height:46px">Próximo ›</button>
+        <button id="btnFinish" onclick="finishAudit()" style="flex:1;width:auto;display:none;padding:12px 8px;background:#F5C518;border:none;border-radius:var(--radius);color:#1A2459;font-size:14px;font-weight:700;cursor:pointer;min-height:46px">Finalizar ✓</button>
+      </div>
     </div>
   </div>
 
@@ -415,6 +420,7 @@ var SENHA = 'pgmed2025';
 var EMAIL_GESTOR = 'tainan.moura@slmandic.edu.br';
 var state = {cl:null, unit:null, auditor:null, date:null, answers:{}, photos:{}, obs:{}};
 var currentAuditId = null;
+var currentPillarIdx = 0;
 
 var CHECKLISTS = {
   score:{
@@ -771,18 +777,46 @@ function backToSetup(){showScreen('scrSetup');}
 function renderAudit(){
   var cl=CHECKLISTS[state.cl];
   document.getElementById('auditTitle').innerHTML=cl.name+'<span class="hdr-sub">'+state.unit+' · '+fmtDate(state.date)+'</span>';
+  currentPillarIdx=0;
+  renderCurrentPillar();
+}
+
+function renderCurrentPillar(){
+  var cl=CHECKLISTS[state.cl];
+  var p=cl.pilares[currentPillarIdx];
   var body=document.getElementById('auditBody');
   body.innerHTML='';
-  cl.pilares.forEach(function(p){
-    var sec=document.createElement('div');
-    sec.className='pillar-section';
-    sec.innerHTML='<div class="pillar-title">'+p.name+'</div>';
-    p.items.forEach(function(item){
-      sec.appendChild(buildItemCard(item));
-    });
-    body.appendChild(sec);
-  });
+  var sec=document.createElement('div');
+  sec.className='pillar-section';
+  sec.innerHTML='<div class="pillar-title">'+p.name+'</div>';
+  p.items.forEach(function(item){sec.appendChild(buildItemCard(item));});
+  body.appendChild(sec);
   updateProgress();
+  updatePillarNav();
+}
+
+function updatePillarNav(){
+  var cl=CHECKLISTS[state.cl];
+  var total=cl.pilares.length;
+  var isFirst=(currentPillarIdx===0);
+  var isLast=(currentPillarIdx===total-1);
+  var nav=document.getElementById('pillarNav');
+  if(nav) nav.textContent='Pilar '+(currentPillarIdx+1)+' de '+total+': '+cl.pilares[currentPillarIdx].name;
+  var btnPrev=document.getElementById('btnPrev');
+  var btnNext=document.getElementById('btnNext');
+  var btnFinish=document.getElementById('btnFinish');
+  if(btnPrev) btnPrev.style.display=isFirst?'none':'block';
+  if(btnNext) btnNext.style.display=isLast?'none':'block';
+  if(btnFinish) btnFinish.style.display=isLast?'block':'none';
+}
+
+function nextPillar(){
+  var cl=CHECKLISTS[state.cl];
+  if(currentPillarIdx<cl.pilares.length-1){currentPillarIdx++;renderCurrentPillar();scrollTop();}
+}
+
+function prevPillar(){
+  if(currentPillarIdx>0){currentPillarIdx--;renderCurrentPillar();scrollTop();}
 }
 
 function buildItemCard(item){
@@ -790,16 +824,26 @@ function buildItemCard(item){
   d.className='item-card';
   d.id='card_'+item.id;
   var tip=item.tip?'<div class="item-tip">'+item.tip+'</div>':'';
+  var clsMap={'Superou':'sel-superou','Conforme':'sel-conforme','Não conforme':'sel-nao','N.A.':'sel-na'};
+  var currResp=state.answers[item.id]||null;
+  function btnCls(val){return 'resp-btn'+(currResp===val?' '+clsMap[val]:'');}
+  var currObs=state.obs[item.id]||'';
   d.innerHTML='<div class="item-label">'+item.label+'</div>'+tip+
     '<div class="resp-btns">'+
-    '<button class="resp-btn" onclick="setResp(\''+item.id+'\',\'Superou\',this)">⭐ Superou</button>'+
-    '<button class="resp-btn" onclick="setResp(\''+item.id+'\',\'Conforme\',this)">✅ Conforme</button>'+
-    '<button class="resp-btn" onclick="setResp(\''+item.id+'\',\'Não conforme\',this)">❌ Não conforme</button>'+
-    '<button class="resp-btn" onclick="setResp(\''+item.id+'\',\'N.A.\',this)">— N.A.</button>'+
+    '<button class="'+btnCls('Superou')+'" onclick="setResp(\''+item.id+'\',\'Superou\',this)">⭐ Superou</button>'+
+    '<button class="'+btnCls('Conforme')+'" onclick="setResp(\''+item.id+'\',\'Conforme\',this)">✅ Conforme</button>'+
+    '<button class="'+btnCls('Não conforme')+'" onclick="setResp(\''+item.id+'\',\'Não conforme\',this)">❌ Não conforme</button>'+
+    '<button class="'+btnCls('N.A.')+'" onclick="setResp(\''+item.id+'\',\'N.A.\',this)">— N.A.</button>'+
     '</div>'+
-    '<textarea class="obs-input" placeholder="Observação (opcional)..." onchange="setObs(\''+item.id+'\',this.value)"></textarea>'+
+    '<textarea class="obs-input" placeholder="Observação (opcional)..." onchange="setObs(\''+item.id+'\',this.value)">'+escHtml(currObs)+'</textarea>'+
     '<label class="photo-btn"><input type="file" accept="image/*" capture="environment" style="display:none" onchange="addPhoto(\''+item.id+'\',this)">📷 Adicionar foto</label>'+
     '<div id="photos_'+item.id+'"></div>';
+  if(state.photos[item.id]&&state.photos[item.id].length){
+    setTimeout(function(){
+      var el=document.getElementById('photos_'+item.id);
+      if(el){state.photos[item.id].forEach(function(data){var im=document.createElement('img');im.src=data;im.className='photo-thumb';el.appendChild(im);});}
+    },0);
+  }
   return d;
 }
 
@@ -943,7 +987,6 @@ function renderSummary(){
   var sc=calcScore();
   var badge=scoreBadge(sc);
   document.getElementById('summaryTitle').innerHTML=cl.name+'<span class="hdr-sub">Resultado</span>';
-  document.getElementById('summarySub').textContent='';
 
   var ncs=[];
   cl.pilares.forEach(function(p){
